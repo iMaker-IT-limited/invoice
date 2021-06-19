@@ -1,0 +1,221 @@
+// Custom variables
+// Note:  These ones were added by us and have nothing to do with Ionic CSS Custom Properties
+:host {
+  --page-margin: var(--app-fair-margin);
+  --page-background: var(--app-background-alt-shade);
+
+  --page-headers-shadow-color: rgba(var(--ion-color-darkest-rgb), 0.4);
+}
+
+
+// Note:  All the CSS variables defined below are overrides of Ionic elements CSS Custom Properties
+.app-sidemenu {
+
+  ion-toolbar {
+    --padding-start: 0px;
+    --padding-end: 0px;
+    --padding-top: 0px;
+    --padding-bottom: 0px;
+    // --background: var(--ion-color-dark-tint);
+    // --background: var(--ion-color-light-tint);
+    --background: var(--ion-color-dark);
+    //  --background: white;
+
+  }
+
+  ion-content {
+    // --background: var(--page-background);
+    --background: var(--ion-color-dark);
+    border-color: var(--ion-color-dark);
+
+  }
+
+  .scrollbar {
+    .scrollbar-item {
+      background: var(--ion-color-primary);
+      border-radius: 15px;
+    }
+
+    .scrollbar-item:hover {
+      background: var(--ion-color-primary);
+      border-radius: 15px;
+      box-shadow: -2px 7px 3px 0px rgba(0, 0, 0, 0.2);
+     
+    }
+  }
+
+  .user-details-wrapper {
+    --ion-grid-column-padding: 0px;
+    --background: var(--ion-color-dark);
+    //     background-color: rgba(var(--ion-color-light-rgb), 0.15);
+    color: var(--ion-color-lightest);
+    padding: var(--page-margin);
+    align-items: center;
+
+    &+.user-details-wrapper {
+      padding-top: 0px;
+    }
+  }
+
+  .user-info-wrapper {
+    padding-left: var(--page-margin);
+
+    .user-name {
+      margin: 0px 0px 5px;
+    }
+
+    .user-handle {
+      color: var(--ion-color-light-shade);
+      margin: 0px;
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+
+  .user-stats-wrapper {
+    text-align: center;
+
+    .user-stat-value {
+      margin-right: 5px;
+      font-weight: 500;
+    }
+
+    .user-stat-name {
+      color: var(--ion-color-light-shade);
+      font-size: 14px;
+    }
+  }
+
+  // Menu list items
+  ion-list {
+    //    --ion-text-color: var(--ion-color-dark-shade);
+    //    --ion-text-color-rgb: var(--ion-color-dark-shade-rgb);
+    //  --ion-item-background: var(--page-background);
+    --ion-text-color: var(--ion-color-primary);
+    --ion-text-color-rgb: var(--ion-color-primary-rgb);
+    --ion-item-border-color: transparent;
+
+    // background: var(--ion-color-theme);
+    background: transparent;
+
+    ion-list-header {
+
+      --color: rgba(var(--ion-color-primary), 0.6);
+
+      text-transform: uppercase;
+      // box-shadow: inset 0px -4px 8px -2px var(--page-headers-shadow-color);
+      // box-shadow: 0px 4px 5px -3px var(--page-headers-shadow-color);
+      box-shadow: none;
+      // padding-inline-start: var(--page-margin);
+      padding-inline-start: 0px;
+    }
+
+    ion-item {
+      --border-width: 0px !important;
+      // --border-color: var(--ion-color-theme-tint);
+      --padding-start: var(--page-margin);
+      --background-activated: var(--ion-color-dark-tint);
+      // --background: var(--ion-color-theme);
+      --background: transparent;
+
+      #item-native {
+        padding-left: 0;
+        text-indent: 16px;
+      }
+    }
+
+    ion-icon {
+      color: var(--ion-color-primary-shade);
+    }
+  }
+
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    // border-bottom: 1px dotted black;
+    width: 100%;
+  }
+
+  .force-overflow {
+    .sb3:before {
+      content: "";
+      width: 0px;
+      height: 0px;
+      position: absolute;
+      border-left: 10px solid var(--ion-color-secondary);
+      border-right: 10px solid transparent;
+      border-top: 10px solid var(--ion-color-secondary);
+      border-bottom: 10px solid transparent;
+      right: 20%;
+      bottom: -10px;
+      z-index: 0;
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      // border-bottom: 1px dotted black;
+      width: 100%;
+    }
+
+    .tooltiptext {
+      visibility: visible;
+      width: 85%;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      background-color: var(--ion-color-secondary);
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+
+      /* Position the tooltip */
+      // position: absolute;
+      z-index: 1;
+      // width: 120px;
+      bottom: 100%;
+
+      /* Use half of the width (120/2 = 60), to center the tooltip */
+    }
+  }
+
+
+  .footer-list {
+    .footer-item {}
+
+    .footer-item:hover {
+      cursor: pointer !important;
+      border-left-style: solid;
+      border-left-color: var(--ion-color-theme);
+      background: var(--ion-color-dark);
+     
+    }
+
+  }
+
+  .footer-item {
+      border-left-style: solid;
+      border-left-color: transparent;
+  }
+
+    .footer-item:hover {
+      cursor: pointer !important;
+      font-weight: bold;
+    //  --color: var(--ion-color-theme);
+    //  filter:blur(2px);
+      border-left-style: solid;
+      border-left-color: var(--ion-color-theme);
+   //   --background: var(--ion-color-dark-tint) !important;
+    }
+
+    .footer-item:active {
+      cursor: pointer !important;
+      border-left-style: solid;
+      border-left-color: var(--ion-color-theme);
+    //  --background: #00446D !important;
+    //  --color: var(--ion-color-theme) !important;
+    }
+    
+  }
+

@@ -1,0 +1,204 @@
+<app-header></app-header>
+<ion-content class="user-profile-content">
+
+  <ion-item-divider class="sticky_header" sticky>
+    <ion-title>All Expenses</ion-title>
+    <ion-button size="large" color='theme' class="new_button" (click)="onCreateContact()"> + New</ion-button>
+    <!-- <ion-button class="new_button" color="premium" fill="solid" slot="end"
+      (click)="showCreditNotesToggle = !showCreditNotesToggle">
+      <ion-icon name="menu-outline"></ion-icon>
+    </ion-button> -->
+
+    <!-- <div class="menu_toggle" *ngIf="showCreditNotesToggle">
+      <ul>
+        <li>
+          <ion-button class="listbutton" expand="full" fill="clear" (click)="show = !show">
+            <ion-icon slot="start" size="medium" icon-only name="cloud-upload-sharp"></ion-icon>
+            <span>
+              Upload contact import
+            </span>
+          </ion-button>
+        </li>
+        <li>
+          <ion-button class="listbutton" expand="full" fill="clear" (click)="getTestCsv()">
+            <ion-icon slot="start" size="medium" icon-only name=""></ion-icon>
+            <span>
+              Get CSV
+            </span>
+          </ion-button>
+        </li>
+        <li>
+          <ion-button class="listbutton" expand="full" fill="clear" (click)="loadCSV()">
+            <ion-icon slot="start" size="medium" icon-only name="cloud-upload-sharp"></ion-icon>
+            <span>
+              Bulk import
+            </span>
+          </ion-button>
+        </li>
+        <li>
+          <ion-button class="listbutton" expand="full" fill="clear" (click)="exportCSV()">
+            <ion-icon slot="start" size="medium" icon-only name="cloud-download-sharp"></ion-icon>
+            <span>
+              Bulk export
+            </span>
+          </ion-button>
+        </li>
+
+      </ul>
+    </div> -->
+  </ion-item-divider>
+
+  <ion-progress-bar *ngIf="!estimatesList" color="theme" type="indeterminate"></ion-progress-bar>
+
+  <div style="background: var(--ion-color-dark)">
+    <ion-card style="box-shadow: none; margin: 0px">
+      <ion-card-header style="text-align: center; color: var(--ion-color-theme); font-size: larger;">Professional
+        Estimates and Proposals that Streamline Your Invoicing
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col class="left" style="text-align: center;">
+            <div>
+
+              <img class="img" style="margin-left: auto; margin-right: auto; display: block;"
+                src="../../../../assets/images/home_categories/one_click_invocies.png" alt="">
+            </div>
+
+            <ion-title>One-Click Invoices
+            </ion-title>
+
+            <p>Easily turn Estimates into Invoices with just a single click.</p>
+
+          </ion-col>
+          <ion-col style="text-align: center;">
+            <div>
+              <img class="img" style="margin-left: auto; margin-right: auto; display: block;"
+                src="../../../../assets/images/home_categories/get_going_with_estimates.png" alt="">
+            </div>
+
+            <ion-title>Get Going with Estimates
+            </ion-title>
+
+            <p>Learn how Estimates and fast approvals get you paid.</p>
+
+          </ion-col>
+          <ion-col style="text-align: center;">
+            <div>
+              <img class="img" style="margin-left: auto; margin-right: auto; display: block;"
+                src="../../../../assets/images/home_categories/client_winning_proposals.png" alt="">
+            </div>
+
+            <ion-title>Client-Winning Proposals
+            </ion-title>
+
+            <p>Showcase your unique value to help win the work you deserve
+              <span>Create now</span></p>
+
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+
+    </ion-card>
+  </div>
+
+  <div *ngIf="!grid">
+    <ion-row class="new">
+      <ion-col class="col-left" style="padding: 0px;" size="12">
+
+        <!-- ngx - table -->
+        <ngx-datatable [rows]="estimatesList" [ngClass]="tableStyle" [rowHeight]="auto" [headerHeight]="50"
+          [columnMode]="'force'" [rowClass]="getRowClass.bind(this)" [limit]="20" [footerHeight]="50">
+          <ngx-datatable-column sortable="true">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              DATE
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <!-- <ion-button fill="clear" color="theme" (click)="onDetailPage(row)">
+                    {{row['Display Name']}}               
+                  </ion-button> -->
+              <div class="_button"> {{row['Expense Date'].substring(0, 10)}}
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column sortable="true">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              Expense Category
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <div class="button" (click)="onDetailPage(row, estimatesList)">
+                {{row['Expense Category']}}
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column sortable="true">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              REFERENCE NUMBER
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{row['id']}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column sortable="true">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              CUSTOMER NAME
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{row['Customer Name']}}
+            </ng-template>
+          </ngx-datatable-column>
+
+
+          <!-- <ngx-datatable-column sortable="true">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              STATUS
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+
+              <div class="text-success" *ngIf="row['Estimate Status'] == 'invoiced'">{{row['Estimate Status']}}
+              </div>
+              <div class="text-draft" *ngIf="row['Estimate Status'] == 'draft'">{{row['Estimate Status']}}
+              </div>
+              <div class="text-sent" *ngIf="row['Estimate Status'] == 'sent'">{{row['Estimate Status']}}
+              </div>
+              <div class="text-expired" *ngIf="row['Estimate Status'] == 'revised'">{{row['Estimate Status']}}
+              </div>
+              <div class="text-expired" *ngIf="row['Estimate Status'] == 'expired'">{{row['Estimate Status']}}
+              </div>
+            </ng-template>
+          </ngx-datatable-column> -->
+
+
+          <ngx-datatable-column sortable="true">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              AMOUNT
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              HKD {{row['Expense Amount']}}
+            </ng-template>
+          </ngx-datatable-column>
+
+
+
+
+
+
+        </ngx-datatable>
+        <!-- ngx - table -->
+
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div *ngIf="name === 'Dan Soong'">
+    Dan Soong
+    <div id="sign-in-status"></div>
+    <div id="sign-in"></div>
+    <pre id="account-details"></pre>
+  </div>
+
+  <app-global-banner></app-global-banner>
+</ion-content>
+<app-global-footer></app-global-footer>

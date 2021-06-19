@@ -1,0 +1,299 @@
+<app-header></app-header>
+<ion-content>
+    <ion-item-divider sticky>
+        <ion-title class="title" (click)="showSideNav(sideNavInvoice = !sideNavInvoice)">
+            All Customers {{sideNavInvoice}}
+        </ion-title>
+        <!-- <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice">
+            <ion-icon name="print"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" fill="clear" color="theme" (click)="testtablePDF(result)">
+            <ion-icon src="assets/icon/pdf.svg"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" fill="solid" color="theme" (click)="testtablePDF(result)">Record payment </ion-button> -->
+        <ion-button slot="end" fill="clear" color="dark" (click)="onDismiss()">
+            <ion-icon name="close"></ion-icon>
+        </ion-button>
+    </ion-item-divider>
+    <ion-progress-bar color="theme" type="indeterminate"></ion-progress-bar>
+
+    <div class="grid-container" id="grid-container2">
+        <aside class="sidenav" id="sidenav">
+            <ul *ngFor="let i of results" class="sidenav__list">
+                <li class="sidenav__list-item">
+                    <input type="checkbox" style="padding-right: 10px;" />
+                    <ion-label style="margin-bottom: 10px; color: black;">
+                        {{i['Customer Name']}}
+                    </ion-label>
+                    <br />
+                    <!-- <div class="estimatenumber">
+                        {{i['Estimate Number']}}
+                    </div>
+                    <div class="estimatedate">
+                        | {{i['Estimate Date']}}
+                    </div>
+                    <div class="status">
+                        {{i['Estimate Status']}}
+                    </div> -->
+                </li>
+            </ul>
+        </aside>
+        <header class="header">
+            <ion-title>{{result["Invoice Number"]}}</ion-title>
+            <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice">
+                <ion-icon src="assets/icon/edit.svg"></ion-icon>
+            </ion-button>
+
+            <ion-button slot="end" fill="clear" color="theme" (click)="testtablePDF(result)">
+                <ion-icon src="assets/icon/pdf.svg"></ion-icon>
+            </ion-button>
+
+            <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice">
+                <ion-icon name="print"></ion-icon>
+            </ion-button>
+
+            <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice">
+                <ion-icon name="mail"></ion-icon>
+            </ion-button>
+
+            <ion-button slot="end" fill="clear" color="theme" (click)="testtablePDF(result)">
+                <ion-icon src="assets/icon/paperclip.svg"></ion-icon>
+            </ion-button>
+
+            <ion-button slot="end" fill="solid" color="theme" (click)="testtablePDF(result)">Delete </ion-button>
+        </header>
+        <main class="main">
+            <!-- <div class="main-header">
+                <ul>
+                    <li>
+                        <p>
+                            26 Nov 2020 06:41 PM
+                        </p>
+                        <ion-icon name="document"></ion-icon>
+                        Estimate updated. Amount changed from HKD82,000.00 to HKD102,000.00 by iMaker
+                    </li>
+                    <li>
+                        <p>
+                            26 Nov 2020 06:41 PM
+                        </p>
+                        <ion-icon name="document"></ion-icon>
+                        Estimate updated. Amount changed from HKD82,000.00 to HKD102,000.00 by iMaker
+                    </li>
+                    <li>
+                        <p>
+                            26 Nov 2020 06:41 PM
+                        </p>
+                        <ion-icon name="document"></ion-icon>
+                        Estimate updated. Amount changed from HKD82,000.00 to HKD102,000.00 by iMaker
+                    </li>
+                </ul>
+            </div> -->
+            <app-nodata *ngIf="!result"></app-nodata>
+            <!-- {{result | json}} -->
+            <ion-card *ngIf="result" class="persondetail">
+                <div class="wrapper">
+                    <div class="left">
+                        <!-- <ion-avatar>
+                            <img src="https://i.imgur.com/cMy8V5j.png" alt="user" width="100" />
+                        </ion-avatar> -->
+
+                        <h4>{{result['Display Name']}}</h4>
+
+                        <p>{{result['Company Name']}}</p>
+                        <div class="info">
+                            <h3>Information</h3>
+                            <div class="info_data">
+                                <div class="data">
+                                    <h4>Email</h4>
+                                    <p>{{result['EmailID']}}</p>
+                                </div>
+                                <div class="data">
+                                    <h4>Phone</h4>
+                                    <p>{{result['Phone']}}</p>
+                                </div>
+                                <div class="data">
+                                    <h4>Created time</h4>
+                                    <ion-chip>{{result['Created Time']}}</ion-chip>
+                                </div>
+                                <div class="data">
+                                    <h4>Last Modified Time</h4>
+                                    <ion-chip color="theme">{{result['Last Modified Time']}}</ion-chip>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="projects">
+                            <h3>Projects</h3>
+                            <div class="projects_data">
+                                <div class="data">
+                                    <h4>Recent</h4>
+                                    <p>Lorem ipsum dolor sit amet.</p>
+                                </div>
+                                <div class="data">
+                                    <h4>Most Viewed</h4>
+                                    <p>dolor sit amet.</p>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <!-- <ion-card style="margin-top: 24px;" class="middle">
+      <ion-card-content>
+        <div id="incomenexpenseDetailChart" style="margin: 0 auto"></div>
+        <div id="pieCateChart" style="margin: 0 auto;"></div>
+        <div id="userDetailChart" style="margin: 0 auto"></div>
+      </ion-card-content>
+    </ion-card> -->
+
+                    <div class="right">
+                        <ion-card style="box-shadow: none;">
+                            <ion-card-title style="text-align: center;">Outstanding Receivables</ion-card-title>
+                            <ion-card-content>
+                                <h1 style="font-size: 20px; font-weight: 600; padding-top: 12px; color: #ff660f;">
+                                    HKD 0.00
+                                </h1>
+                            </ion-card-content>
+                        </ion-card>
+
+                        <ion-card style="margin: 0px; box-shadow: none;" class="">
+                            <ion-card-content>
+                                <div id="incomenexpenseDetailChart" style="margin: 0 auto;"></div>
+                                <!-- <div id="pieCateChart" style="margin: 0 auto;"></div>
+        <div id="userDetailChart" style="margin: 0 auto"></div> -->
+                            </ion-card-content>
+                        </ion-card>
+
+                        <ion-card class="timeline">
+                            <div class="history-tl-container">
+                                <ul class="tl">
+                                    <li class="tl-item" ng-repeat="item in retailer_history">
+                                        <div class="timestamp">
+                                            3rd March 2015<br />
+                                            7:00 PM
+                                        </div>
+                                        <div class="item-title">Start from Shire</div>
+                                        <div class="item-detail">Don't forget the ring</div>
+                                    </li>
+                                    <li class="tl-item" ng-repeat="item in retailer_history">
+                                        <div class="timestamp">
+                                            19th March 2015<br />
+                                            3:00 PM
+                                        </div>
+                                        <div class="item-title">Kill some Orcs</div>
+                                        <div class="item-detail">Don't enter the caves!!</div>
+                                    </li>
+                                    <li class="tl-item" ng-repeat="item in retailer_history">
+                                        <div class="timestamp">
+                                            1st June 2015<br />
+                                            7:00 PM
+                                        </div>
+                                        <div class="item-title">Throw that goddamn ring in the lava</div>
+                                        <div class="item-detail">Also, throw that Gollum too</div>
+                                    </li>
+                                    <li class="tl-item" ng-repeat="item in retailer_history">
+                                        <div class="timestamp">
+                                            3rd March 2015<br />
+                                            7:00 PM
+                                        </div>
+                                        <div class="item-title">Start from Shire</div>
+                                        <div class="item-detail">Don't forget the ring</div>
+                                    </li>
+                                    <li class="tl-item" ng-repeat="item in retailer_history">
+                                        <div class="timestamp">
+                                            19th March 2015<br />
+                                            3:00 PM
+                                        </div>
+                                        <div class="item-title">Kill some Orcs</div>
+                                        <div class="item-detail">Don't enter the caves!!</div>
+                                    </li>
+                                    <li class="tl-item" ng-repeat="item in retailer_history">
+                                        <div class="timestamp">
+                                            1st June 2015<br />
+                                            7:00 PM
+                                        </div>
+                                        <div class="item-title">Throw that goddamn ring in the lava</div>
+                                        <div class="item-detail">Also, throw that Gollum too</div>
+                                    </li>
+                                    <li class="tl-item" ng-repeat="item in retailer_history">
+                                        <div class="timestamp">
+                                            3rd March 2015<br />
+                                            7:00 PM
+                                        </div>
+                                        <div class="item-title">Start from Shire</div>
+                                        <div class="item-detail">Don't forget the ring</div>
+                                    </li>
+                                    <li class="tl-item" ng-repeat="item in retailer_history">
+                                        <div class="timestamp">
+                                            19th March 2015<br />
+                                            3:00 PM
+                                        </div>
+                                        <div class="item-title">Kill some Orcs</div>
+                                        <div class="item-detail">Don't enter the caves!!</div>
+                                    </li>
+                                    <li class="tl-item" ng-repeat="item in retailer_history">
+                                        <div class="timestamp">
+                                            1st June 2015<br />
+                                            7:00 PM
+                                        </div>
+                                        <div class="item-title">Throw that goddamn ring in the lava</div>
+                                        <div class="item-detail">Also, throw that Gollum too</div>
+                                    </li>
+                                    <li class="tl-item" ng-repeat="item in retailer_history">
+                                        <div class="timestamp">
+                                            3rd March 2015<br />
+                                            7:00 PM
+                                        </div>
+                                        <div class="item-title">Start from Shire</div>
+                                        <div class="item-detail">Don't forget the ring</div>
+                                    </li>
+                                    <li class="tl-item" ng-repeat="item in retailer_history">
+                                        <div class="timestamp">
+                                            19th March 2015<br />
+                                            3:00 PM
+                                        </div>
+                                        <div class="item-title">Kill some Orcs</div>
+                                        <div class="item-detail">Don't enter the caves!!</div>
+                                    </li>
+                                    <li class="tl-item" ng-repeat="item in retailer_history">
+                                        <div class="timestamp">
+                                            1st June 2015<br />
+                                            7:00 PM
+                                        </div>
+                                        <div class="item-title">Throw that goddamn ring in the lava</div>
+                                        <div class="item-detail">Also, throw that Gollum too</div>
+                                    </li>
+                                    <li class="tl-item" ng-repeat="item in retailer_history">
+                                        <div class="timestamp">
+                                            3rd March 2015<br />
+                                            7:00 PM
+                                        </div>
+                                        <div class="item-title">Start from Shire</div>
+                                        <div class="item-detail">Don't forget the ring</div>
+                                    </li>
+                                    <li class="tl-item" ng-repeat="item in retailer_history">
+                                        <div class="timestamp">
+                                            19th March 2015<br />
+                                            3:00 PM
+                                        </div>
+                                        <div class="item-title">Kill some Orcs</div>
+                                        <div class="item-detail">Don't enter the caves!!</div>
+                                    </li>
+                                    <li class="tl-item" ng-repeat="item in retailer_history">
+                                        <div class="timestamp">
+                                            1st June 2015<br />
+                                            7:00 PM
+                                        </div>
+                                        <div class="item-title">Throw that goddamn ring in the lava</div>
+                                        <div class="item-detail">Also, throw that Gollum too</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </ion-card>
+                    </div>
+                </div>
+            </ion-card>
+        </main>
+    </div>
+
+
+</ion-content>

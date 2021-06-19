@@ -1,0 +1,354 @@
+<app-header></app-header>
+<ion-content class="user-profile-content">
+
+    <ion-item-divider class="sticky_header" sticky>
+        <ion-title style="padding: 10px;">Dashboard</ion-title>
+    </ion-item-divider>
+
+    <!-- <ion-progress-bar color="theme" type="indeterminate"></ion-progress-bar> -->
+    <app-rating-input *ngIf="!invoices"></app-rating-input>
+
+    <main>
+
+        <ion-grid>
+
+            <ion-row>
+
+                <ion-col sm="2" class="_tab">
+
+                    <img *ngIf="companyProfile" class="_img"
+                        src="../../../assets/images/home_categories/icons_company_detail_white.svg" alt=""
+                        (click)="onCompanyProfile()">
+
+                    <img *ngIf="!companyProfile" class="_img"
+                        src="../../../assets/images/home_categories/company_detail_grey.svg" alt=""
+                        (click)="onCompanyProfile()">
+
+                    <p>
+                        Add Company Details
+                        <!-- Your name and company details appear on invoices, reports and more. -->
+                    </p>
+
+                </ion-col>
+
+                <ion-col sm="2" class="_tab">
+
+                    <img *ngIf="contactsList" class="_img"
+                        src="../../../assets/images/home_categories/icons_add_customers_white.svg" alt=""
+                        (click)="onCreateClient()">
+
+                    <img *ngIf="!contactsList" class="_img"
+                        src="../../../assets/images/home_categories/add_customers_grey.svg" alt=""
+                        (click)="onCreateClient()">
+
+                    <p>
+                        Add the Customers
+                        <!-- Steamline billing your clients by adding items and services.  -->
+                    </p>
+
+                </ion-col>
+
+                <ion-col sm="2" class="_tab">
+                    <img *ngIf="itemsList?.length > 0" class="_img"
+                        src="../../../assets/images/home_categories/icons_items_service_white.svg" alt=""
+                        (click)="onAddItem()">
+                    <img *ngIf="itemsList?.length == 0" class="_img"
+                        src="../../../assets/images/home_categories/items_service_grey.svg" alt=""
+                        (click)="onAddItem()">
+                    <p>
+                        Set Your Items/Services
+                        <!-- It's simple to create estimate. Add your logo, services and payment terms. -->
+                    </p>
+                </ion-col>
+
+                <ion-col sm="2" class="_tab">
+                    <img *ngIf="estimateList?.length > 0" class="_img"
+                        src="../../../assets/images/home_categories/icons_estimate_white.svg" alt=""
+                        (click)="onCreateEstimate()">
+                    <img *ngIf="estimateList?.length == 0" class="_img"
+                        src="../../../assets/images/home_categories/estimate_grey.svg" alt=""
+                        (click)="onCreateEstimate()">
+                    <p>
+                        Send an Invoice
+                        <!-- Get yourself up and running with clients for future invoicing and projects. -->
+                    </p>
+                </ion-col>
+
+            </ion-row>
+
+        </ion-grid>
+
+        <div style="height: 20px;"></div>
+
+        <!-- <div class="tabset">
+            <input type="radio" name="tabset" id="tab1" aria-controls="marzen" checked>
+            <label for="tab1">Set up Company detail</label>
+            <input type="radio" name="tabset" id="tab2" aria-controls="rauchbier">
+            <label for="tab2">Add a new customer</label>
+            <input type="radio" name="tabset" id="tab3" aria-controls="dunkles">
+            <label for="tab3">Add new items / services</label>
+            <input type="radio" name="tabset" id="tab4" aria-controls="estimate">
+            <label for="tab4">Create a new estimate</label>
+
+            <div class="tab-panels">
+                <section id="marzen" class="tab-panel">
+                </section>
+                <section id="rauchbier" class="tab-panel">
+                    <ion-list lines="none">
+                        <ion-item>
+                            <ion-avatar slot="start">
+                                <ion-icon *ngIf="!companyProfile" name="square-outline"></ion-icon>
+                                <ion-icon *ngIf="companyProfile" name="checkbox-outline"></ion-icon>
+                            </ion-avatar>
+
+                            <ion-label>
+                                <ion-title color="theme"> It All Starts with Clients
+                                </ion-title>
+                                <br>
+                                <br>
+                                Get yourself up and running with clients for future invoicing and projects.
+                                <br>
+                                <br>
+                                <ion-button color="theme" (click)="onCreateClient()">Add a Client</ion-button>
+                                &nbsp;
+                            </ion-label>
+                        </ion-item>
+                    </ion-list>
+                </section>
+
+                <section id="dunkles" class="tab-panel">
+                    <ion-list lines="none">
+                        <ion-item>
+                            <ion-avatar slot="start">
+                                <ion-icon *ngIf="!companyProfile" name="square-outline"></ion-icon>
+                                <ion-icon *ngIf="companyProfile" name="checkbox-outline"></ion-icon>
+                            </ion-avatar>
+
+                            <ion-label>
+                                <ion-title color="theme"> Get Ready to Invoice </ion-title>
+                                <br>
+                                <br>
+                                Steamline billing your clients by adding items and services.
+                                <br>
+                                <br>
+                                <ion-button color="theme" (click)="onAddItem()">Add Items and Services</ion-button>
+                                &nbsp;
+                            </ion-label>
+                        </ion-item>
+                    </ion-list>
+                </section>
+
+                <section id="estimate" class="tab-panel">
+                    <ion-list lines="none">
+                        <ion-item>
+
+                            <ion-label>
+                                <ion-title color="theme"> Start Your First Estimate </ion-title>
+                                <br>
+                                <br>
+                                It's simple to create estimate. Add your logo, services and payment terms.
+                                <br>
+                                <br>
+                                <ion-button color="theme" (click)="onCreateEstimate()">Create an Estimate
+                                </ion-button>
+                                &nbsp;
+                            </ion-label>
+                        </ion-item>
+                    </ion-list>
+
+                </section>
+            </div>
+        </div> -->
+
+        <div style="height: 20px;"></div>
+
+        <div>
+            <ion-card style="box-shadow: none;">
+                <ion-card-header style="border: none;">
+                    <!-- <div class="bar-chart secondary" data-total="76" animated>
+                    <span class="bar-chart--inner" id="bar-chart-inner" style="width:56%;"></span>
+
+                </div> -->
+                    <ion-progress-bar style="border-radius: 0px; height: 25px; padding-bottom: 5px;" color="theme"
+                        value="{{totalProfit/totalReceivable}}">
+                    </ion-progress-bar>
+
+                </ion-card-header>
+                <ion-card-content style="border: none;">
+                    <ion-badge color="theme" style="padding: 5px; float: left">Paid</ion-badge>
+                    <ion-badge color=""
+                        style="padding: 5px; float: right; color:white; background: var(--buffer-background);">Unpaid
+                    </ion-badge>
+                </ion-card-content>
+            </ion-card>
+            <!-- {{totalProfit/totalReceivable}} -->
+
+            <div style="height: 20px;"></div>
+
+            <ion-row>
+                <ion-col>
+                    <ion-card>
+                        <ion-card-header>
+                            <h2>Total Profit</h2>
+
+                        </ion-card-header>
+                        <ion-card-content class="tag receipt">
+                            HKD $ {{totalProfit || 0}}
+                        </ion-card-content>
+                    </ion-card>
+                </ion-col>
+                <ion-col>
+                    <ion-card>
+                        <ion-card-header>
+                            <h2>Total Sales : </h2>
+                        </ion-card-header>
+                        <ion-card-content class="tag sale">
+                            HKD $ {{totalReceivable || 0}}
+                        </ion-card-content>
+                        <!-- <span></span> -->
+                    </ion-card>
+
+                </ion-col>
+            </ion-row>
+
+
+            <div style="height: 20px;"></div>
+
+
+            <!-- <ion-card>
+                <ion-card-header>
+                    Your Profit
+                </ion-card-header>
+                <ion-card-content>
+                    <div id="barChart" style="margin: 0 auto;"></div>
+                </ion-card-content>
+
+            </ion-card>
+
+            <div style="height: 20px;"></div>
+
+            <ion-card>
+                <ion-card-header>
+                    <h2>Your Top Expense</h2>
+                </ion-card-header>
+                <ion-card-content>
+                    <div id="pieChart" style="margin: 0 auto;"></div>
+                </ion-card-content>
+
+            </ion-card>
+
+            <div style="height: 20px;"></div>
+
+            <ion-card>
+                <ion-card-header>
+                    <h2></h2>
+                </ion-card-header>
+
+                <ion-card-content>
+                    <div id="barChart_" style="margin: 0 auto;"></div>
+                </ion-card-content>
+
+
+            </ion-card> -->
+
+            <div style="height: 20px;"></div>
+
+            <!-- <div class="flex-grid">
+                <div>
+                    <h2></h2>
+                    <div id="barChart_" style="margin: 0 auto;"></div>
+
+                </div>
+
+            </div> -->
+
+            <!-- <div class="">
+            <div>
+                <h2>Headline</h2>
+                <ngx-datatable [rows]="invoices" [ngClass]="tableStyle" [rowHeight]="auto" [headerHeight]="50"
+                    [columnMode]="'force'" [rowClass]="getRowClass.bind(this)" [limit]="10" [footerHeight]="50">
+                    <ngx-datatable-column sortable="true">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            DATE
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <div>{{row['Invoice Date']}}</div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column sortable="true">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            INVOICE#
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <div class="button" (click)="onDetailPage(row)">
+                                {{row['Invoice Number']}}
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column sortable="true">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            ORDER NUMBER
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{row['Estimate Number']}}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column sortable="true">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            CUSTOMER NAME
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{row['Customer Name']}}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column sortable="true">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            STATUS
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{row['Invoice Status']}}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column sortable="true">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            DUE DATE
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <div class="invoiced"></div>
+                            {{row['Due Date']}}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column sortable="true">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            AMOUNT
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            HKD {{row['Total']}}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column sortable="true">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            BALANCE DUE
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            HKD {{row['Balance']}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </div>
+        </div> -->
+
+        </div>
+    </main>
+
+    <app-global-banner></app-global-banner>
+
+</ion-content>
+<app-global-footer></app-global-footer>

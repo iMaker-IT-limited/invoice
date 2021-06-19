@@ -1,0 +1,44 @@
+.dropzone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  //  min-width: 100%;
+    max-width: 200px;
+    font-weight: 200;
+    height: 150px;
+    border: 2px dashed gray;
+    border-radius: 5px;
+    background: white;
+    margin: 10px 0;
+
+    &.hovering {
+        border: 2px solid var(--ion-color-theme);
+        color: #dadada !important;
+    }
+
+    .file-label {
+        font-size: 1.2em;
+        color: var(--ion-color-theme);
+    }
+
+    h3 {
+        color: var(--ion-color-theme);
+    }
+
+    p {
+        color: var(--ion-color-theme);
+    }
+}
+
+.dropzone:hover {
+    border: 2px dashed var(--ion-color-theme);
+    cursor: pointer;
+}
+progress::-webkit-progress-value {
+    transition: width 0.1s ease;
+}
+
+.icon {
+    width: 200px;
+}

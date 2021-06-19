@@ -1,0 +1,95 @@
+<app-header></app-header>
+<ion-content>
+    <ion-item-divider sticky>
+        <ion-title>New Customer</ion-title>
+        <ion-button fill="clear" color="theme" (click)="dismissModal()">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
+
+        <ion-button fill="clear" color="theme" (click)="readContact()">
+           Get
+        </ion-button>
+
+         <ion-button fill="clear" color="theme" (click)="updateContact()">
+           Update
+        </ion-button>
+
+         <ion-button fill="clear" color="theme" (click)="deleteContact()">
+           Delete
+        </ion-button>
+
+    </ion-item-divider>
+    
+    <ion-progress-bar color="theme" type="indeterminate"></ion-progress-bar>
+
+    <div class="testbox">
+        <form [formGroup]="createContactForm" (ngSubmit)="createContact()">
+            <h4>Customer Type<span>*</span></h4>
+            <div class="title-radio">
+                <input style="width: 40px;" type="radio" value="business" formControlName="type" />
+                <label for="banma">Business</label><br />
+                <input style="width: 40px;" type="radio" value="individual" formControlName="type" />
+                <label for="kokui">Individual</label>
+            </div>
+
+            <h4>Primary Contact<span>*</span></h4>
+            <div class="title-block">
+                <select formControlName="unit">
+                    <option value="Type">Salutation</option>
+                    <option value="Mr.">Mr.</option>
+                    <option value="Mrs.">Mrs.</option>
+                    <option value="Ms.">Ms.</option>
+                    <option value="Miss">Miss</option>
+                    <option value="Dr.">Dr.</option>
+                </select>
+            </div>
+
+            <div class="title-block">
+                <input type="text" name="first_name" placeholder="First Name" formControlName="first_name" />
+            </div>
+
+            <div class="title-block">
+                <input type="text" name="last_name" placeholder="Last Name" formControlName="last_name" />
+            </div>
+
+            <h4>Company Name</h4>
+            <div class="title-block">
+                <input type="text" name="company_name" placeholder="Company Name" formControlName="company_name" />
+            </div>
+
+            <h4 style="color: #e54643;">Customer Display Name <span>*</span></h4>
+            <div class="title-block">
+                <input type="text" name="customer_display_name" placeholder="Customer Name" formControlName="customer_display_name" />
+            </div>
+
+            <h4>Customer Email</h4>
+            <div class="title-block">
+                <input type="text" name="customer_email" placeholder="Customer Email" formControlName="customer_email" />
+            </div>
+
+            <h4>Customer Phone</h4>
+            <div class="title-block">
+                <input type="text" name="work_phone" placeholder="Work Phone" formControlName="work_phone" />
+            </div>
+
+            <div class="title-block">
+                <input type="text" name="mobile_phone" placeholder="Mobile" formControlName="mobile_phone" />
+            </div>
+
+            <h4>Website</h4>
+            <div class="title-block">
+                <input type="text" name="website" placeholder="Website" formControlName="website" />
+            </div>
+
+            <h4>Description</h4>
+            <div class="title-block">
+                <textarea rows="5" formControlName="description"></textarea>
+            </div>
+
+            <div class="btn-block">
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+
+</ion-content>

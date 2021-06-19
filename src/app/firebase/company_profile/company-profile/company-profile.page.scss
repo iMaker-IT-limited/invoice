@@ -1,0 +1,616 @@
+
+
+// h1,
+// h4 {
+// 	margin: 15px 0 4px;
+// 	font-weight: 400;
+// }
+
+// h4 {
+// 	font-size: 13px;
+// 	margin: 20px 0 4px;
+// 	font-weight: 400;
+// }
+
+pre {
+	white-space: pre-wrap;
+	font-size: 0.75em;
+  color: black;
+  line-height: 1.2em;
+	width: 45%;
+}
+// span {
+// //	color: red;
+// }
+
+// .small {
+// 	font-size: 10px;
+// 	line-height: 18px;
+// }
+
+.testbox {
+	//display: flex;
+	justify-content: center;
+	align-items: center;
+	height: inherit;
+	padding: 0px;
+}
+
+form {
+	width: 100%;
+	padding: 20px;
+//	background: #fff;
+//	box-shadow: 0 2px 5px var(--ion-color-theme);
+box-shadow: none;
+}
+input {
+	width: calc(100% - 10px);
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	vertical-align: middle;
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+	outline: none;
+	border: 1px solid #095484;
+	background: #e6eef7;
+}
+
+.title-block select,
+.title-block input {
+	margin-bottom: 10px;
+}
+
+select {
+	padding: 7px 0;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+	background: transparent;
+}
+
+select,
+table {
+	width: 100%;
+}
+
+option {
+	background: #fff;
+}
+
+.day-visited,
+.time-visited {
+	position: relative;
+}
+
+input[type="date"]::-webkit-inner-spin-button {
+	display: none;
+}
+
+input[type="time"]::-webkit-inner-spin-button {
+	margin: 2px 22px 0 0;
+}
+
+.day-visited i,
+.time-visited i,
+input[type="date"]::-webkit-calendar-picker-indicator {
+	position: absolute;
+	top: 8px;
+	font-size: 20px;
+}
+
+.day-visited i,
+.time-visited i {
+	right: 5px;
+	z-index: 1;
+	color: #a9a9a9;
+}
+
+[type="date"]::-webkit-calendar-picker-indicator {
+	right: 0;
+	z-index: 2;
+	opacity: 0;
+}
+
+.question-answer label {
+	display: block;
+	padding: 0 20px 10px 0;
+}
+
+.question-answer input {
+	width: auto;
+	margin-top: -2px;
+}
+
+th,
+td {
+	width: 18%;
+	padding: 15px 0;
+	border-bottom: 1px solid #ccc;
+  color: black;
+	text-align: center;
+	vertical-align: unset;
+	line-height: 18px;
+	font-weight: 400;
+	word-break: break-all;
+}
+
+.first-col {
+	width: 25%;
+	text-align: left;
+}
+
+textarea {
+	width: calc(100% - 6px);
+}
+
+.btn-block {
+	margin-top: 20px;
+	text-align: center;
+}
+
+button {
+	width: 150px;
+	padding: 10px;
+	border: none;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background-color: #095484;
+	font-size: 16px;
+	color: #fff;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #0666a3;
+}
+
+@media (min-width: 568px) {
+	.title-radio {
+		display: inline-flex;
+		padding-top: 15px;
+		justify-content: end;
+	}
+	.title-block {
+		display: inline;
+		margin-left: 15px;
+		margin-right: 15px;
+		justify-content: space-between;
+	}
+	.title-block select {
+		width: 92%;
+		margin-bottom: 0;
+	}
+	.title-block input {
+		width: 92%;
+		margin-bottom: 0;
+	}
+	th,
+	td {
+		word-break: keep-all;
+	}
+}
+
+.service {
+	position: static;
+	margin-top: 0;
+	margin-right: .3125rem;
+	margin-left: 0;
+	justify-content: space-between;
+	display: inline-flex;
+	align-items: center;
+	padding-left: 0;
+	margin-right: .75rem;
+}
+
+label {
+	line-height: 1 !important;
+}
+
+/*
+ CSS for the main interaction / tabset
+*/
+
+.tabset {
+ // position: fixed;
+ position: relative;
+}
+.tabset > input[type="radio"] {
+  position: absolute;
+  left: -200vw;
+}
+
+.tabset .tab-panel {
+  display: none;
+}
+
+// .tab-panels {
+// 	width: 50%;
+// }
+.tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
+.tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),
+.tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),
+.tabset > input:nth-child(7):checked ~ .tab-panels > .tab-panel:nth-child(4),
+.tabset > input:nth-child(9):checked ~ .tab-panels > .tab-panel:nth-child(5),
+.tabset > input:nth-child(11):checked ~ .tab-panels > .tab-panel:nth-child(6) {
+  display: block;
+}
+
+.tabset > label {
+  position: relative;
+  display: inline-block;
+  padding: 15px 15px 25px;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tabset > label::after {
+  content: "";
+  position: absolute;
+  left: 15px;
+  bottom: 10px;
+  width: 22px;
+  height: 4px;
+  background: #8d8d8d;
+}
+
+.tabset > label:hover,
+.tabset > input:focus + label {
+  color: var(--ion-color-theme);
+}
+
+.tabset > label:hover::after,
+.tabset > input:focus + label::after,
+.tabset > input:checked + label::after {
+  background: var(--ion-color-theme);
+}
+
+.tabset > input:checked + label {
+  border-color: none;
+ // border-bottom: 1px solid #fff;
+ border-bottom: none;
+  margin-bottom: -1px;
+}
+
+.tab-panel {
+  padding: 30px 0;
+  border-top: 1px solid #ccc;
+}
+
+/*
+ Demo purposes only
+*/
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+
+.tabset {
+// max-width: 65em;
+}
+
+// end of tabs
+
+
+.header {
+	height: 50px;
+}
+
+.input[_ngcontent-rbp-c16] {
+	background: var(--ion-color-theme);
+	border: none;
+}
+
+// alert 
+
+// invoice template
+
+
+::selection {background: #f31544; color: #FFF;}
+::moz-selection {background: #f31544; color: #FFF;}
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.col-left {
+    float: left;
+}
+.col-right {
+    float: right;
+}
+h1{
+  font-size: 1.5em;
+  color: #444;
+}
+h2{font-size: .9em;}
+h3{
+  font-size: 1.2em;
+  font-weight: 300;
+  line-height: 2em;
+}
+p{
+ // font-size: .75em;
+  color: #666;
+  line-height: 1.2em;
+}
+a {
+    text-decoration: none;
+    color: #00a63f;
+}
+
+#invoiceholder{
+  width:100%;
+  height: 100%;
+ // padding: 50px 0;
+}
+#invoice{
+  position: relative;
+  margin: 0 auto;
+ // width: 700px;
+  background: #FFF;
+}
+
+[id*='invoice-']{ /* Targets all id with 'col-' */
+/*  border-bottom: 1px solid #EEE;*/
+  padding: 20px;
+}
+
+#invoice-top{border-bottom: 2px solid #00a63f;}
+#invoice-mid{min-height: 110px;}
+#invoice-bot{ min-height: 240px;}
+
+.logo{
+    display: inline-block;
+    vertical-align: middle;
+	width: 110px;
+    overflow: hidden;
+}
+.info{
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 20px;
+}
+.logo img,
+.clientlogo img {
+    width: 100%;
+}
+.clientlogo{
+    display: inline-block;
+    vertical-align: middle;
+	width: 50px;
+}
+.clientinfo {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 20px
+}
+.title{
+  float: right;
+}
+.title p{
+	text-align: right;
+}
+#message{margin-bottom: 30px; display: block;}
+h2 {
+    margin-bottom: 5px;
+    color: lightgray;
+}
+.col-right td {
+    color: lightgray;
+    padding: 5px 8px;
+    border: 0;
+    font-size: 0.75em;
+ //   border-bottom: 1px solid #eeeeee;
+}
+.col-right td label {
+    margin-left: 5px;
+    font-weight: 600;
+    color: lightgray;
+}
+.cta-group a {
+    display: inline-block;
+    padding: 7px;
+    border-radius: 4px;
+    background: rgb(196, 57, 10);
+    margin-right: 10px;
+    min-width: 100px;
+    text-align: center;
+    color: #fff;
+    font-size: 0.75em;
+}
+.cta-group .btn-primary {
+    background: #00a63f;
+}
+.cta-group.mobile-btn-group {
+    display: none;
+}
+table{
+  width: 100%;
+  border-collapse: collapse;
+}
+td{
+    padding: 10px;
+    border-bottom: 1px solid #cccaca;
+    font-size: 0.70em;
+    text-align: left;
+}
+
+.tabletitle th {
+  border-bottom: 2px solid #ddd;
+  text-align: right;
+}
+.tabletitle th:nth-child(2) {
+    text-align: left;
+}
+th {
+    font-size: 0.7em;
+    text-align: left;
+    padding: 5px 10px;
+}
+.item{width: 50%;}
+.list-item td {
+    text-align: right;
+}
+.list-item td:nth-child(2) {
+    text-align: left;
+}
+.total-row th,
+.total-row td {
+    text-align: right;
+    font-weight: 700;
+    font-size: .75em;
+    border: 0 none;
+}
+.table-main td, .table-main th{
+  border: 1px solid darkgray;
+  padding: 8px;
+}
+footer {
+    border-top: 1px solid #eeeeee;;
+    padding: 15px 20px;
+}
+.effect2
+{
+  position: relative;
+}
+.effect2:before, .effect2:after
+{
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 15px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width:300px;
+  background: #777;
+  -webkit-box-shadow: 0 15px 10px #777;
+  -moz-box-shadow: 0 15px 10px #777;
+  box-shadow: 0 15px 10px #777;
+  -webkit-transform: rotate(-3deg);
+  -moz-transform: rotate(-3deg);
+  -o-transform: rotate(-3deg);
+  -ms-transform: rotate(-3deg);
+  transform: rotate(-3deg);
+}
+.effect2:after
+{
+  -webkit-transform: rotate(3deg);
+  -moz-transform: rotate(3deg);
+  -o-transform: rotate(3deg);
+  -ms-transform: rotate(3deg);
+  transform: rotate(3deg);
+  right: 10px;
+  left: auto;
+}
+@media screen and (max-width: 767px) {
+    h1 {
+        font-size: .9em;
+    }
+    #invoice {
+        width: 100%;
+    }
+    #message {
+        margin-bottom: 20px;
+    }
+    [id*='invoice-'] {
+        padding: 20px 10px;
+    }
+    .logo {
+        width: 140px;
+    }
+    .title {
+        float: none;
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 40px;
+    }
+    .title p {
+        text-align: left;
+    }
+    .col-left,
+    .col-right {
+        width: 100%;
+    }
+    .table {
+        margin-top: 20px;
+    }
+    #table {
+        white-space: nowrap;
+        overflow: auto;
+    }
+    td {
+        white-space: normal;
+    }
+    .cta-group {
+        text-align: center;
+    }
+    .cta-group.mobile-btn-group {
+        display: block;
+        margin-bottom: 20px;
+    }
+     /*==================== Table ====================*/
+    .table-main {
+        border: 0 none;
+    }  
+      .table-main thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+      }
+      .table-main tr {
+        border-bottom: 2px solid #eee;
+        display: block;
+        margin-bottom: 20px;
+      }
+      .table-main td {
+        font-weight: 700;
+        display: block;
+        padding-left: 40%;
+        max-width: none;
+        position: relative;
+        border: 1px solid #cccaca;
+        text-align: left;
+      }
+      .table-main td:before {
+        /*
+        * aria-label has no advantage, it won't be read inside a table
+        content: attr(aria-label);
+        */
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        font-weight: normal;
+        text-transform: uppercase;
+      }
+    .total-row th {
+        display: none;
+    }
+    .total-row td {
+        text-align: left;
+    }
+    footer {text-align: center;}
+}
+
+.list-item {
+     position: relative; 
+    /* z-index: 999; */
+}
+
+legend {
+  font-size: smaller;
+  white-space: nowrap;
+}

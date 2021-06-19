@@ -1,0 +1,191 @@
+<app-header></app-header>
+<ion-content>
+    <ion-item-divider sticky>
+        <ion-title class="title" (click)="showSideNav(sideNavInvoice = !sideNavInvoice)">
+            All Credit Notes {{sideNavInvoice}}
+        </ion-title>
+        <!-- <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice">
+            <ion-icon name="print"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" fill="clear" color="theme" (click)="testtablePDF(result)">
+            <ion-icon src="assets/icon/pdf.svg"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" fill="solid" color="theme" (click)="testtablePDF(result)">Convert to Open </ion-button> -->
+        <ion-button slot="end" fill="clear" color="dark" (click)="onDismiss()">
+            <ion-icon name="close"></ion-icon>
+        </ion-button>
+    </ion-item-divider>
+    <ion-progress-bar color="theme" type="indeterminate"></ion-progress-bar>
+
+    <div class="grid-container" id="grid-container2">
+        <aside class="sidenav" id="sidenav">
+            <ul *ngFor="let i of quotesData" class="sidenav__list">
+                <li class="sidenav__list-item">
+                    <input type="checkbox" style="padding-right: 10px;" />
+                    <ion-label style="margin-bottom: 10px; color: black;">
+                        {{i['Customer Name']}}
+                    </ion-label>
+                    <br />
+                    <div class="estimatenumber">
+                        {{i['Estimate Number']}}
+                    </div>
+                    <div class="estimatedate">
+                        | {{i['Estimate Date']}}
+                    </div>
+                    <div class="status">
+                        {{i['Estimate Status']}}
+                    </div>
+                </li>
+            </ul>
+        </aside>
+        <header class="header">
+            <ion-title>{{result["Credit Note Number"]}}</ion-title>
+            <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice">
+                <ion-icon src="assets/icon/edit.svg"></ion-icon>
+            </ion-button>
+
+            <ion-button slot="end" fill="clear" color="theme" (click)="testtablePDF(result)">
+                <ion-icon src="assets/icon/pdf.svg"></ion-icon>
+            </ion-button>
+
+            <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice">
+                <ion-icon name="print"></ion-icon>
+            </ion-button>
+
+            <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice">
+                <ion-icon name="mail"></ion-icon>
+            </ion-button>
+
+            <ion-button slot="end" fill="clear" color="theme" (click)="testtablePDF(result)">
+                <ion-icon src="assets/icon/paperclip.svg"></ion-icon>
+            </ion-button>
+
+            <ion-button slot="end" fill="solid" color="theme" (click)="testtablePDF(result)">Delete </ion-button>
+        </header>
+        <main class="main">
+            <div class="main-header">
+                <ul>
+                    <li>
+                        <p>
+                            26 Nov 2020 06:41 PM
+                        </p>
+                        <ion-icon name="document"></ion-icon>
+                        Estimate updated. Amount changed from HKD82,000.00 to HKD102,000.00 by iMaker
+                    </li>
+                    <li>
+                        <p>
+                            26 Nov 2020 06:41 PM
+                        </p>
+                        <ion-icon name="document"></ion-icon>
+                        Estimate updated. Amount changed from HKD82,000.00 to HKD102,000.00 by iMaker
+                    </li>
+                    <li>
+                        <p>
+                            26 Nov 2020 06:41 PM
+                        </p>
+                        <ion-icon name="document"></ion-icon>
+                        Estimate updated. Amount changed from HKD82,000.00 to HKD102,000.00 by iMaker
+                    </li>
+                </ul>
+            </div>
+            <div id="invoice">
+                <div class="ribbon">
+                    <div class="wrap">
+                        <span class="ribbon6">Invoiced</span>
+
+                        <ion-card class="invoice overflow-auto">
+                            <table id="billto">
+                                <tr colspan="3">
+                                    <td>
+                                        <img src="./../../../../assets/images/home_categories/ionInvoice.svg" alt="" />
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Bill To:</td>
+                                    <td></td>
+                                    <td>
+                                        Sales Invoices <br />
+                                        <!-- {{result["Estimate Number"]}} -->
+                                        {{result["Invoice Number"]}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Customer name: {{result['Customer Name']}}</td>
+                                    <td></td>
+                                    <td>Estimate Date: {{result["Estimate Date"]}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Billing Address: {{result['Billing Address']}}</td>
+                                    <td></td>
+                                    <td>Expiry Date: {{result["Expiry Date"]}}</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Sales person: {{result["Sales person"]}}</td>
+                                </tr>
+                                <!-- <tr><td></td><td></td><td></td></tr> -->
+                            </table>
+                            <table id="my-table">
+                                <tr>
+                                    <th>#</th>
+                                    <th>DESCRIPTION</th>
+                                    <th>UNIT PRICE({{result["Currency Code"]}})</th>
+                                    <th>UNIT(S)</th>
+                                    <th>TOTAL({{result["Currency Code"]}})</th>
+                                </tr>
+                                <tr>
+                                    <td class="no">01</td>
+                                    <td class="text-left">
+                                        <h3>{{result["Item Name"]}}</h3>
+                                        <pre style="white-space: pre-wrap;">
+                                {{result["Item Desc"]}}
+                                        </pre>
+                                    </td>
+                                    <td class="unit">{{result["Item Price"]}}</td>
+                                    <td class="qty">{{result["Quantity"]}}</td>
+                                    <td class="total">{{result["Item Total"]}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2">SUBTOTAL</td>
+                                    <td>${{result["SubTotal"]}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2">TAX 25%</td>
+                                    <td>$1,300.00</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2">GRAND TOTAL</td>
+                                    <td>${{result["Total"]}}</td>
+                                </tr>
+                            </table>
+                            <table id="notices">
+                                <tr>
+                                    <th>Terms & Conditions:</th>
+                                </tr>
+                                <tr>
+                                    <td class="notice">
+                                        <pre style="white-space: pre-wrap;">
+{{result['Terms & Conditions'].toString()}}
+
+                                        </pre>
+                                    </td>
+                                </tr>
+                            </table>
+                            <footer>
+                                Powered by i-Maker IT Limited
+                            </footer>
+                        </ion-card>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+        </main>
+    </div>
+</ion-content>

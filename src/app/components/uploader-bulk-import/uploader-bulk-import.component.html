@@ -1,0 +1,19 @@
+<div class="dropzone" dropzone (hovered)="toggleHover($event)" (dropped)="onDrop($event)" [class.hovering]="isHovering">
+
+  <img class="icon" src="./../../../assets/images/home_categories/ionInvoice.svg" alt="">
+  <!-- Drag and Drop a File -->
+  <br>
+  <!-- Upload File {{id}} -->
+  <h1>Step 2. Drag a file here</h1>
+  <h1 style="color: var(--ion-color-theme)">.csv file only</h1>
+</div>
+
+<div *ngIf="files.length > 0">
+  <!-- <ion-label>上載</ion-label> -->
+</div>
+<!-- {{files | json}} -->
+<ion-list *ngFor="let file of files">
+  <ion-item>
+    <app-upload-task-bulk-import [file]="file" [id]="id"></app-upload-task-bulk-import>
+  </ion-item>
+</ion-list>

@@ -1,0 +1,738 @@
+<ion-header>
+  <ion-toolbar class="header">
+    <ion-title color="theme">Company Profile</ion-title>
+
+    <ion-button fill="clear" slot="end" color="theme" (click)="dismissModal()">
+      <ion-icon name="close"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+
+  <!-- <ion-item-divider sticky>
+    <ion-title>New Customer</ion-title>
+    <ion-button fill="clear" color="theme" (click)="dismissModal()">
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+
+    <ion-button fill="clear" color="theme" (click)="readContact()">
+      Get
+    </ion-button>
+
+    <ion-button fill="clear" color="theme" (click)="updateContact()">
+      Update
+    </ion-button>
+
+    <ion-button fill="clear" color="theme" (click)="deleteContact()">
+      Delete
+    </ion-button>
+
+  </ion-item-divider>
+
+  <ion-progress-bar color="theme" type="indeterminate"></ion-progress-bar> -->
+
+  <ion-row>
+
+    <ion-col size="7">
+
+      <ion-card>
+        <div class="tabset">
+          <!-- Tab 1 -->
+          <input type="radio" name="tabset" id="tab11" aria-controls="a" checked>
+          <label for="tab11">Set up Company detail</label>
+          <!-- Tab 2 -->
+          <input type="radio" name="tabset" id="tab22" aria-controls="b">
+          <label for="tab22">Terms and Conditions</label>
+          <!-- Tab 3 -->
+          <input type="radio" name="tabset" id="tab33" aria-controls="c">
+          <label for="tab33">Customer Notes</label>
+
+          <input type="radio" name="tabset" id="tab44" aria-controls="d">
+          <label for="tab44">Custom Logistic Info</label>
+          <div class="tab-panels">
+
+            <section id="a" class="tab-panel">
+
+              <!-- <div style="padding: 20px;">
+            <app-uploader [id]="uid"></app-uploader>
+          </div> -->
+
+              <div class="testbox">
+
+                <form [formGroup]="createCompanyProfileForm" (ngSubmit)="createCompanyProfile()">
+
+
+
+                  <legend>Company Logo</legend>
+                  <p>
+                    <input type="file" name="file" id="file" class="inputfile" (change)="onChange($event)" />
+                  </p>
+                  <!-- <div *ngIf="myimage">
+                      <img [src]="myimage | async" width="200px" height="200px" alt="">
+                    </div> -->
+
+
+                  <!-- <h4>Customer Type<span>*</span></h4>
+              <div class="title-radio">
+                <input style="width: 40px;" type="radio" value="business" formControlName="type" />
+                <label for="banma">Business</label><br />
+                <input style="width: 40px;" type="radio" value="individual" formControlName="type" />
+                <label for="kokui">Individual</label>
+              </div> -->
+
+                  <!-- <h4>Primary Contact<span>*</span></h4>
+              <div class="title-block">
+                <select formControlName="unit">
+                  <option value="Type">Salutation</option>
+                  <option value="Mr.">Mr.</option>
+                  <option value="Mrs.">Mrs.</option>
+                  <option value="Ms.">Ms.</option>
+                  <option value="Miss">Miss</option>
+                  <option value="Dr.">Dr.</option>
+                </select>
+              </div> -->
+
+                  <legend>Address</legend>
+                  <p>
+                    <input type="text" name="address" placeholder="Address" formControlName="address" />
+                  </p>
+
+                  <legend>Company Name</legend>
+                  <p>
+                    <input type="text" name="company_name" placeholder="Company Name" formControlName="company_name" />
+                  </p>
+
+                  <legend>Company Email</legend>
+                  <p>
+                    <input type="email" name="company_email" placeholder="Company Eamil"
+                      formControlName="company_email" />
+                  </p>
+
+                  <legend>Website</legend>
+                  <p>
+                    <input type="text" name="website" placeholder="website" formControlName="website" />
+                  </p>
+
+                  <legend>Phone</legend>
+                  <p>
+                    <input type="text" name="work_phone" placeholder="Work Phone" formControlName="work_phone" />
+                  </p>
+
+                  <div class="btn-block">
+                    <button type="submit">Save</button>
+                  </div>
+                </form>
+
+              </div>
+
+            </section>
+
+            <section id="b" class="tab-panel">
+              <div class="testbox">
+
+                <form [formGroup]="createTermsandConditionsForm" (ngSubmit)="createTermsandConditions()">
+                  <legend>Terms and Conditions</legend>
+                  <p>
+                    <ion-textarea rows="6" class="form-control" formControlName="termsandconditions"
+                      placeholder="Enter the terms and conditions of your business that will displayed in your transaction">
+                    </ion-textarea>
+                  </p>
+
+                  <div class="btn-block">
+                    <button type="submit">Save</button>
+                  </div>
+                </form>
+
+              </div>
+            </section>
+            <section id="c" class="tab-panel">
+              <div class="testbox">
+
+                <form [formGroup]="createCustomerNotesForm" (ngSubmit)="createCustomerNotes()">
+                  <legend>Custom Notes</legend>
+                  <p>
+                    <ion-textarea rows="6" class="form-control" formControlName="customernotes"
+                      placeholder="Customer notes">
+                    </ion-textarea>
+
+                  </p>
+
+
+                  <div class="btn-block">
+                    <button type="submit">Save</button>
+                  </div>
+                </form>
+
+              </div>
+            </section>
+
+            <section id="d" class="tab-panel">
+
+              <div class="testbox">
+
+                <form [formGroup]="createLogisticCompanyProfileForm" (ngSubmit)="createLogisticCompanyProfile()">
+
+                  <legend>Shipper</legend>
+                  <p>
+                    <input type="text" name="shipper" id="shipper" placeholder="Shipper" formControlName="shipper" />
+                  </p>
+
+                  <legend>Consignee</legend>
+                  <p>
+                    <input type="text" name="consignee" placeholder="Consignee" formControlName="consignee" />
+                  </p>
+
+                  <legend>Port of Loading</legend>
+                  <p>
+                    <input type="text" name="port_of_loading" placeholder="Port of Loading"
+                      formControlName="port_of_loading" />
+                  </p>
+
+                  <legend>Port of Discharge</legend>
+                  <p>
+                    <input type="text" name="port_of_discharge" placeholder="Port of Discharge"
+                      formControlName="port_of_discharge" />
+                  </p>
+
+                  <legend>HBL</legend>
+                  <p>
+                    <input type="text" name="HBL" placeholder="HBL" formControlName="HBL" />
+                  </p>
+
+                  <legend>MBL</legend>
+                  <p>
+                    <input type="text" name="MBL" placeholder="MBL" formControlName="MBL" />
+                  </p>
+
+                  <legend>Carriage by</legend>
+                  <p>
+                    <input type="text" name="carriage_by" placeholder="Carriage by" formControlName="carriage_by" />
+                  </p>
+
+                  <legend>Vessel</legend>
+                  <p>
+                    <input type="text" name="vessel" placeholder="vessel" formControlName="vessel" />
+                  </p>
+
+                  <legend>Container</legend>
+                  <p>
+                    <input type="text" name="container" placeholder="Container" formControlName="container" />
+                  </p>
+
+                  <legend>Date of order</legend>
+                  <p>
+                    <input type="text" name="date_of_order" placeholder="Date of order"
+                      formControlName="date_of_order" />
+                  </p>
+
+                  <legend>Your Reference</legend>
+                  <p>
+                    <input type="text" name="your_reference" placeholder="Your Reference"
+                      formControlName="your_reference" />
+                  </p>
+
+                  <legend>Terms of delivery</legend>
+                  <p>
+                    <input type="text" name="terms_of_delivery" placeholder="Terms of delivery"
+                      formControlName="terms_of_delivery" />
+                  </p>
+
+                  <legend>Marks/No.</legend>
+                  <p>
+                    <input type="text" name="marks" placeholder="" formControlName="marks_no" />
+                  </p>
+
+                  <legend>Pieces</legend>
+                  <p>
+                    <input type="text" name="pieces" placeholder="" formControlName="pieces" />
+                  </p>
+
+                  <legend>Packaging</legend>
+                  <p>
+                    <input type="text" name="packaging" placeholder="packaging" formControlName="packaging" />
+                  </p>
+
+                  <legend>Description of goods</legend>
+                  <p>
+                    <input type="text" name="description_of_goods" placeholder=""
+                      formControlName="description_of_goods" />
+                  </p>
+
+                  <legend>Weight(kgs)</legend>
+                  <p>
+                    <input type="text" name="weight" placeholder="" formControlName="weight" />
+                  </p>
+
+                  <legend>cbm</legend>
+                  <p>
+                    <input type="text" name="cbm" placeholder="cbm" formControlName="cbm" />
+                  </p>
+
+                  <div class="btn-block">
+                    <button type="submit">Save</button>
+                  </div>
+                </form>
+
+              </div>
+
+            </section>
+          </div>
+
+
+
+        </div>
+      </ion-card>
+
+    </ion-col>
+
+    <ion-col size="5">
+
+      <ion-card style="overflow-x: scroll;">
+        <div id="invoiceholder">
+          <div id="invoice" class="effect2">
+
+            <div id="invoice-top">
+              <div class="logo">
+                <img [src]="base64Image" alt="">
+              </div>
+              <div class="title" style="filter:blur(4px);">
+                <h1>Invoice #<span class="invoiceVal invoice_num">tst-inv-23</span></h1>
+                <p>Invoice Date: <span id="invoice_date">01 Feb 2018</span><br>
+                  GL Date: <span id="gl_date">23 Feb 2018</span>
+                </p>
+              </div>
+              <!--End Title-->
+            </div>
+            <!--End InvoiceTop-->
+
+
+            <div id="invoice-mid">
+              <!-- <div id="message">
+              <h2>Hello Andrea De Asmundis,</h2>
+              <p>An invoice with invoice number #<span id="invoice_num">tst-inv-23</span> is created for <span
+                  id="supplier_name"> {{company_name || 0}}</span> which is 100% matched with PO and is waiting for your
+                approval. <a href="javascript:void(0);">Click here</a> to login to view the invoice.</p>
+            </div> -->
+
+              <div class="clearfix">
+                <div class="col-left">
+                  <!-- <div class="clientlogo">
+                  <img [src]="base64Image" alt="">
+                </div> -->
+
+                  <div *ngIf="companyprofile" class="clientinfo">
+                    <h2 id="supplier">{{company_name}}</h2>
+                    <p>
+                      <span id="address"></span>
+                      <br>
+                      <span id="city">
+                        {{companyaddress}}</span>
+                      <br>
+                      <span id="country">
+
+                      </span>
+                      <span id="zip">
+                        {{companyemail}}
+                      </span>
+                      <br>
+                      <span id="tax_num">
+                        555-555-5555
+                      </span>
+                      <br>
+                    </p>
+                    <p> {{website}}</p>
+                  </div>
+
+                  <div *ngIf="!companyprofile" class="clientinfo">
+                    <h2 id="supplier">
+                      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                    </h2>
+                    <p>
+                      <span id="address"></span>
+                      <br>
+                      <span id="city">
+                        <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                      </span>
+                      <br>
+                      <span id="country">
+
+                      </span>
+                      <span id="zip">
+                        <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                      </span>
+                      <br>
+                      <span id="tax_num">
+                        <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                      </span>
+                      <br>
+                    </p>
+                    <p>
+                      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                    </p>
+                  </div>
+
+                </div>
+                <!-- <div class="col-right">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td><span>Invoice Total</span><label id="invoice_total">61.2</label></td>
+                      <td><span>Currency</span><label id="currency">EUR</label></td>
+                    </tr>
+                    <tr>
+                      <td><span>Payment Term</span><label id="payment_term">60 gg DFFM</label></td>
+                      <td><span>Invoice Type</span><label id="invoice_type">EXP REP INV</label></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><span>Note</span>#<label id="note">None</label></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div> -->
+              </div>
+            </div>
+            <!--End Invoice Mid-->
+
+            <div *ngIf="companylogisticprofile" id="invoice-bot">
+
+              <div id="table">
+                <table class="table-main" style="filter:blur(0px);">
+                  <tr>
+                    <td colspan="4">
+                      <legend>Shipper</legend>
+                      {{shipper}}
+
+                    </td>
+                    <td colspan="4">
+                      <legend>Consignee</legend>
+                      {{consignee}}
+
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="2">
+                      <legend>Port of Loading</legend>{{port_of_loading}}
+
+                    </td>
+                    <td colspan="2">
+                      <legend>Port of Discharge</legend>{{port_of_discharge}}
+                    </td>
+                    <td colspan="2">
+                      <legend>HBL</legend>{{HBL}}
+                    </td>
+                    <td colspan="1">
+                      <legend>MBL</legend>{{MBL}}
+                    </td>
+                    <td colspan="1">
+                      <legend>Carriage by</legend>{{carriage_by}}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="2">
+                      <legend>Vessel</legend>
+                      {{vessel}}
+                    </td>
+                    <td colspan="6">
+                      <legend>Container</legend>{{container}}
+                    </td>
+
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      <legend>Date of order</legend>{{date_of_order}}
+                    </td>
+                    <td colspan="4">
+                      <legend>Your Reference</legend>{{your_reference}}
+                    </td>
+                    <td colspan="2">
+                      <legend>Terms of delivery</legend>{{terms_of_delivery}}
+                    </td>
+
+                  </tr>
+
+                </table>
+
+                <br>
+                <table class="table-main">
+                  <tr>
+                    <td colspan="2">
+                      <legend>Marks/ No.</legend>
+                    </td>
+                    <td colspan="1">
+                      <legend>Pieces</legend>
+                    </td>
+                    <td colspan="1">
+                      <legend>Packaging</legend>
+                    </td>
+                    <td colspan="2">
+                      <legend>Description of goods</legend>
+                    </td>
+                    <td colspan="1">
+                      <legend>Weights</legend>
+                    </td>
+                    <td colspan="1">
+                      <legend>cbm</legend>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="2">
+                      {{marks_no}}
+                    </td>
+                    <td colspan="1">
+                      {{pieces}}
+                    </td>
+                    <td colspan="1">
+                      {{packaging}}
+                    </td>
+                    <td colspan="2">
+                      {{description_of_goods}}
+                    </td>
+                    <td colspan="1">
+                      {{weight}}
+                    </td>
+                    <td colspan="1">
+                      {{cbm}}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <!--End Table-->
+
+            </div>
+
+            <div *ngIf="!companylogisticprofile" id="invoice-bot">
+
+              <div id="table">
+                <table class="table-main" style="filter:blur(0px);">
+                  <tr>
+                    <td colspan="4">
+                      <legend>Shipper</legend>
+                      <ion-skeleton-text animated style="width: 20px"></ion-skeleton-text>
+                    </td>
+                    <td colspan="4">
+                      <legend>Consignee</legend>
+                      <ion-skeleton-text animated style="width: 20px"></ion-skeleton-text>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="2">
+                      <legend>Port of Loading</legend>
+                      <ion-skeleton-text *ngIf="!port_of_loading" animated style="width: 20px"></ion-skeleton-text>
+
+                    </td>
+                    <td colspan="2">
+                      <legend>Port of Discharge</legend>
+                      <ion-skeleton-text *ngIf="!port_of_discharge" animated style="width: 20px"></ion-skeleton-text>
+                    </td>
+                    <td colspan="2">
+                      <legend>HBL</legend>
+                      <ion-skeleton-text *ngIf="!HBL" animated style="width: 20px">
+                      </ion-skeleton-text>
+                    </td>
+                    <td colspan="1">
+                      <legend>MBL</legend>
+                      <ion-skeleton-text *ngIf="!MBL" animated style="width: 20px">
+                      </ion-skeleton-text>
+                    </td>
+                    <td colspan="1">
+                      <legend>Carriage by</legend>
+                      <ion-skeleton-text *ngIf="!carriage_by" animated style="width: 20px">
+                      </ion-skeleton-text>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      <legend>Vessel</legend>
+                      <ion-skeleton-text *ngIf="!vessel" animated style="width: 20px">
+                      </ion-skeleton-text>
+                    </td>
+                    <td colspan="6">
+                      <legend>Container</legend>
+                      <ion-skeleton-text *ngIf="!container" animated style="width: 20px">
+                      </ion-skeleton-text>
+                    </td>
+
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      <legend>Date of order</legend>
+                      <ion-skeleton-text *ngIf="!date_of_order" animated style="width: 20px">
+                      </ion-skeleton-text>
+                    </td>
+                    <td colspan="4">
+                      <legend>Your Reference</legend>
+                      <ion-skeleton-text *ngIf="!your_reference" animated style="width: 20px">
+                      </ion-skeleton-text>
+                    </td>
+                    <td colspan="2">
+                      <legend>Terms of delivery</legend>
+                      <ion-skeleton-text *ngIf="!terms_of_delivery" animated style="width: 20px">
+                      </ion-skeleton-text>
+                    </td>
+
+                  </tr>
+
+                </table>
+
+                <br>
+
+                <table class="table-main">
+                  <tr>
+                    <td colspan="2">
+                      <legend>Marks/ No.</legend>
+                    </td>
+                    <td colspan="1">
+                      <legend>Pieces</legend>
+                    </td>
+                    <td colspan="1">
+                      <legend>Packaging</legend>
+                    </td>
+                    <td colspan="2">
+                      <legend>Description of goods</legend>
+                    </td>
+                    <td colspan="1">
+                      <legend>Weights</legend>
+                    </td>
+                    <td colspan="1">
+                      <legend>cbm</legend>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="2">
+                      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                    </td>
+                    <td colspan="1">
+                      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                    </td>
+                    <td colspan="1">
+                      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                    </td>
+                    <td colspan="2">
+                      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                    </td>
+                    <td colspan="1">
+                      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                    </td>
+                    <td colspan="1">
+                      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                    </td>
+                  </tr>
+                </table>
+
+              </div>
+              <!--End Table-->
+
+            </div>
+
+            <div id="invoice-bot">
+
+              <div id="table">
+                <table class="table-main" style="filter:blur(4px);">
+                  <thead>
+                    <tr class="tabletitle">
+                      <th>Type</th>
+                      <th>Description</th>
+                      <th>Quantity</th>
+                      <th>Unit Price</th>
+                      <th>Taxable Amount</th>
+                      <th>Tax Code</th>
+                      <th>%</th>
+                      <th>Tax Amount</th>
+                      <th>AWT</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tr class="list-item">
+                    <td data-label="Type" class="tableitem">ITEM</td>
+                    <td data-label="Description" class="tableitem">Servizio EDI + Traffico mese di novembre 2017
+                    </td>
+                    <td data-label="Quantity" class="tableitem">46.6</td>
+                    <td data-label="Unit Price" class="tableitem">1</td>
+                    <td data-label="Taxable Amount" class="tableitem">46.6</td>
+                    <td data-label="Tax Code" class="tableitem">DP20</td>
+                    <td data-label="%" class="tableitem">20</td>
+                    <td data-label="Tax Amount" class="tableitem">9.32</td>
+                    <td data-label="AWT" class="tableitem">None</td>
+                    <td data-label="Total" class="tableitem">55.92</td>
+                  </tr>
+                  <tr class="list-item">
+                    <td data-label="Type" class="tableitem">ITEM</td>
+                    <td data-label="Description" class="tableitem">Traffico mese di novembre 2017 FRESSNAPF
+                      TIERNAHRUNGS
+                      GMBH
+                      riadd. Almo DE</td>
+                    <td data-label="Quantity" class="tableitem">4.4</td>
+                    <td data-label="Unit Price" class="tableitem">1</td>
+                    <td data-label="Taxable Amount" class="tableitem">46.6</td>
+                    <td data-label="Tax Code" class="tableitem">DP20</td>
+                    <td data-label="%" class="tableitem">20</td>
+                    <td data-label="Tax Amount" class="tableitem">9.32</td>
+                    <td data-label="AWT" class="tableitem">None</td>
+                    <td data-label="Total" class="tableitem">55.92</td>
+                  </tr>
+                  <tr class="list-item total-row">
+                    <th colspan="9" class="tableitem">Grand Total</th>
+                    <td data-label="Grand Total" class="tableitem">111.84</td>
+                  </tr>
+                </table>
+              </div>
+
+              <!--End Table-->
+              <div class="cta-group">
+                <!-- <a href="javascript:void(0);" class="btn-primary">Approve</a>
+              <a href="javascript:void(0);" class="btn-default">Reject</a> -->
+                <!-- <ion-chip style="background: white; color: black;line-height: inherit;height: auto;"> -->
+                <pre *ngIf="termsandconditions"> {{termsandconditions}}
+                      </pre>
+
+                <ion-skeleton-text *ngIf="!termsandconditions" animated
+                  style="width: 40%; height: 80px; border-radius: 3px">
+                </ion-skeleton-text>
+                <!-- </ion-chip> -->
+
+
+                <!-- <ion-chip style="background: white; color: black;line-height: inherit;height: auto;"> -->
+                <pre *ngIf="customernotes">
+                  {{customernotes}}
+              </pre>
+
+                <ion-skeleton-text *ngIf="!customernotes" animated style="width: 40%; height: 50px; border-radius: 3px">
+                </ion-skeleton-text>
+                <!-- </ion-chip> -->
+              </div>
+
+            </div>
+            <!--End InvoiceBot-->
+            <footer>
+              <div id="legalcopy" class="clearfix">
+                <p class="col-right">Our mailing address is:
+                  <span class="email"><a href="mailto:supplier.portal@almonature.com">xxx@xxx.com</a></span>
+                </p>
+              </div>
+            </footer>
+          </div>
+          <!--End Invoice-->
+        </div><!-- End Invoice Holder-->
+      </ion-card>
+
+
+
+    </ion-col>
+
+  </ion-row>
+
+
+
+
+
+
+
+</ion-content>

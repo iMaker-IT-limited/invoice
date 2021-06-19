@@ -1,0 +1,19 @@
+<div class="dropzone" dropzone (hovered)="toggleHover($event)" (dropped)="onDrop($event)" [class.hovering]="isHovering">
+
+  <!-- <img class="icon" src="./../../../assets/images/home_categories/ionInvoice.svg" alt="">  -->
+  <!-- Drag and Drop a File -->
+  <p style="color: gray">Drag your company logo here
+  </p>
+  <!-- {{id}} -->
+
+</div>
+
+<div *ngIf="files.length > 0">
+  <!-- <ion-label>上載</ion-label> -->
+</div>
+
+<ion-list *ngFor="let file of files">
+  <ion-item>
+    <app-upload-task [file]="file" [id]="id"></app-upload-task>
+  </ion-item>
+</ion-list>

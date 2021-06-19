@@ -1,0 +1,185 @@
+<ion-app dir="{{ textDir }}">
+  <ion-split-pane>
+    <ion-menu style="border-color: var(--ion-color-theme)" id="menu" swipeGesture="true" type="push" side="start"
+      class="app-sidemenu">
+      <ion-header no-border>
+        <ion-toolbar>
+          <ion-row (click)="onCloseMenu()" [routerLink]="['/']" style="padding: 8px; cursor: pointer;"
+            class="user-details-wrapper">
+            <!-- <ion-col size="2"> -->
+            <app-aspect-ratio [ratio]="{ w: 18, h: 7 }">
+              <!-- logo size: 300 * 87 -->
+              <app-image-shell style="background: transparent; padding: 8px;" animation="spinner"
+                src="../assets/images/home_categories/ionInvoice.svg">
+              </app-image-shell>
+            </app-aspect-ratio>
+            <!-- </ion-col> -->
+          </ion-row>
+          <!-- <ion-row class="user-stats-wrapper user-details-wrapper">
+            <ion-col>
+              <span class="user-stat-value">1553</span>
+              <span class="user-stat-name">Following</span>
+            </ion-col>
+            <ion-col>
+              <span class="user-stat-value">537</span>
+              <span class="user-stat-name">Followers</span>
+            </ion-col>
+          </ion-row> -->
+        </ion-toolbar>
+      </ion-header>
+
+      <div class="scrollbar" id="style-1">
+        <ion-list class="force-overflow" lines="none">
+          <br>
+          <!-- dashboard -->
+          <ion-item id="Dashboard" class="footer-item" style="" (click)="onDashboardPage()">
+            <ion-icon style="margin-left: 0px; margin-right: 5px;" slot="start"
+              src="../assets/images/home_categories/dashboard_icon.svg">
+            </ion-icon>
+            <ion-label>
+              Dashboard
+            </ion-label>
+            <ion-icon slot="end" src="../assets/images/home_categories/add.svg"></ion-icon>
+          </ion-item>
+          <!-- customers -->
+          <ion-item id="Contact" class="footer-item" style="" (click)="onContactPage()">
+            <!-- [routerLink]="['/firebase/contacts']" -->
+            <ion-icon style="margin-left: 0px; margin-right: 5px;" slot="start"
+              src="../assets/images/home_categories/customer_icon.svg">
+            </ion-icon>
+            <ion-label>
+              Customer
+            </ion-label>
+            <ion-icon slot="end" src="../assets/images/home_categories/add.svg"></ion-icon>
+          </ion-item>
+          <!-- items -->
+          <ion-item id="Item" class="footer-item" style="" (click)="onItemPage()">
+            <ion-icon style="margin-left: 0px; margin-right: 5px;" slot="start"
+              src="../assets/images/home_categories/items_icon.svg"></ion-icon>
+            <ion-label>
+              Items
+            </ion-label>
+            <ion-icon slot="end" src="../assets/images/home_categories/add.svg"></ion-icon>
+          </ion-item>
+          <br>
+          <br>
+          <!-- estimates -->
+          <ion-item id="estimates" class="footer-item" style="" (click)="onEstimatesPage()">
+            <ion-icon style="margin-left: 0px; margin-right: 5px;" slot="start"
+              src="../assets/images/home_categories/estimates.svg">
+            </ion-icon>
+            <ion-label>
+              Estimates
+            </ion-label>
+            <ion-icon class="" slot="end" src="../assets/images/home_categories/add.svg"></ion-icon>
+          </ion-item>
+          <!-- invoices -->
+          <ion-item id="Invoices" class="footer-item" style="" (click)="onInvoicesPage()">
+            <ion-icon style="margin-left: 0px; margin-right: 5px;" slot="start"
+              src="../assets/images/home_categories/invoices.svg">
+            </ion-icon>
+            <ion-label>
+              Invoices
+            </ion-label>
+            <ion-icon class="" slot="end" src="../assets/images/home_categories/add.svg"></ion-icon>
+          </ion-item>
+          <!-- Payments Received -->
+          <ion-item id="PaymentsReceived" class="footer-item" style="" (click)="onPaymentsReceivedPage()">
+            <ion-icon style="margin-left: 0px; margin-right: 5px;" slot="start"
+              src="../assets/images/home_categories/payments_icon.svg">
+            </ion-icon>
+            <ion-label>
+              Payments Received
+            </ion-label>
+            <ion-icon class="" slot="end" src="../assets/images/home_categories/add.svg"></ion-icon>
+          </ion-item>
+          <!-- Credit Notes -->
+          <!-- <ion-item class="footer-item" style="--background: var(--ion-color-dark)" (click)="onCreditNotesPage()">
+            <ion-icon style="margin-left: 0px; margin-right: 5px;" slot="start"
+              src="../assets/images/home_categories/credit_notes_icon.svg">
+            </ion-icon>
+            <ion-label style="font-size:small; color: white;">
+              Credit Notes
+            </ion-label>
+            <ion-icon class="" slot="end" src="../assets/images/home_categories/add.svg"></ion-icon>
+          </ion-item> -->
+          <!-- Expenses  -->
+          <ion-item id="Expenses" class="footer-item" style="" (click)="onExpensesPage()">
+            <ion-icon style="margin-left: 0px; margin-right: 5px;" slot="start"
+              src="../assets/images/home_categories/credit_notes_icon.svg">
+            </ion-icon>
+            <ion-label>
+              Expenses
+            </ion-label>
+            <ion-icon class="" slot="end" src="../assets/images/home_categories/add.svg"></ion-icon>
+          </ion-item>
+          <!-- <ion-list *ngFor="let cate of ionInvoice | keyvalue; let i = index;">
+            <ion-list-header tappable (click)="i = !i">
+              <ion-item style="width: 100%;" (click)="onPage(cate);">
+                <ion-icon style="font-size: initial; color: lightgray; " slot="end"
+                  src="./assets/sample-icons/side-menu/arrow-down.svg"></ion-icon>
+                <ion-icon style="color: lightgray; height: 12px; " slot="end"
+                  src="./assets/sample-icons/side-menu/arrow-up.svg">
+                </ion-icon>
+
+                <ion-label style="size: small;">
+                  {{cate.key}}
+                </ion-label>
+
+                <ion-icon class="" style="color: lightgray; " slot="end" name="add-outline"></ion-icon>
+
+              </ion-item>
+            </ion-list-header>
+          </ion-list> -->
+
+        </ion-list>
+      </div>
+
+      <ion-content> </ion-content>
+
+      <!-- <ion-footer style="--background: var(--ion-color-theme);background: var(--ion-color-theme)">
+        <ion-list class="footer-list" style="padding-top: 0px; padding-bottom: 0px;" lines="full">
+          <ion-item *ngIf="signin == 'Sign out'" style="--background: var(--ion-color-theme)">
+            <ion-label slot="start" color="primary"
+              style="text-transform:capitalize; font-size: small; font-weight: bold;"> 試用版
+            </ion-label>
+            <ion-button color="none" style="--box-shadow: none;">
+              <ion-label slot="start" color="primary"
+                style="text-transform:capitalize; font-size: small; font-weight: bold;">
+                升級 </ion-label>
+            </ion-button>
+          </ion-item>
+
+          <ion-item class="footer-item" *ngIf="this.email == 'dannyshf1993@gmail.com'"
+            style="--background: var(--ion-color-theme)" [routerLink]="['/firebase/listing']">
+            <ion-icon slot="start" name="person"></ion-icon>
+            <ion-label style="font-size:small;">
+              管理員
+            </ion-label>
+          </ion-item>
+
+          <ion-item class="footer-item" *ngIf="signin == 'Sign in'"
+            style="cursor: pointer; --background: var(--ion-color-theme-shade)" [routerLink]="['/app/auth/signup']">
+            <ion-icon slot="start" src="./assets/sample-icons/side-menu/login.svg"></ion-icon>
+            <ion-label style="font-size:small;">
+              登入
+            </ion-label>
+          </ion-item>
+
+          <ion-item class="footer-item" *ngIf="signin == 'Sign out'" style="cursor: pointer; --background:
+            var(--ion-color-theme-shade)" (click)="onSignOut()" [routerLink]="['/']">
+            <ion-icon slot="start" src="./assets/sample-icons/side-menu/login.svg"></ion-icon>
+            <ion-label style="font-size:small;">
+              登出
+            </ion-label>
+          </ion-item>
+
+
+        </ion-list>
+      </ion-footer> -->
+    </ion-menu>
+
+    <!-- Main app content gets rendered in this router-outlet -->
+    <ion-router-outlet main></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

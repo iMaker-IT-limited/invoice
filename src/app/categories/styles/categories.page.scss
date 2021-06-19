@@ -1,0 +1,729 @@
+@import "../../../theme/mixins/scrollbars";
+
+// Custom variables
+// Note:  These ones were added by us and have nothing to do with Ionic CSS Custom Properties
+
+@import url(https://fonts.googleapis.com/css?family=Lato:700);
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f0f0f0;
+}
+.box {
+  position: relative;
+  max-width: 600px;
+  margin: 5%;
+ // width: 90%;
+ // height: 400px;
+  background: #fff;
+  box-shadow: 0 0 15px rgba(0,0,0,.1);
+}
+.box {
+  cursor: pointer;
+}
+/* common */
+.ribbon {
+ // width: 150px;
+width: 100%; 
+height: 150px;
+  overflow: hidden;
+  position: absolute;
+}
+.ribbon::before,
+.ribbon::after {
+  position: absolute;
+  z-index: -1;
+  content: '';
+  display: block;
+  border: 5px solid var(--ion-color-theme);
+}
+.ribbon span {
+  position: absolute;
+  display: block;
+  width: 225px;
+  padding: 15px 0;
+  // background-color: var(--ion-color-theme);
+background: rgba(10,186,181,0.7); 
+ box-shadow: 0 5px 10px rgba(0,0,0,.1);
+  color: #fff;
+  font: 700 18px/1 'Lato', sans-serif;
+  text-shadow: 0 1px 1px rgba(0,0,0,.2);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* top left*/
+.ribbon-top-left {
+  // top: -10px;
+  // left: -10px;
+}
+.ribbon-top-left::before,
+.ribbon-top-left::after {
+  border-top-color: transparent;
+  border-left-color: transparent;
+}
+.ribbon-top-left::before {
+  top: 0;
+  right: 0;
+}
+.ribbon-top-left::after {
+  bottom: 0;
+  left: 0;
+}
+.ribbon-top-left span {
+  // right: -25px;
+  // top: 30px;
+  // transform: rotate(-45deg);
+  // z-index: 999;
+  transform: rotate(0deg);
+  z-index: 999;
+  font-size: small;
+  width: -webkit-fill-available;
+}
+
+/* top right*/
+.ribbon-top-right {
+  top: -10px;
+  right: -10px;
+}
+.ribbon-top-right::before,
+.ribbon-top-right::after {
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+.ribbon-top-right::before {
+  top: 0;
+  left: 0;
+}
+.ribbon-top-right::after {
+  bottom: 0;
+  right: 0;
+}
+.ribbon-top-right span {
+  left: -25px;
+  top: 30px;
+  transform: rotate(45deg);
+}
+
+/* bottom left*/
+.ribbon-bottom-left {
+  bottom: -10px;
+  left: -10px;
+}
+.ribbon-bottom-left::before,
+.ribbon-bottom-left::after {
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+.ribbon-bottom-left::before {
+  bottom: 0;
+  right: 0;
+}
+.ribbon-bottom-left::after {
+  top: 0;
+  left: 0;
+}
+.ribbon-bottom-left span {
+  right: -25px;
+  bottom: 30px;
+  transform: rotate(225deg);
+}
+
+/* bottom right*/
+.ribbon-bottom-right {
+  bottom: -10px;
+  right: -10px;
+}
+.ribbon-bottom-right::before,
+.ribbon-bottom-right::after {
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+}
+.ribbon-bottom-right::before {
+  bottom: 0;
+  left: 0;
+}
+.ribbon-bottom-right::after {
+  top: 0;
+  right: 0;
+}
+.ribbon-bottom-right span {
+  left: -25px;
+  bottom: 30px;
+  transform: rotate(-225deg);
+}
+
+:host {
+  --page-margin: var(--app-narrow-margin);
+
+  --page-categories-gutter: calc(var(--page-margin) / 4);
+
+  --page-category-background: var(--ion-color-medium);
+  --page-category-background-rgb: var(--ion-color-medium-rgb);
+
+}
+
+#container {
+  width: 145px;
+  height: 100px;
+  border: 1px solid #ccc;
+  overflow-x: scroll;
+}
+
+#content {
+  width: 250px;
+  background-color: #ccc;
+}
+
+/* On screens that are 600px or more, set the background color to blue */
+@media screen and (min-width: 600px) {
+  .cate-list {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+
+    .categories-list {
+      --ion-grid-column-padding: var(--page-categories-gutter);
+
+      padding: calc(var(--page-categories-gutter) * 3);
+      height: 100%;
+      align-content: flex-start;
+      overflow: scroll;
+
+      @include hide-scrollbars();
+
+      .category-item {
+        .category-anchor {
+          height: 100%;
+          text-decoration: none;
+          display: flex;
+          justify-content: flex-start;
+          align-items: flex-start;
+
+          .category-title {
+            float: right;
+            border-top-right-radius: 0px !important;
+            border-bottom-right-radius: 0px !important;
+            position: absolute;
+            bottom: 8px;
+            right: 0px;
+            margin: auto;
+            text-transform: uppercase;
+            font-weight: 400;
+            font-size: 16px;
+            letter-spacing: 1px;
+            padding: calc((var(--page-margin) / 4) * 3) var(--page-margin);
+            color: var(--ion-color-lightest);
+            background-color: var(--page-category-background);
+            border-radius: var(--app-fair-radius);
+          }
+        }
+
+               
+        .category-cover {
+          background-size: contain;
+          background-position: center;
+          background-repeat: no-repeat;
+          box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-cover:hover {
+          box-shadow: 0px 7px 8px 7px rgba(0, 0, 0, 0.2);
+        }
+
+      }
+
+      .travel-category {
+        // margin: 20px;
+        // --page-category-background: #00afff;
+        --page-category-background: var(--ion-color-theme);
+        --page-category-background-rgb: 0, 175, 255;
+      }
+
+      .fashion-category {
+        // margin: 20px;
+        // --page-category-background: #cb328f;
+        --page-category-background: var(--ion-color-theme);
+        --page-category-background-rgb: 203, 50, 143;
+      }
+
+      .food-category {
+        // margin: 20px;
+        // --page-category-background: #ebbb00;
+        --page-category-background: var(--ion-color-theme);
+        --page-category-background-rgb: 235, 187, 0;
+      }
+
+      .deals-category {
+        // margin: 20px;
+        // --page-category-background: #70df70;
+        --page-category-background: var(--ion-color-theme);
+        --page-category-background-rgb: 112, 223, 112;
+      }
+
+      .real-estate-category {
+        // margin: 20px;
+        --page-category-background: #d9453a;
+        --page-category-background-rgb: 217, 69, 58;
+      }
+    }
+
+  }
+
+  .search-bar-section {
+    width: 100%;
+    margin: calc(var(--page-margin) * 2) var(--page-margin) var(--page-margin);
+    padding-bottom: var(--page-margin);
+    border-bottom: 1px solid var(--ion-color-light-shade);
+
+    .card {
+      .row {
+        .search-section {
+          .banner-search {
+            // width: 40%;
+            left: 8%;
+            top: 16%;
+            position: absolute;
+
+            .items-searchbar {
+              padding: 0px;
+              min-width: 350px;
+              color: var(--ion-color-theme);
+            }
+
+            .items-list {
+              width: 100%;
+              box-shadow: 0px 8px 3px 0px rgba(0, 0, 0, 0.2);
+              z-index: 999;
+              position: absolute;
+              padding: 0px;
+              top: 109px;
+              border-bottom-left-radius: 7px;
+              border-bottom-right-radius: 7px;
+
+              .items-item {
+                //      background: 
+                color: gray;
+                font-size: smaller;
+
+                .number {
+                  right: 0px;
+                  position: absolute;
+                  padding-right: 5px;
+
+                }
+              }
+
+              .items-item:hover {
+
+                --background: var(--ion-color-primary);
+                color: var(--ion-color-theme);
+              }
+            }
+
+          }
+
+        }
+      }
+    }
+  }
+
+
+  .user-friends-section {
+
+    margin: calc(var(--page-margin) * 2) var(--page-margin) var(--page-margin);
+    padding-bottom: var(--page-margin);
+    border-bottom: 1px solid var(--ion-color-light-shade);
+
+    .heading-row {
+      margin-bottom: var(--page-margin);
+      justify-content: space-between;
+      align-items: center;
+
+      .details-section-title {
+        margin: 0px;
+      }
+
+      .heading-call-to-action {
+        padding: calc(var(--page-margin) / 2) calc(var(--page-margin) / 4);
+        text-decoration: none;
+        color: var(--ion-color-secondary);
+      }
+    }
+
+    .button-left {
+      width: 50px;
+      height: 50px;
+      float: left;
+      --border-radius: 25px;
+      margin-top: 70px;
+    }
+
+    .button-right {
+      width: 50px;
+      height: 50px;
+      float: right;
+      --border-radius: 25px;
+      margin-top: 70px;
+    }
+
+    .friends-row {
+      // --ion-grid-columns: 7; // We want to show three friends and a half. Each friend fills 2 cols => (3.5 * 2 = 7 cols)
+      --ion-grid-columns: 13.2; // We want to show four friends and a half. Each friend fills 2 cols => (5.5 * 2 = 9 cols)
+      --ion-grid-column-padding: 0px;
+
+      flex-wrap: nowrap;
+      overflow-x: scroll;
+      will-change: scroll-position;
+      margin-left: calc(var(--page-margin) * -1);
+      margin-right: calc(var(--page-margin) * -1);
+
+      @include hide-scrollbars();
+
+      &::before,
+      &::after {
+        content: '';
+        // .friend-item has 8px of side padding, we need an extra 4px at the beginning and end to fill the 12px side margin of the view
+        flex: 0 0 calc(var(--page-margin) - var(--page-friends-gutter));
+      }
+
+      .friend-item {
+        padding: 10px 20px;
+
+        .friend-name {
+          display: block;
+          text-align: center;
+          margin: var(--page-margin) 0px;
+          font-size: 14px;
+          font-weight: bold;
+        }
+      }
+
+      .friend-item:hover {
+        cursor: pointer;
+        padding: 10px 20px;
+
+        .friend-name {
+          display: block;
+          text-align: center;
+          margin: var(--page-margin) 0px;
+          font-size: 14px;
+          font-weight: bold;
+          color: var(--ion-color-theme);
+        }
+
+        border-bottom-style: solid;
+        border-bottom-color: var(--ion-color-theme);
+      }
+
+    }
+  }
+}
+
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 600px) {
+  .slide-section {
+    display: none;
+  }
+
+  .cate-list {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+
+    .categories-list {
+      --ion-grid-column-padding: var(--page-categories-gutter);
+
+      padding: calc(var(--page-categories-gutter) * 1);
+      height: 100%;
+      align-content: flex-start;
+      overflow: scroll;
+
+      @include hide-scrollbars();
+
+      .category-item {
+        .category-anchor {
+          height: 100%;
+          text-decoration: none;
+          display: flex;
+          justify-content: flex-start;
+          align-items: flex-start;
+
+          .category-title {
+            float: right;
+            border-top-right-radius: 0px !important;
+            border-bottom-right-radius: 0px !important;
+            position: absolute;
+            bottom: 8px;
+            right: 0px;
+            margin: auto;
+            text-transform: uppercase;
+            font-weight: 400;
+            font-size: 14px;
+            letter-spacing: 1px;
+            padding: calc((var(--page-margin) / 4) * 3) var(--page-margin);
+            color: var(--ion-color-lightest);
+            background-color: var(--page-category-background);
+            border-radius: var(--app-fair-radius);
+          }
+        }
+
+        .category-cover {
+          background-size: contain;
+          background-position: center;
+          background-repeat: no-repeat;
+          box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-cover:hover {
+          box-shadow: 0px 7px 8px 7px rgba(0, 0, 0, 0.2);
+        }
+
+      }
+
+      .travel-category {
+        padding: 25px;
+        min-width: 100%;
+        // --page-category-background: #00afff;
+        --page-category-background: var(--ion-color-theme);
+        --page-category-background-rgb: 0, 175, 255;
+      }
+
+      .fashion-category {
+        padding: 25px;
+        min-width: 100%;
+        // --page-category-background: #cb328f;
+        --page-category-background: var(--ion-color-theme);
+        --page-category-background-rgb: 203, 50, 143;
+      }
+
+      .food-category {
+        padding: 25px;
+        min-width: 100%;
+        // --page-category-background: #ebbb00;
+        --page-category-background: var(--ion-color-theme);
+        --page-category-background-rgb: 235, 187, 0;
+      }
+
+      .deals-category {
+        padding: 25px;
+        min-width: 100%;
+        // --page-category-background: #70df70;
+        --page-category-background: var(--ion-color-theme);
+        --page-category-background-rgb: 112, 223, 112;
+      }
+
+      .real-estate-category {
+        padding: 25px;
+        min-width: 100%;
+        --page-category-background: #d9453a;
+        --page-category-background-rgb: 217, 69, 58;
+      }
+    }
+
+  }
+
+  .search-bar-section {
+    .card {
+      box-shadow: none !important;
+
+      .row {
+        .search-section {
+          width: 99%;
+
+          padding: 0px;
+
+          flex: none !important;
+          width: 100% !important;
+          max-width: none !important;
+
+          .banner-search {
+            // width: 320px;
+            // padding-left: 20%;
+            padding: 10%;
+
+            h1 {
+              // text-indent: 0 !important;
+              // font-size: 24px;
+              padding-bottom: 24px;
+              color: black;
+              font-size: 32px;
+              line-height: 44px;
+              font-weight: bold;
+              text-indent: 0px !important;
+            }
+
+
+            .items-searchbar {
+              padding: 0px;
+              color: var(--ion-color-theme);
+            }
+
+            .items-list {
+              // width: 100%;
+              box-shadow: 0px 5px 3px 0px rgba(0, 0, 0, 0.2);
+              z-index: 999;
+              //     position: absolute;
+              padding: 0px;
+              //   top: 107px;
+              border-bottom-left-radius: 7px;
+              border-bottom-right-radius: 7px;
+              min-width: 220px;
+
+              .items-item {
+                //      background: 
+                color: gray;
+                font-size: smaller;
+
+                .number {
+                  right: 0px;
+                  position: absolute;
+                  padding-right: 5px;
+
+                }
+              }
+
+              .items-item:hover {
+
+                --background: var(--ion-color-primary);
+                color: var(--ion-color-theme);
+              }
+            }
+
+          }
+        }
+
+      }
+
+    }
+  }
+
+
+  .banner {
+    display: none;
+  }
+
+  .user-friends-section {
+    margin: calc(var(--page-margin) * 2) var(--page-margin) var(--page-margin);
+    padding-bottom: var(--page-margin);
+    border-bottom: 1px solid var(--ion-color-light-shade);
+
+    .heading-row {
+      margin-bottom: var(--page-margin);
+      justify-content: space-between;
+      align-items: center;
+
+      .details-section-title {
+        margin: 0px;
+      }
+
+      .heading-call-to-action {
+        padding: calc(var(--page-margin) / 2) calc(var(--page-margin) / 4);
+        text-decoration: none;
+        color: var(--ion-color-secondary);
+      }
+    }
+
+    .button-left {
+      // width: 30px;
+      // height: 30px;
+      // float: left;
+      // --border-radius: 15px;
+      // margin-top: 42px;
+      display: none;
+    }
+
+    .button-right {
+      // width: 30px;
+      // height: 30px;
+      // float: right;
+      // --border-radius: 15px;
+      // margin-top: 42px;
+      // color: var(--ion-col-theme);
+      display: none;
+    }
+
+    .friends-row {
+      // --ion-grid-columns: 7; // We want to show three friends and a half. Each friend fills 2 cols => (3.5 * 2 = 7 cols)
+      --ion-grid-columns: 6; // We want to show four friends and a half. Each friend fills 2 cols => (5.5 * 2 = 9 cols)
+      --ion-grid-column-padding: 0px;
+
+      // flex-wrap: nowrap;
+      overflow-x: scroll;
+      will-change: scroll-position;
+      margin-left: calc(var(--page-margin) * -1);
+      margin-right: calc(var(--page-margin) * -1);
+
+      @include hide-scrollbars();
+
+      &::before,
+      &::after {
+        content: '';
+        // .friend-item has 8px of side padding, we need an extra 4px at the beginning and end to fill the 12px side margin of the view
+        flex: 0 0 calc(var(--page-margin) - var(--page-friends-gutter));
+      }
+
+      .friend-item {
+        padding: 10px 20px;
+
+        .friend-name {
+          display: block;
+          text-align: center;
+          margin: var(--page-margin) 0px;
+          font-size: 14px;
+          font-weight: bold;
+        }
+      }
+
+      .friend-item:hover {
+        cursor: pointer;
+        padding: 10px 20px;
+
+        .friend-name {
+          display: block;
+          text-align: center;
+          margin: var(--page-margin) 0px;
+          font-size: 14px;
+          font-weight: bold;
+          color: var(--ion-color-theme);
+        }
+
+        border-bottom-style: solid;
+        border-bottom-color: var(--ion-color-theme);
+      }
+
+    }
+  }
+}
+
+// Note:  All the CSS variables defined below are overrides of Ionic elements CSS Custom Properties
+
+
+
+
+
+
+
+
+// Alerts and in general all overlays are attached to the body or ion-app directly
+// We need to use ::ng-deep to access it from here
+::ng-deep .language-alert {
+  // @include select-alert();
+
+  // Variables should be in a deeper selector or after the mixin include to override default values
+  --select-alert-color: var(--ion-color-lightest);
+  --select-alert-background: var(--ion-color-primary);
+  --select-alert-margin: var(--app-fair-margin);
+
+  .alert-message {
+    display: none;
+  }
+
+  .alert-wrapper {
+    min-width: 500px !important;
+  }
+}

@@ -1,0 +1,234 @@
+<app-header></app-header>
+<ion-content class="user-profile-content">
+    <ion-item-divider class="sticky_header" sticky>
+        <ion-title>All Customers </ion-title>
+
+        <!-- <ion-button class="new_button" color="theme" fill="clear" (click)="refresh()">
+            <ion-icon name="refresh-circle-outline"></ion-icon>
+        </ion-button> -->
+        <!-- 
+        <ion-button color="" fill="clear " (click)="loadDemoCSV()">
+            load Demo CSV
+        </ion-button> -->
+
+        <ion-button color="" fill="clear " (click)="exportDemoCSV()">
+            Step 1: Demo file
+        </ion-button>
+
+        <!-- <ion-button class="new_button" color="theme" fill="solid" slot="end" (click)="convertCSVtoJSON()">
+            convertCSVtoJSON
+        </ion-button> -->
+
+        <!-- <ion-button class="new_button" color="theme" fill="solid" slot="end" (click)="onCreateContact()">
+            + New
+        </ion-button> -->
+
+        <!-- <ion-button fill="clear" color="theme" (click)="readContact()">
+           Get
+          </ion-button> -->
+
+        <!-- <ion-button class="new_button" color="premium" fill="solid" slot="end"
+            (click)="showCreditNotesToggle = !showCreditNotesToggle">
+            <ion-icon name="menu-outline"></ion-icon>
+        </ion-button> -->
+
+        <!-- <div class="menu_toggle" *ngIf="showCreditNotesToggle">
+            <ul>
+                <li>
+                    <ion-button class="listbutton" expand="full" fill="clear" (click)="show = !show">
+                        <ion-icon slot="start" size="medium" icon-only name="cloud-upload-sharp"></ion-icon>
+                        <span>
+                            Upload contact
+                        </span>
+                    </ion-button>
+                </li>
+                <li>
+                    <ion-button class="listbutton" expand="full" fill="clear" (click)="getCsvData()">
+                        <ion-icon slot="start" size="medium" icon-only name=""></ion-icon>
+                        <span>
+                            One click bulk import
+                        </span>
+                    </ion-button>
+                </li>
+                <li>
+                    <ion-button class="listbutton" expand="full" fill="clear" (click)="loadCSV()">
+                        <ion-icon slot="start" size="medium" icon-only name="cloud-upload-sharp"></ion-icon>
+                        <span>
+                            Bulk import
+                        </span>
+                    </ion-button>
+                </li>
+                <li>
+                    <ion-button class="listbutton" expand="full" fill="clear" (click)="realDownLoadCSV()">
+                        <ion-icon slot="start" size="medium" icon-only name="cloud-download-sharp"></ion-icon>
+                        <span>
+                            Bulk export
+                        </span>
+                    </ion-button>
+                </li>
+            </ul>
+        </div> -->
+    </ion-item-divider>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal ">
+
+        <!-- Modal content -->
+        <div class="modal-content animated fadeInDownBig">
+            <span class="close" id="close">&times;</span>
+            <div style="padding: 20px;">
+                <app-uploader-bulk-import [id]="uid"></app-uploader-bulk-import>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- <ion-progress-bar *ngIf="!contacts" color="theme" type="indeterminate"></ion-progress-bar> -->
+
+    <!-- <button (click)="secondFunction()">secondFunction</button> -->
+    <div style="background: #1b1e27">
+        <ion-card style="box-shadow: none; margin: 0px;">
+            <ion-card-header style="text-align: center; color: var(--ion-color-theme); font-size: larger;">Make Billing
+                a Breeze with Client Info at Your Fingertips
+            </ion-card-header>
+            <ion-card-content>
+                <ion-row>
+                    <ion-col class="left" style="text-align: center;">
+                        <div>
+                            <img class="img" style="margin-left: auto; margin-right: auto; display: block;"
+                                src="../../../../assets/images/home_categories/it_all_starts_with_clients.png" alt="">
+                        </div>
+
+                        <ion-title>It All
+                            Starts with Clients
+                        </ion-title>
+
+                        <p>Get yourself up and running with organized clients. Learn more</p>
+
+                    </ion-col>
+                    <ion-col style="text-align: center;">
+                        <div>
+                            <img class="img" style="margin-left: auto; margin-right: auto; display: block;"
+                                src="../../../../assets/images/home_categories/outstanding_client_revenus.png" alt="">
+                        </div>
+
+                        <ion-title>Outstanding Client Revenue
+                        </ion-title>
+
+                        <p>Know exactly where your client stands with any outstanding invoices.</p>
+
+                    </ion-col>
+                    <ion-col style="text-align: center;">
+                        <div>
+                            <img class="img" style="margin-left: auto; margin-right: auto; display: block;"
+                                src="../../../../assets/images/home_categories/have_lots_of_clients.png" alt="">
+                        </div>
+
+                        <ion-title>Have Lots of Clients?
+                        </ion-title>
+
+                        <p>Automatically import your clients from</p>
+                        <p>a .csv file. <button style="color: var(--ion-color-theme); padding: 5px; border-radius: 5px"
+                                class="animated infinite heartBeat slower" id="myBtn">Step 2. Import
+                                now</button></p>
+
+                    </ion-col>
+                </ion-row>
+            </ion-card-content>
+
+        </ion-card>
+    </div>
+
+    <app-nodata *ngIf="!downloadURL"></app-nodata>
+    <ion-progress-bar *ngIf="!contacts " color="theme" type="indeterminate"></ion-progress-bar>
+
+    <!-- <app-rating-input *ngIf="!contacts && downloadURL"></app-rating-input>
+    <app-rating-input></app-rating-input> -->
+
+    <div *ngIf="contacts">
+        <ion-row class="new">
+            <ion-col class="col-left" style="padding: 0px;" size="12">
+                <ngx-datatable [rows]="contacts" [ngClass]="tableStyle" [rowHeight]="auto" [headerHeight]="50"
+                    [columnMode]="'force'" [rowClass]="getRowClass.bind(this)" [limit]="10" [footerHeight]="50">
+                    <ngx-datatable-column sortable="true">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            CUSTOMER ID
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <div class="button" (click)="onDetailPage(row, contacts)"> {{row['Customer ID']}}
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column sortable="true">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            COMPANY NAME
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <!-- {{row['CF.Company Name']}} -->
+                            {{row['Company Name']}}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column sortable="true">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            EMAIL
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{row['EmailID']}}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column sortable="true">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            WORK PHONE
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <!-- {{row['CF.Phone']}} -->
+                            {{row['Phone']}}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <!-- <ngx-datatable-column sortable="true">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            RECEIVABLE
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            HKD 0.00
+                        </ng-template>
+                    </ngx-datatable-column> -->
+
+                    <!-- <ngx-datatable-column sortable="true">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            UNUSED CREDITS
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            HKD 0.00
+                        </ng-template>
+                    </ngx-datatable-column> -->
+                </ngx-datatable>
+            </ion-col>
+        </ion-row>
+    </div>
+
+    <!-- <div class="animated fadeIn">
+        <table border="0" class="rwd-table">
+            <tr class="header_">
+                <td *ngFor="let header of headerRowDemo">
+                    <b>
+                        {{header}}
+                    </b>
+                </td>
+            </tr>
+            <tr *ngFor="let row of csvDemoData; let i = index">
+                <td *ngFor="let data of row; let j = index; trackBy: trackByFn" class="data-col">
+                    {{csvDemoData[i][j]}}
+                </td>
+            </tr>
+        </table>
+    </div> -->
+
+    <app-global-banner></app-global-banner>
+</ion-content>
+<app-global-footer></app-global-footer>

@@ -1,0 +1,795 @@
+
+
+import { Component, OnInit, HostBinding, ViewChild } from "@angular/core";
+import { ActivatedRoute, NavigationExtras } from "@angular/router";
+
+import { UserProfileModel } from "./user-profile.model";
+import {
+  AlertController,
+  IonReorderGroup,
+  LoadingController,
+  ToastController,
+  NavController,
+  NavParams
+} from "@ionic/angular";
+
+import * as Highcharts from 'highcharts/highcharts-gantt';
+
+import { LanguageService } from "../../language/language.service";
+import { TranslateService } from "@ngx-translate/core";
+import * as firebase from "firebase";
+import { AuthService } from "../../../app/services/auth.service";
+import { FirebaseService } from "../../../app/firebase/firebase-integration.service";
+import { FormGroup, FormControl } from "@angular/forms";
+import { Storage } from "@ionic/storage";
+
+import * as HighCharts from 'highcharts';
+
+// invoices
+import invoicesdata from './../../../assets/invoices.json';
+import { map } from "rxjs/operators";
+
+@Component({
+  selector: "app-user-profile",
+  templateUrl: "./user-profile.page.html",
+  styleUrls: [
+    "./styles/user-profile.page.scss",
+    "./styles/user-profile.shell.scss",
+    "./styles/user-profile.ios.scss",
+    "./styles/user-profile.md.scss"
+  ]
+})
+export class UserProfilePage implements OnInit {
+  @ViewChild(IonReorderGroup, { static: false }) reorderGroup: IonReorderGroup;
+
+  public navParams = new NavParams;
+  // ngx-table start
+  // ngx-table start
+  private invoices = invoicesdata;
+  tableStyle = 'bootstrap';
+  customRowClass = false;
+  companiesArr: any[];
+
+  // ngx-table end
+
+  grid = false;
+  myNumber = 5;
+  collapse: boolean;
+  profile: UserProfileModel;
+  available_languages = [];
+  translations;
+  displayName: string;
+  email: string;
+  providerData: firebase.UserInfo;
+  providerDataDisplayName: string;
+  name: string;
+  photoURL: string;
+  uid: string;
+  checkboxForm: FormGroup;
+  role: any;
+  enquiryToPS: unknown[];
+  enquiryToT: unknown[];
+  selectedID: string;
+  salesquotation: unknown[];
+  phoneNumber: string;
+  enquiryToTLength: number;
+  enquiryToPSLength: number;
+  salesquotationLength: number;
+  signin: string;
+  countdownDate: number;
+  countdownDbte: number;
+  isRead: boolean;
+  thatSQ: unknown;
+  isAccepted: boolean;
+  now: number;
+  showMore: boolean;
+  subtitle: string;
+  slideOpts = {
+    slidesPerView: 5,
+
+  }
+  data: { heading: string; para1: string; para2: string; };
+  totalReceivable: any;
+  totalProfit: any;
+  downloadURL: any;
+  ratio: number;
+  companyProfile: unknown;
+  //  companiesArr: any[];
+  @HostBinding("class.is-shell") get isShell() {
+    return this.profile && this.profile.isShell ? true : false;
+  }
+
+  itemsList: any;
+  estimateList: any;
+  contactsList: any;
+
+  constructor(
+    private navCtrl: NavController,
+    private toastCtrl: ToastController,
+    private loadingCtrl: LoadingController,
+    private firebaseService: FirebaseService,
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    public translate: TranslateService,
+    public languageService: LanguageService,
+    public alertController: AlertController,
+    private storage: Storage
+  ) {
+    console.log(this.invoices);
+
+    this.uid = this.authService.uid();
+    this.email = this.authService.email();
+
+    this.subtitle = 'This is some text within a card block.';
+    //    console.log(this.companies);
+    const arr = [];
+
+    this.companiesArr = arr;
+
+    this.checkboxForm = new FormGroup({
+      role: new FormControl(""),
+      provider_name: new FormControl(""),
+      provider_email: new FormControl(""),
+      provider_phone: new FormControl(""),
+      name: new FormControl("")
+    });
+  }
+
+  ngOnInit(): void {
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        console.log(user);
+        this.name = user.displayName;
+        this.photoURL = user.photoURL;
+        this.uid = user.uid;
+        this.email = user.email;
+        this.phoneNumber = user.phoneNumber;
+        console.log(
+          //   this.uid,
+          //  this.email,
+          this.phoneNumber,
+          this.name,
+          this.photoURL
+        );
+
+        console.log(this.uid);
+
+      } else {
+        console.log("Not authenticated");
+        // No user is signed in.
+      }
+    });
+
+    this.route.data.subscribe(
+      resolvedRouteData => {
+        const profileDataStore = resolvedRouteData["data"];
+
+        profileDataStore.state.subscribe(
+          state => {
+            this.profile = state;
+
+            // get translations for this page to use in the Language Chooser Alert
+            this.getTranslations();
+
+            this.translate.onLangChange.subscribe(() => {
+              this.getTranslations();
+            });
+          },
+          error => { }
+        );
+      },
+      error => { }
+    );
+
+    this.getCompanyProfile();
+    this.getCustomerList();
+    this.getFirstEstimate();
+    this.getItemsnServices();
+    this.getReport();
+  }
+
+  getTranslations() {
+    // get translations for this page to use in the Language Chooser Alert
+    this.translate
+      .getTranslation(this.translate.currentLang)
+      .subscribe(translations => {
+        this.translations = translations;
+      });
+  }
+
+  async openLanguageChooser() {
+    this.available_languages = this.languageService
+      .getLanguages()
+      .map(item => ({
+        name: item.name,
+        type: "radio",
+        label: item.name,
+        value: item.code,
+        checked: item.code === this.translate.currentLang
+      }));
+
+    const alert = await this.alertController.create({
+      header: this.translations.SELECT_LANGUAGE,
+      inputs: this.available_languages,
+      cssClass: "language-alert",
+      buttons: [
+        {
+          text: this.translations.CANCEL,
+          role: "cancel",
+          cssClass: "secondary",
+          handler: () => { }
+        },
+        {
+          text: this.translations.OK,
+          handler: data => {
+            if (data) {
+              this.translate.use(data);
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  ionViewWillEnter() {
+    // case when non first timer user(ie. teacher) fill in the form when logged out, submit quotation enquiry
+    // this.save();
+    // var Startdate = new Date(document.getElementById("Insert ID here").value)
+    // var now = new Date();
+    // if (before < now) {
+    //   // selected date is in the past
+    // }
+  }
+
+  doReorder(ev: any) {
+    // The `from` and `to` properties contain the index of the item
+    // when the drag started and ended, respectively
+    console.log(
+      ev.detail.complete(),
+      "Dragged from index",
+      ev.detail.from,
+      "to",
+      ev.detail.to
+    );
+
+    // Finish the reorder and position the item in the DOM based on
+    // where the gesture ended. This method can also be called directly
+    // by the reorder group
+    ev.detail.complete();
+  }
+
+  toggleReorderGroup() {
+    this.reorderGroup.disabled = !this.reorderGroup.disabled;
+  }
+
+  selectedEnquiry(value) {
+    console.log(value, value.id);
+
+    this.selectedID = "check";
+  }
+
+  changeTargetValue(value): string {
+    switch (true) {
+      case value === 1:
+        return "K1";
+      case value === 2:
+        return "K2";
+      case value === 3:
+        return "K3";
+      case value === 4:
+        return "P1";
+      case value === 5:
+        return "P2";
+      case value === 6:
+        return "P3";
+      case value === 7:
+        return "P4";
+      case value === 8:
+        return "P5";
+      case value === 9:
+        return "P6";
+      case value === 10:
+        return "S1";
+      case value === 11:
+        return "S2";
+      case value === 12:
+        return "S3";
+      case value === 13:
+        return "S4";
+      case value === 14:
+        return "S5";
+      case value === 15:
+        return "S6";
+      case value === 16:
+        return "大專";
+      case value >= 17:
+        return "";
+      // case value <= 3:
+      //   return "K1 - K3";
+      // case value > 3 && value <= 6:
+      //   return "P1 - P3";
+      // case value > 6 && value <= 9:
+      //   return "P4 - P6";
+      // case value > 9 && value <= 12:
+      //   return "S1 - S3";
+      // case value > 12 && value <= 15:
+      //   return "S4 - S6";
+      // case value > 15:
+      //   return "大專";
+    }
+  }
+
+  checkUserStatus() {
+    firebase.auth().onAuthStateChanged(
+      user => {
+        if (user) {
+          // User is signed in.
+
+          // this.uid = user.uid;
+          // this.displayName = user.displayName;
+          // this.photoURL = user.photoURL;
+          const displayName = user.displayName;
+          const email = user.email;
+          const emailVerified = user.emailVerified;
+          const photoURL = user.photoURL;
+          const uid = user.uid;
+          const phoneNumber = user.phoneNumber;
+          const providerData = user.providerData;
+          user.getIdToken().then(accessToken => {
+            console.log("accessToken: ", accessToken);
+
+            document.getElementById("sign-in-status").textContent = "Signed in";
+            document.getElementById("sign-in").textContent = "Sign out";
+            this.signin = "Sign out";
+            this.displayName = displayName;
+            //   this.uid = uid;
+            //  this.email = email;
+            this.photoURL = photoURL;
+            document.getElementById(
+              "account-details"
+            ).textContent = JSON.stringify(
+              {
+                displayName: displayName,
+                email: email,
+                emailVerified: emailVerified,
+                phoneNumber: phoneNumber,
+                photoURL: photoURL,
+                uid: uid,
+                accessToken: accessToken,
+                providerData: providerData
+              },
+              null,
+              "  "
+            );
+          });
+        } else {
+          // User is signed out.
+          document.getElementById("sign-in-status").textContent = "Signed out";
+          document.getElementById("sign-in").textContent = "Sign in";
+          this.signin = "Sign in";
+          document.getElementById("account-details").textContent = "null";
+        }
+      },
+      function (error) {
+        console.log(error);
+      }
+    );
+  }
+
+  number(value: number, numDay: number) {
+    //   console.log(value, numDay + 1, Number(numDay) + 1);
+
+    const getcountday = Number(numDay) + 1;
+    const limit = 1000 * 60 * 60 * 24 * getcountday + Number(value);
+    this.countdownDate = new Date("Feb 13 2020").getTime();
+    //     // console.log(this.countdownDate);
+    const v = new Date(limit);
+    const w = v.toString().substr(4, 11);
+    const countdownDate = new Date(w.toString()).getTime();
+    //   console.log(countdownDate, w, v, value);
+    return countdownDate;
+  }
+
+  hideDropZone() {
+    setTimeout(() => {
+      console.log("hi");
+    }, 3000);
+  }
+
+
+  // 1 check accepted and reject function done
+  // 2 go to profile page and send sq as a first timer
+  // 3 send email with on delete
+
+
+  // async onGetEnquiryToTeacher() {
+  //   this.myNumber += 1;
+  //   console.log(this.myNumber);
+  //   console.log(this.uid);
+  //   this.firebaseService.getEnquiryToTeacher(this.uid).subscribe(res => {
+  //     console.log(res);
+  //     this.enquiryToT = res;
+  //     this.enquiryToTLength = res.length;
+  //   });
+  // }
+
+  onReadQE(value) {
+    console.log(value);
+  }
+
+  // ngx - table start
+  switchStyle() {
+    if (this.tableStyle == 'dark') {
+      this.tableStyle = 'bootstrap';
+    } else {
+      this.tableStyle = 'dark';
+    }
+  }
+
+  getRowClass(row) {
+    // console.log('class: ', row);
+    const isMale = row.gender == 'male';
+
+    if (!this.customRowClass) {
+      return {};
+    }
+    return {
+      'male-row': isMale,
+      'female-row': !isMale
+    }
+
+  }
+
+  onCompanyProfile() {
+    // this.navCtrl.navigateForward("/firebase/contacts");
+    this.navCtrl.navigateForward("/firebase/company-profile");
+  }
+
+  onCreateClient() {
+    // this.navCtrl.navigateForward("/firebase/contacts");
+    this.navCtrl.navigateForward("/firebase/contacts");
+  }
+
+  onAddItem() {
+    // this.navCtrl.navigateForward("/firebase/contacts");
+    this.navCtrl.navigateForward("/firebase/create%23inventory");
+  }
+
+  onCreateEstimate() {
+    // this.navCtrl.navigateForward("/firebase/contacts");
+    this.navCtrl.navigateForward("/firebase/create%23quotes");
+  }
+  onDetailPage(value, timestamp) {
+    console.log(value, timestamp);
+
+    const data = JSON.stringify(value);
+    console.log(data);
+
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        data: data
+      }
+    };
+    this.navCtrl.navigateForward(["/firebase/form-results"], navigationExtras);
+  }
+
+  updateFilter(event) {
+    const val = event.target.value.toLowerCase();
+    console.log(event, val);
+
+    // filter our data
+    // const temp = this.temp.filter(function (d) {
+    //   return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    // });
+
+    // // update the rows
+    // this.rows = temp;
+    // // Whenever the filter changes, always go back to the first page
+    // this.table.offset = 0;
+  }
+
+  changeDateFormat(date) {
+    const dateFormat = new Date(date).toString().substring(0, 15);
+    return dateFormat;
+  }
+
+  // ngx - table end
+
+  ionViewDidEnter() {
+    this.barChartPopulation();
+    this.pieChartBrowser();
+    this.barChart();
+
+  }
+
+  getCompanyLogo() {
+    console.log(this.email, this.uid);
+    this.firebaseService.getCompanyLogo(this.uid).subscribe(res => {
+      this.downloadURL = res['userData']['downloadURL'];
+      console.log(res, this.downloadURL);
+    })
+  }
+
+  getCompanyProfile() {
+    console.log(this.email, this.uid);
+    this.firebaseService.readCompanyProfile(this.uid).subscribe(res => {
+      this.companyProfile = res['userData'];
+      console.log(res, this.companyProfile);
+    })
+  }
+
+  getFirstEstimate() {
+    console.log(this.email, this.uid);
+    //  this.firebaseService.readEstimates(this.uid, this.email).
+    this.firebaseService.readEstimates(this.uid, this.email).snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c =>
+          ({ id: c.payload.doc.id, ...c.payload.doc.data() })
+        )
+      )
+    ).subscribe(data => {
+      this.estimateList = data;
+      console.log(this.estimateList, this.estimateList.length);
+
+    });
+  }
+
+  getCustomerList() {
+    console.log(this.email, this.uid);
+    //  this.firebaseService.readEstimates(this.uid, this.email).
+    this.firebaseService.readContactsinCSV(this.uid, this.email).subscribe(res => {
+      this.contactsList = res.userData;
+      console.log(this.contactsList);
+
+    })
+  }
+
+  getItemsnServices(): void {
+    console.log(this.email, this.uid);
+    this.firebaseService.readItems(this.uid, this.email).snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c =>
+          ({ id: c.payload.doc.id, ...c.payload.doc.data() })
+        )
+      )
+    ).subscribe(data => {
+      this.itemsList = data;
+      console.log('items data:', this.itemsList);
+
+    });
+  }
+
+  getReport() {
+    console.log(this.email, this.uid);
+
+    this.firebaseService.getReceivables(this.uid).subscribe(res => {
+      this.totalReceivable = res['userData']['totalReceivable'];
+      console.log(res, this.totalReceivable);
+    })
+
+    this.firebaseService.getProfit(this.uid).subscribe(res => {
+      this.totalProfit = res['userData']['totalProfit'];
+      console.log(res, this.totalProfit);
+    })
+
+    // setTimeout(function () {
+    //   console.log(this.totalProfit, this.totalReceivable);
+    // }, 3000);
+    // this.ratio = this.totalProfit / this.totalReceivable;
+    // console.log(this.ratio);
+
+  }
+  // getReceivables() {
+  //   console.log(this.email, this.uid);
+
+  //   this.firebaseService.getReceivables(this.uid).subscribe(res => {
+  //     this.totalReceivable = res['userData']['totalReceivable'];
+  //     console.log(res, this.totalReceivable);
+  //   })
+
+  // }
+
+
+  // getProfit() {
+  //   console.log(this.email, this.uid);
+
+  //   this.firebaseService.getProfit(this.uid).subscribe(res => {
+  //     this.totalProfit = res['userData']['totalProfit'];
+  //     console.log(res, this.totalProfit);
+  //   })
+
+  // }
+
+  returnRatio(totalProfit: number, totalReceivable: number) {
+    console.log(totalProfit, totalReceivable);
+
+    let ratio = (totalProfit / totalReceivable) * 100;
+    // this.ratio = ratio;
+    return ratio;
+  }
+
+  barChart() {
+    HighCharts.chart('barChart', {
+      chart: {
+        type: 'area',
+        backgroundColor: '#1b1e27',
+      },
+      title: {
+        text: ''
+      },
+      xAxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        type: undefined,
+        name: '',
+        data: [107000, -31000, 63500, 20300, -2000, 10700, 31000, 63500, 2030, -2000, 31000, 6350]
+      }]
+    });
+  }
+
+  barChartPopulation() {
+    HighCharts.chart('barChart_', {
+      chart: {
+        type: 'column',
+        backgroundColor: '#1b1e27',
+      },
+      title: {
+        text: 'Historic World Population by Region'
+      },
+      xAxis: {
+        categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Population (millions)',
+          align: 'high'
+        },
+      },
+      tooltip: {
+        valueSuffix: ' millions'
+      },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            enabled: true
+          }
+        }
+      },
+      series: [{
+        type: undefined,
+        name: '',
+        data: [107, 31, 635, 203, -200]
+      }
+        //   , {
+        //   type: undefined,
+        //   name: 'Year 1900',
+        //   data: [133, 156, 947, 408, 6]
+        // }, {
+        //   type: undefined,
+        //   name: 'Year 2000',
+        //   data: [814, 841, 3714, 727, 31]
+        // }, {
+        //   type: undefined,
+        //   name: 'Year 2016',
+        //   data: [1216, 1001, 4436, 738, 40]
+        // }
+      ]
+    });
+  }
+
+  pieChartBrowser() {
+    HighCharts.chart('pieChart', {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie',
+        backgroundColor: '#1b1e27',
+      },
+      title: {
+        text: ''
+      },
+      tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          //size: 250,
+          innerSize: '50%',
+          center: ['50%', '40%'],
+          dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+          }
+        }
+      },
+      series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        type: undefined,
+        data: [{
+          name: 'Chrome',
+          y: 61.41,
+          sliced: true,
+          selected: true
+        }, {
+          name: 'Internet Explorer',
+          y: 11.84
+        }, {
+          name: 'Firefox',
+          y: 10.85
+        }, {
+          name: 'Edge',
+          y: 4.67
+        }, {
+          name: 'Safari',
+          y: 4.18
+        }, {
+          name: 'Sogou Explorer',
+          y: 1.64
+        }, {
+          name: 'Opera',
+          y: 1.6
+        }, {
+          name: 'QQ',
+          y: 1.2
+        }, {
+          name: 'Other',
+          y: 2.61
+        }]
+      }]
+    });
+  }
+
+  // lineChart
+  public lineChartData: Array<any> = [
+    { data: [0, 5, 6, 8, 25, 9, 8, 24], label: 'Iphone' },
+    { data: [0, 3, 1, 2, 8, 1, 5, 1], label: 'Ipad' }
+  ];
+  public lineChartLabels: Array<string> = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+  ];
+  public lineChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false
+  };
+  public lineChartColors: Array<Object> = [
+    {
+      // grey
+      backgroundColor: 'rgba(41, 98, 255,0.1)',
+      borderColor: '#2962FF',
+      pointBackgroundColor: '#2962FF',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: '#2962FF'
+    },
+    {
+      // dark grey
+      backgroundColor: 'rgba(116, 96, 238,0.1)',
+      borderColor: '#7460ee',
+      pointBackgroundColor: '#7460ee',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: '#7460ee'
+    }
+  ];
+  public lineChartLegend = false;
+  public lineChartType = 'line';
+}
+

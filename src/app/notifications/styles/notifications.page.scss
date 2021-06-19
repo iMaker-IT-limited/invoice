@@ -1,0 +1,141 @@
+// Custom variables
+// Note:  These ones were added by us and have nothing to do with Ionic CSS Custom Properties
+:host {
+  --page-margin: var(--app-narrow-margin);
+}
+
+// Note:  All the CSS variables defined below are overrides of Ionic elements CSS Custom Properties
+.notifications-content {
+
+  .list {
+    
+    overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  }
+
+  .spinner {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    // 28px*28px
+    width: 28px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+  ion-item-divider {
+    --background: var(--ion-color-light);
+    --padding-start: var(--page-margin);
+  }
+
+  .notification-item {
+    --padding-start: 0px;
+    --inner-padding-end: 0px;
+
+    padding: var(--page-margin);
+    color: var(--ion-color-medium);
+    box-shadow: inset 0 8px 2px -9px var(--ion-color-darkest);
+
+    .notification-item-wrapper {
+      --ion-grid-column-padding: 0px;
+
+      width: 100%;
+      align-items: center;
+    }
+
+    .details-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      padding-left: var(--page-margin);
+
+      .details-name {
+        margin-top: 0px;
+        margin-bottom: 5px;
+        font-size: 16px;
+      	font-weight: 400;
+      	letter-spacing: 0.2px;
+      	color: var(--ion-color-secondary);
+      }
+
+      .details-description {
+        font-size: 12px;
+        margin: 0px;
+      }
+    }
+
+    .date-wrapper {
+      align-self: flex-start;
+
+      .notification-date {
+        margin: 0px;
+        font-size: 12px;
+        text-align: end;
+      }
+    }
+  }
+}
+@font-face{font-family:'Calluna';
+ src:url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/callunasansregular-webfont.woff') format('woff');
+}
+body {
+	background: url(//subtlepatterns.com/patterns/scribble_light.png);
+  font-family: Calluna, Arial, sans-serif;
+  min-height: 1000px;
+}
+#columns {
+	column-width: 320px;
+	column-gap: 15px;
+  width: 90%;
+	max-width: 1100px;
+	margin: 50px auto;
+}
+
+div#columns figure {
+	background: #fefefe;
+	border: 2px solid #fcfcfc;
+	box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+	margin: 0 2px 15px;
+	padding: 15px;
+	padding-bottom: 10px;
+	transition: opacity .4s ease-in-out;
+  display: inline-block;
+  column-break-inside: avoid;
+}
+
+div#columns figure img {
+	width: 100%; height: auto;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 15px;
+	margin-bottom: 5px;
+}
+
+div#columns figure figcaption {
+  font-size: .9rem;
+	color: #444;
+  line-height: 1.5;
+}
+
+div#columns small { 
+  font-size: 1rem;
+  float: right; 
+  text-transform: uppercase;
+  color: #aaa;
+} 
+
+div#columns small a { 
+  color: #666; 
+  text-decoration: none; 
+  transition: .4s color;
+}
+
+div#columns:hover figure:not(:hover) {
+	opacity: 0.4;
+}
+
+@media screen and (max-width: 750px) { 
+  #columns { column-gap: 0px; }
+  #columns figure { width: 100%; }
+}

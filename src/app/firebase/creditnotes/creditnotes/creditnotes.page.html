@@ -1,0 +1,220 @@
+<app-header></app-header>
+<ion-content>
+  <ion-item-divider sticky>
+    <ion-title>All Credit Notes</ion-title>
+    <ion-button color='theme' class="new_button" (click)="onCreateCreditNotes()"> + New</ion-button>
+  
+    <ion-button class="new_button" color="premium" fill="solid" slot="end" (click)="showCreditNotesToggle = !showCreditNotesToggle">
+<ion-icon name="menu-outline"></ion-icon>
+</ion-button>
+
+      <!-- <a class="menu_toggle" id="toggle"><span></span></a> -->
+      <div class="menu_toggle" *ngIf="showCreditNotesToggle">
+         <ul>
+            <li>
+               <ion-button class="listbutton" expand="full" fill="clear" (click)="show = !show">
+                  <ion-icon slot="start" size="medium" icon-only name="cloud-upload-sharp"></ion-icon>
+                  <span>
+                     Upload contact import
+                  </span>
+               </ion-button>
+            </li>
+            <li>
+               <ion-button class="listbutton" expand="full" fill="clear" (click)="getTestCsv()">
+                  <ion-icon slot="start" size="medium" icon-only name=""></ion-icon>
+                  <span>
+                     Get CSV
+                  </span>
+               </ion-button>
+            </li>
+            <li>
+               <ion-button class="listbutton" expand="full" fill="clear" (click)="loadCSV()">
+                  <ion-icon slot="start" size="medium" icon-only name="cloud-upload-sharp"></ion-icon>
+                  <span>
+                     Bulk import
+                  </span>
+               </ion-button>
+            </li>
+            <li>
+               <ion-button class="listbutton" expand="full" fill="clear" (click)="exportCSV()">
+                  <ion-icon slot="start" size="medium" icon-only name="cloud-download-sharp"></ion-icon>
+                  <span>
+                     Bulk export
+                  </span>
+               </ion-button>
+            </li>
+           
+         </ul>
+      </div>
+
+  
+  </ion-item-divider>
+  <ion-progress-bar color="theme"  type="indeterminate"></ion-progress-bar>
+ 
+  <!-- {{credit_notes | json}} -->
+   <ion-slides style="background:#f9f9fb; border-radius: 20px;" pager="true" [options]="slideOpts">
+        <ion-slide>
+          <ion-card style="box-shadow: none;">
+            <ion-card-header>
+              Total Outstanding Receivables
+            </ion-card-header>
+            <ion-card-content>
+              HKD 0.00
+            </ion-card-content>
+          </ion-card>
+        
+        </ion-slide>
+        <ion-slide>
+          <ion-card style="box-shadow: none;">
+            <ion-card-header>
+              Total Outstanding Receivables
+            </ion-card-header>
+            <ion-card-content>
+              HKD 0.00
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+        <ion-slide>
+          <ion-card style="box-shadow: none;">
+            <ion-card-header>
+              Total Outstanding Receivables
+            </ion-card-header>
+            <ion-card-content>
+              HKD 0.00
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+         <ion-slide>
+             <ion-card style="box-shadow: none;">
+            <ion-card-header>
+              Total Outstanding Receivables
+            </ion-card-header>
+            <ion-card-content>
+              HKD 0.00
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+        <ion-slide>
+          <ion-card style="box-shadow: none;">
+            <ion-card-header>
+              Total Outstanding Receivables
+            </ion-card-header>
+            <ion-card-content>
+              HKD 0.00
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+      </ion-slides>
+
+  <div *ngIf="!grid">
+    <ion-row class="new">
+      <ion-col class="col-left" style="padding: 0px;" size="12">
+    
+          <!-- ngx - table -->                              
+              <ngx-datatable [rows]="credit_notes" [ngClass]="tableStyle" [rowHeight]="auto" [headerHeight]="50"
+                [columnMode]="'force'" [rowClass]="getRowClass.bind(this)" [limit]="10" [footerHeight]="50">
+                <ngx-datatable-column sortable="true">
+                  <ng-template let-column="column" ngx-datatable-header-template>
+                   DATE
+                  </ng-template>
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                  <!-- <ion-button fill="clear" color="theme" (click)="onDetailPage(row)">
+                    {{row['Display Name']}}               
+                  </ion-button> -->
+                  <div> {{row['Credit Note Date']}}               
+                  </div>
+                 </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column sortable="true">
+                  <ng-template let-column="column" ngx-datatable-header-template>
+                   CREDIT NOTE#
+                  </ng-template>
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                   <div class="button" (click)="onDetailPage(row)">
+
+                    {{row['Credit Note Number']}}
+                   </div>
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column sortable="true">
+                  <ng-template let-column="column" ngx-datatable-header-template>
+                   REFERENCE#
+                  </ng-template>
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{row['Reference#']}}
+                  </ng-template>
+                </ngx-datatable-column>
+                    
+                  <ngx-datatable-column sortable="true">
+                  <ng-template let-column="column" ngx-datatable-header-template>
+                   CUSTOMER NAME
+                  </ng-template>
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{row['Customer Name']}}
+                  </ng-template>
+                </ngx-datatable-column>
+                       
+                <ngx-datatable-column sortable="true">
+                  <ng-template let-column="column" ngx-datatable-header-template>
+                   CREDIT NOTE#
+                  </ng-template>
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                   <div class="invoiced">
+                   </div> {{row['Credit Note Number']}}
+                  </ng-template>
+                </ngx-datatable-column>
+                
+                       
+                <ngx-datatable-column sortable="true">
+                  <ng-template let-column="column" ngx-datatable-header-template>
+                   STATUS
+                  </ng-template>
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                 
+                    <div class="text-draft" *ngIf="row['Credit Note Status'] == 'Draft'">
+                    {{row['Credit Note Status']}}
+                    </div>
+                    <div class="text-sent" *ngIf="row['Credit Note Status'] == 'Sent'">
+                    {{row['Credit Note Status']}}
+                    </div>
+                    <div class="text-closed" *ngIf="row['Credit Note Status'] == 'Closed'">
+                    {{row['Credit Note Status']}}
+                    </div>
+                    <div class="text-expired" *ngIf="row['Credit Note Statuss'] == 'Overdue'">
+                    {{row['Credit Note Status']}}
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+                
+                  <ngx-datatable-column sortable="true">
+                  <ng-template let-column="column" ngx-datatable-header-template>
+                   AMOUNT
+                  </ng-template>
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                   HKD {{row['Total']}}
+                  </ng-template>
+                </ngx-datatable-column>
+
+                  <ngx-datatable-column sortable="true">
+                  <ng-template let-column="column" ngx-datatable-header-template>
+                   BALANCE
+                  </ng-template>
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                   HKD {{row['Balance']}}
+                  </ng-template>
+                </ngx-datatable-column>
+                
+              </ngx-datatable>
+          <!-- ngx - table -->
+      </ion-col>
+    </ion-row>
+  </div>
+
+
+
+
+   <app-global-banner></app-global-banner>
+</ion-content>
+<app-global-footer></app-global-footer>

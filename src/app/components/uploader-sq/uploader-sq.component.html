@@ -1,0 +1,51 @@
+<!-- <div>{{enquirydetail | json}}</div> -->
+<ion-card style="box-shadow: none;"
+  *ngIf="enquirydetail.timestamp + enquirydetail.sq_timelimit * 1000 * 60 * 60 * 24 <= NOW">報價單查詢已逾期</ion-card>
+<ion-card *ngIf="enquirydetail.timestamp + enquirydetail.sq_timelimit * 1000 * 60 *60 * 24 > NOW"
+  style="box-shadow: none;">
+  <ion-card-header>
+    將報價單 ( 編號: {{enquirydetail?.timestamp}}) 發送至: {{enquirydetail.organization_name || ""}},
+    {{enquirydetail.enquiry_name || ''}}
+    <app-countdown-timer fill="time" [units]="{from: 'day', to: 'day'}"
+      [end]="number(enquirydetail.timestamp, enquirydetail.sq_timelimit)">
+    </app-countdown-timer>
+    <br>
+    <!-- <strong>
+      請在到期日 {{atend.toString().substr(0, 15)}} 之前發送報價單
+    </strong> -->
+
+    <!-- End at: {{number(enquirydetail.timestamp, enquirydetail.sq_timelimit)}} -->
+  </ion-card-header>
+  <ion-card-content>
+    <div class="dropzone" dropzone (hovered)="toggleHover($event)" (dropped)="onDrop($event)"
+      [class.hovering]="isHovering">
+
+      <h1>
+        <strong>
+        ionInvoice | iMaker IT limited 
+        </strong>
+      </h1>
+      <p>
+        <img src="../../../assets/images/home_categories/ionInvoice.svg" style="margin-top: 10px; margin-bottom: 10px; width: 175px !important;" alt="">
+        <!-- Drag and Drop a File
+        請在此處上傳
+        <br>
+        報價單文件
+        <br>
+        (i.e. PDF format) -->
+      </p>
+    </div>
+
+    <ion-list *ngFor="let file of files">
+      <ion-item>
+        <app-upload-task-sq style="width: 100%;" [file]="file" [id]="enquirydetail" [supplieruid]="supplieruid">
+        </app-upload-task-sq>
+      </ion-item>
+    </ion-list>
+
+    <!-- <div *ngIf="files.length > 0">
+      <ion-label>上載</ion-label>
+    </div> -->
+
+  </ion-card-content>
+</ion-card>

@@ -1,0 +1,43 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>contact-us-submenu2</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+<app-header></app-header>
+<ion-content>
+  <ion-slides>
+    <ion-slide>
+      <!-- 500*130 *  -->
+      <img style="width: 100%;" src="../../../assets/images/join-us/submenu2/staff.png" alt="">
+      <!-- <h1>Slide 1</h1> -->
+    </ion-slide>
+  </ion-slides>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="7">
+        <ion-card style="text-align: left; box-shadow: none;">
+          <ion-card-header style="font-size: larger; font-weight: bold;">學校教職員</ion-card-header>
+          <ion-card-content>
+            學校教職員只要簡單利用Google帳戶或用其他電郵於本平台登記成為會員，即可使用配對功能，並且能一覽各供應商的資料，費用全免。 <br>
+            <br>
+
+            <ion-button color="theme" fill="outline" [routerLink]="['/app/auth/signup']">
+              立即註冊</ion-button>
+
+            <!-- 教職員只需按一個按鈕鍵“Get a Quote", 便能獲得充足的合適報價。 供應商方面， 亦能因此而獲得商機。 -->
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="5">
+        <ion-card style="text-align: center;">
+          <!-- src\assets\sample-images\user\理念背景_1.jpg -->
+          <img src="../../../assets/sample-images/user/理念背景_1.jpg" alt="">
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <app-global-banner></app-global-banner>
+
+</ion-content>

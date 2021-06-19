@@ -1,0 +1,281 @@
+<!-- <ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="app/user"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header> -->
+<!-- <app-header></app-header> -->
+
+
+<ion-content class="user-friends-content">
+
+  <ion-fab vertical="top" horizontal="end" slot="fixed" color="none">
+    <ion-fab-button (click)="onDismiss()" size="small">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-segment class="user-friends-segment" mode="md" (ionChange)="segmentChanged($event)">
+
+    <ion-segment-button mode="md" checked="true" value="aboutme">
+      <ion-label>關於我</ion-label>
+    </ion-segment-button>
+
+    <!-- <ion-segment-button mode="md" value="friends">
+      <ion-label>Friends</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button mode="md" value="followers">
+      <ion-label>Followers</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button mode="md" value="following">
+      <ion-label>Following</ion-label>
+    </ion-segment-button> -->
+  </ion-segment>
+
+  <!-- <ion-searchbar class="friends-searchbar" animated mode="ios" [(ngModel)]="searchQuery" (ionChange)="searchList()">
+  </ion-searchbar> -->
+
+  <ng-template #friendItem let-friend="friend">
+    <ion-row class="user-details-section">
+      <ion-col class="user-image-wrapper" size="2">
+        <app-aspect-ratio [ratio]="{w:1, h:1}">
+          <app-image-shell class="user-image" animation="spinner" [src]="friend.image" [alt]="'friend'">
+          </app-image-shell>
+        </app-aspect-ratio>
+      </ion-col>
+      <ion-col class="user-data-wrapper">
+        <div class="user-info">
+          <h3 class="user-name">
+            <app-text-shell [data]="friend.name"></app-text-shell>
+          </h3>
+          <h5 class="user-job">
+            <app-text-shell [data]="friend.job"></app-text-shell>
+          </h5>
+        </div>
+      </ion-col>
+      <ion-col class="user-actions-wrapper">
+        <ion-button *ngIf="!friend.following" class="user-action" expand="block" size="small" color="primary">Follow
+        </ion-button>
+        <ion-button *ngIf="friend.following" class="user-action" expand="block" size="small" color="light">Following
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ng-template>
+
+  <section [hidden]="segmentValue !== 'aboutme'">
+
+    <ion-card>
+      <ion-card-header style="background-color: lightgray;">
+        <ion-avatar class="logo_">
+          <img src="{{photoURL}}" alt="">
+        </ion-avatar>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+          <ion-avatar slot="start">
+            <ion-icon class="icon" name="person-circle-outline"></ion-icon>
+          </ion-avatar>
+          <ion-label>{{roleDetail.user_name}}</ion-label>
+          <ion-chip color="secondary">
+            <ion-label>
+              <span *ngIf="role == 'teacher'">老師</span>
+              <span *ngIf="role == 'supplier'">供應商</span>
+            </ion-label>
+          </ion-chip>
+
+        </ion-item>
+
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src="{{photoURL}}">
+          </ion-avatar>
+          <ion-label>{{roleDetail.organization_name}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-avatar slot="start">
+            <ion-icon class="icon" name="mail-outline"></ion-icon>
+          </ion-avatar>
+          <ion-label>{{roleDetail.user_email}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-avatar slot="start">
+            <ion-icon class="icon" name="call-outline"></ion-icon>
+          </ion-avatar>
+          <ion-label>{{roleDetail.user_phone}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-avatar slot="start">
+            <ion-icon *ngIf="roleDetail.isVerified == true" class="icon" style="color: var(--ion-color-theme);"
+              name="checkmark-circle-outline"></ion-icon>
+            <ion-icon *ngIf="roleDetail.isVerified == false" class="icon" style="color: var(--ion-color-secondary);"
+              name="ellipse-outline"></ion-icon>
+          </ion-avatar>
+          <ion-label>
+            <span *ngIf="roleDetail.isVerified == false" style="color: var(--ion-color-secondary);">未驗證</span>
+            <span *ngIf="roleDetail.isVerified == true" style="color: var(--ion-color-theme);">已驗證</span>
+          </ion-label>
+        </ion-item>
+
+
+
+      </ion-card-content>
+    </ion-card>
+
+    <!-- <ion-list class="friends-list" *ngIf="friendsList.length > 0">
+      <ion-item class="friend-item" *ngFor="let friend of friendsList">
+        <ng-container *ngTemplateOutlet="friendItem; context: { friend: friend }"></ng-container>
+      </ion-item>
+    </ion-list> -->
+    <!-- <ng-container *ngIf="friendsList.length <= 0">
+      <h3 class="empty-list-message">No Friends</h3>
+    </ng-container> -->
+  </section>
+
+  <!-- <section [hidden]="segmentValue !== 'friends'">
+    <ion-list class="friends-list" *ngIf="friendsList.length > 0">
+      <ion-item class="friend-item" *ngFor="let friend of friendsList">
+        <ng-container *ngTemplateOutlet="friendItem; context: { friend: friend }"></ng-container>
+      </ion-item>
+    </ion-list>
+    <ng-container *ngIf="friendsList.length <= 0">
+      <h3 class="empty-list-message">No Friends</h3>
+    </ng-container>
+  </section> -->
+
+  <!-- <section [hidden]="segmentValue !== 'followers'">
+    <ion-list class="friends-list" *ngIf="followersList.length > 0">
+      <ion-item class="friend-item" *ngFor="let friend of followersList">
+        <ng-container *ngTemplateOutlet="friendItem; context: { friend: friend }"></ng-container>
+      </ion-item>
+    </ion-list>
+    <ng-container *ngIf="followersList.length <= 0">
+      <h3 class="empty-list-message">No Followers</h3>
+    </ng-container>
+  </section> -->
+
+  <!-- <section [hidden]="segmentValue !== 'following'">
+    <ion-list class="friends-list" *ngIf="followingList.length > 0">
+      <ion-item class="friend-item" *ngFor="let friend of followingList">
+        <ng-container *ngTemplateOutlet="friendItem; context: { friend: friend }"></ng-container>
+      </ion-item>
+    </ion-list>
+    <ng-container *ngIf="followingList.length <= 0">
+      <h3 class="empty-list-message">No Following</h3>
+    </ng-container>
+  </section> -->
+
+  <!-- <ion-card class="update-user-content">
+    <ion-row class="select-user-image-row">
+      <ion-col class="user-image-col" size="5">
+        <app-aspect-ratio [ratio]="{w: 1, h: 1}">
+          <app-image-shell [mode]="'cover'" class="user-image" animation="spinner" [src]="selectedAvatar"
+            [alt]="'user image'"></app-image-shell>
+        </app-aspect-ratio>
+        <ion-button class="change-image-btn" color="secondary" (click)="changeUserImage()">
+          <ion-icon class="btn-icon" slot="icon-only" name="camera"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <section class="user-details-fields fields-section">
+      <ion-list class="inputs-list" lines="full">
+        <ion-item class="input-item">
+          <ion-label color="secondary" position="floating">Name</ion-label>
+          <ion-input type="text" formControlName="name" required></ion-input>
+        </ion-item>
+        <ion-item class="input-item">
+          <ion-label color="secondary" position="floating">Last name</ion-label>
+          <ion-input type="text" formControlName="lastname" required></ion-input>
+        </ion-item>
+        <ion-item class="input-item">
+          <ion-label color="secondary" position="floating">Date of Birth</ion-label>
+          <ion-datetime display-format="DD/MM/YYYY" picker-format="DD MMMM YYYY" formControlName="birthdate" required>
+          </ion-datetime>
+        </ion-item>
+        <ion-item class="input-item">
+          <ion-label color="secondary" position="floating">Phone number</ion-label>
+          <ion-input type="tel" formControlName="phone" required></ion-input>
+        </ion-item>
+        <ion-item class="input-item">
+          <ion-label color="secondary" position="floating">Email</ion-label>
+          <ion-input type="email" formControlName="email" required></ion-input>
+        </ion-item>
+      </ion-list>
+    </section>
+
+    <section class="user-experience-fields fields-section">
+      <h5 class="section-header">Experience in</h5>
+      <ion-row class="checkbox-tags rounded-checkbox-tags">
+        <ion-item formArrayName="skills" lines="none" class="checkbox-tag rounded-tag"
+          *ngFor="let skill of skillsFormArray.controls; let i = index;">
+          <ion-label class="tag-label">{{skills[i].name}}</ion-label>
+          <ion-checkbox [formControlName]="i"></ion-checkbox>
+        </ion-item>
+      </ion-row>
+    </section>
+
+    <section class="user-languages-fields fields-section">
+      <h5 class="section-header">Languages</h5>
+      <ion-row class="range-item-row">
+        <ion-col size="12">
+          <div class="range-header">
+            <span class="range-label">English</span>
+            <span class="range-value">{{ changeLangValue(updateUserForm.controls.english.value) }}</span>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <ion-range class="range-control" formControlName="english" color="secondary" min="1" max="10" step="1">
+          </ion-range>
+        </ion-col>
+      </ion-row>
+      <ion-row class="range-item-row">
+        <ion-col size="12">
+          <div class="range-header">
+            <span class="range-label">Spanish</span>
+            <span class="range-value">{{ changeLangValue(updateUserForm.controls.spanish.value) }}</span>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <ion-range class="range-control" formControlName="spanish" color="secondary" min="1" max="10" step="1">
+          </ion-range>
+        </ion-col>
+      </ion-row>
+      <ion-row class="range-item-row">
+        <ion-col size="12">
+          <div class="range-header">
+            <span class="range-label">French</span>
+            <span class="range-value">{{ changeLangValue(updateUserForm.controls.french.value) }}</span>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <ion-range class="range-control" formControlName="french" color="secondary" min="1" max="10" step="1">
+          </ion-range>
+        </ion-col>
+      </ion-row>
+    </section>
+  </ion-card> -->
+
+
+</ion-content>
+
+<!-- <ion-footer>
+  <ion-row class="form-actions-wrapper">
+    <ion-col>
+      <ion-button class="delete-btn" expand="block" color="primary" fill="outline" (click)="deleteUser()">DELETE
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button class="submit-btn" expand="block" color="secondary" type="submit" fill="solid"
+        [disabled]="!updateUserForm.valid">UPDATE</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer> -->

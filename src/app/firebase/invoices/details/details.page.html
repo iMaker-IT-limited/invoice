@@ -1,0 +1,737 @@
+<app-header></app-header>
+<ion-content>
+    <ion-item-divider sticky>
+        <ion-title class="title" (click)="showSideNav(sideNavInvoice = !sideNavInvoice)">
+            <!-- All Invoices -->
+            <!-- {{sideNavInvoice}} -->
+            {{invoiceDetail["Invoice Number"]}}
+        </ion-title>
+        <!-- <button (click)="onStatus()">Status</button> -->
+        <ion-button slot="end" fill="clear" color="dark" (click)="onDismiss()">
+            <ion-icon name="close"></ion-icon>
+        </ion-button>
+    </ion-item-divider>
+    <ion-progress-bar *ngIf="!invoiceDetail" color="theme" type="indeterminate"></ion-progress-bar>
+
+    <div class="grid-container" id="grid-container2">
+        <aside class="sidenav" id="sidenav">
+            <ul *ngFor="let i of invoiceList" class="sidenav__list">
+                <li class="sidenav__list-item">
+                    <input type="checkbox" style="padding-right: 10px;" />
+                    <ion-label style="margin-bottom: 10px; color: black;">
+                        {{i['Customer Name']}}
+                    </ion-label>
+                    <br />
+                    <div class="estimatenumber">
+                        {{i['Invoice Number']}}
+                    </div>
+                    <div class="estimatedate">
+                        | {{i['Invoice Date']}}
+                    </div>
+                    <div class="status">
+                        {{i['Invoice Status']}}
+                    </div>
+                </li>
+            </ul>
+        </aside>
+
+        <header class="header">
+            <!-- <ion-title>{{invoiceDetail["Invoice Number"]}}
+            </ion-title> -->
+            <div>
+                <ul class="hList">
+                    <li>
+                        <a class="menu">
+                            <h2 class="menu-title">
+                                <ion-icon src="assets/icon/pdf.svg"></ion-icon>
+                                Download
+                            </h2>
+                            <ul class="menu-dropdown">
+                                <li (click)="testtablePDF(invoiceDetail)">
+                                    Invoice
+                                </li>
+                                <li (click)="testtablePDFfordeliverynote(invoiceDetail)">Deliver note</li>
+                            </ul>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="menu">
+                            <h2 class="menu-title">
+                                <ion-icon name="document"></ion-icon>
+
+                                Invoice Status
+                            </h2>
+                            <ul class="menu-dropdown">
+                                <li (click)="onMarkAsSent(invoiceDetail)">Sent</li>
+                                <li>
+                                    <label for="showForm">
+                                        Record payment
+                                    </label>
+                                </li>
+                                <li (click)="onVoid(invoiceDetail)">Void</li>
+                            </ul>
+                        </a>
+                    </li>
+                    <li>
+                        <a (click)="updateInvoices(invoiceDetail)" class="menu">
+                            <h2 class="menu-title">
+
+                                <ion-icon src="assets/icon/edit.svg">
+                                </ion-icon>
+                                Edit
+                            </h2>
+                        </a>
+                    </li>
+                    <li>
+                        <a (click)="showcolor = !showcolor" class="menu">
+                            <h2 class="menu-title">
+                                Customize
+                            </h2>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice"
+                (click)="updateInvoices(invoiceDetail)">
+                <ion-icon src="assets/icon/edit.svg"></ion-icon>
+            </ion-button>
+
+            <ion-button slot="end" fill="clear" color="theme" (click)="testtablePDF(invoiceDetail)">
+                <ion-icon src="assets/icon/pdf.svg"></ion-icon>
+            </ion-button> -->
+
+            <ion-button slot="end" fill="solid" color="theme" (click)="deleteInvoice(invoiceDetail)">Delete
+            </ion-button>
+        </header>
+
+        <main class="main">
+            <div class="main-header">
+
+                <li *ngIf="showcolor">
+
+                    <div class="menu_toggle" style="overflow-y: scroll;">
+                        <ul>
+                            <li>
+                                <ion-item-divider style="background: var(--ion-color-dark-tint)" sticky>
+                                    <ion-button slot="end" color="theme" fill="solid" class="dismissbutton"
+                                        (click)="onDismissModal()">
+                                        <ion-icon name="close"></ion-icon>
+                                    </ion-button>
+                                </ion-item-divider>
+
+                            </li>
+
+                            <li>
+
+                                <!-- <ion-card>
+                                    <ion-card-header> Template</ion-card-header>
+                                    <ion-card-content>
+                                        <select class="select" name="color" style="" id="color" placeholder=""
+                                            (change)="selectcolortheme()">
+                                            <option value="blue">Blue</option>
+                                            <option value="steelblue">steelblue</option>
+                                            <option value="teal">Teal</option>
+                                            <option value="orange">Orange</option>
+                                        </select>
+
+                                    </ion-card-content>
+                                </ion-card> -->
+
+                                <ion-row>
+                                    <ion-col>
+                                        <ion-card style="padding: 0px;" (click)="selectTheme('blue')">
+                                            <ion-card-header style="padding: 0px;">
+                                                <img src="./../../../../assets/images/blue.png" alt="">
+                                            </ion-card-header>
+
+                                            <!-- <ion-card-content>
+                                                Blue
+                                            </ion-card-content> -->
+                                        </ion-card>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-card style="padding: 0px;" (click)="selectTheme('orange')">
+                                            <ion-card-header style="padding: 0px;">
+                                                <img src="./../../../../assets/images/orange.jpg" alt="">
+                                            </ion-card-header>
+
+                                            <!-- <ion-card-content>
+                                                Orange
+                                            </ion-card-content> -->
+                                        </ion-card>
+                                    </ion-col>
+                                </ion-row>
+
+                                <ion-row>
+                                    <ion-col>
+                                        <ion-card style="padding: 0px;" (click)="selectTheme('cyan')">
+                                            <ion-card-header style="padding: 0px;">
+                                                <img src="./../../../../assets/images/cyan.jpg" alt="">
+                                            </ion-card-header>
+
+                                            <!-- <ion-card-content>
+                                                Cyan
+                                            </ion-card-content> -->
+                                        </ion-card>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-card style="padding: 0px;" (click)="selectTheme('steelblue')">
+                                            <ion-card-header style="padding: 0px;">
+                                                <img src="./../../../../assets/images/steelblue.jpg" alt="">
+                                            </ion-card-header>
+
+                                            <!-- <ion-card-content>
+                                                Steel blue
+                                            </ion-card-content> -->
+                                        </ion-card>
+                                    </ion-col>
+                                </ion-row>
+
+                                <ion-row>
+                                    <ion-col>
+                                        <ion-card style="padding: 0px;" (click)="selectTheme('cyan')">
+                                            <ion-card-header style="padding: 0px;">
+                                                <img src="./../../../../assets/images/cyan.jpg" alt="">
+                                            </ion-card-header>
+
+                                        </ion-card>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-card style="padding: 0px;" (click)="selectTheme('steelblue')">
+                                            <ion-card-header style="padding: 0px;">
+                                                <img src="./../../../../assets/images/steelblue.jpg" alt="">
+                                            </ion-card-header>
+
+
+                                        </ion-card>
+                                    </ion-col>
+                                </ion-row>
+
+                                <ion-row>
+                                    <ion-col>
+                                        <ion-card style="padding: 0px;" (click)="selectTheme('cyan')">
+                                            <ion-card-header style="padding: 0px;">
+                                                <img src="./../../../../assets/images/cyan.jpg" alt="">
+                                            </ion-card-header>
+
+
+                                        </ion-card>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-card style="padding: 0px;" (click)="selectTheme('steelblue')">
+                                            <ion-card-header style="padding: 0px;">
+                                                <img src="./../../../../assets/images/steelblue.jpg" alt="">
+                                            </ion-card-header>
+
+
+                                        </ion-card>
+                                    </ion-col>
+                                </ion-row>
+
+                                <ion-row>
+                                    <ion-col>
+                                        <ion-card style="padding: 0px;" (click)="selectTheme('cyan')">
+                                            <ion-card-header style="padding: 0px;">
+                                                <img src="./../../../../assets/images/cyan.jpg" alt="">
+                                            </ion-card-header>
+
+
+                                        </ion-card>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-card style="padding: 0px;" (click)="selectTheme('steelblue')">
+                                            <ion-card-header style="padding: 0px;">
+                                                <img src="./../../../../assets/images/steelblue.jpg" alt="">
+                                            </ion-card-header>
+
+
+                                        </ion-card>
+                                    </ion-col>
+                                </ion-row>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </li>
+
+
+                <input type="checkbox" name="showForm" id="showForm" class="showForm">
+
+                <div class="form">
+                    <h2 style="font-size: large">Payment for {{invoiceDetail["Invoice Number"]}}</h2>
+
+                    <form [formGroup]="reimburshForm" (ngSubmit)="onPaymentReceived(invoiceDetail)">
+
+                        <!-- <label for="">Customer Name</label>
+                            <input type="text" name="name" placeholder="" readonly>
+                            <label for="">Payment #</label>
+                            <input type="" name="" placeholder="" >
+                            <label for=""></label>
+                            <input type="" name="" placeholder="" readonly> -->
+                        <ion-list lines="none">
+
+                            <ion-item>
+                                <ion-label class="label-form">Customer ID: {{invoiceDetail["Customer ID"]}}</ion-label>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label class="label-form">Customer Name: {{invoiceDetail["Customer Name"]}}
+                                </ion-label>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label class="label-form">Amount: {{invoiceDetail["Total"]}}
+                                </ion-label>
+                            </ion-item>
+                            <!-- {{invoiceDetail | json}} -->
+                            <ion-item>
+                                <ion-label class="label-form_" for="cars">Payment made</ion-label>
+                                <select formControlName="payment" name="cars" id="cars">
+                                    <option value="cash">Cash</option>
+                                    <option value="online banking">Online banking</option>
+                                    <option value="bank transfer">Bank Transfer</option>
+                                    <option value="cheque">Cheque</option>
+                                </select>
+                            </ion-item>
+
+                            <ion-item>
+                                <ion-label class="label-form_" for="cars">Payment date</ion-label>
+                                <input formControlName="payment_date" type="date">
+
+                            </ion-item>
+
+
+                            <!-- <ion-item>
+                                <ion-label>
+                                    Payment Date
+                                </ion-label>
+
+                                <ion-input type="date"></ion-input>
+                            </ion-item> -->
+                        </ion-list>
+
+                        <!-- <div class="left section">
+                            <input type="text" name="name" placeholder="Your name" required>
+                            <input type="email" name="email" placeholder="Your email" required>
+                            <input type="tel" name="tel" placeholder="Your telephone number" required>
+                        </div> -->
+                        <!-- <div class="right section">
+                            <textarea name="comment" placeholder="Your comment" required></textarea>
+                        </div> -->
+                        <ion-button fill="clear" color="theme" type="submit" style="" class="recordpayment">
+                            Record Payment</ion-button>
+
+                        <label for="showForm" style="border-radius: 8px;" class="closeFormLabel left">Cancel
+                        </label>
+                    </form>
+                </div>
+
+
+            </div>
+
+
+            <div style="height: 20px;"></div>
+
+            <div id="invoice">
+
+                <!-- {{statusList | json}} -->
+
+                <ion-card style="box-shadow: none;" class="timeline">
+                    <div class="history-tl-container">
+                        <ul class="tl">
+
+                            <li class="tl-item" *ngFor="let i of statusList">
+                                <div class="timestamp">
+                                    {{i['time'].toDate() | date:'yyyy/MM/dd h:mm:ss a'}}
+
+                                </div>
+                                <div class="item-title">Estimate {{i['Estimate Number']}} is
+                                    {{i['Estimate Status']}}
+                                </div>
+                            </li>
+
+                        </ul>
+                        <!-- <ul class="tl">
+                            <li class="tl-item" ng-repeat="item in retailer_history">
+                                <div class="timestamp">
+                                    3rd March 2015<br />
+                                    7:00 PM
+                                </div>
+                                <div class="item-title">Start from Shire</div>
+                                <div class="item-detail">Don't forget the ring</div>
+                            </li>
+                            <li class="tl-item" ng-repeat="item in retailer_history">
+                                <div class="timestamp">
+                                    19th March 2015<br />
+                                    3:00 PM
+                                </div>
+                                <div class="item-title">Kill some Orcs</div>
+                                <div class="item-detail">Don't enter the caves!!</div>
+                            </li>
+                            <li class="tl-item" ng-repeat="item in retailer_history">
+                                <div class="timestamp">
+                                    1st June 2015<br />
+                                    7:00 PM
+                                </div>
+                                <div class="item-title">Throw that goddamn ring in the lava</div>
+                                <div class="item-detail">Also, throw that Gollum too</div>
+                            </li>
+
+
+                        </ul> -->
+                    </div>
+                </ion-card>
+
+                <div class="ribbon">
+                    <div class="wrap">
+                        <span class="ribbon6">Invoiced</span>
+
+                        <ion-card class="invoice overflow-auto">
+                            <table id="billto">
+                                <tr colspan="3">
+                                    <td>
+                                        <input type="file" name="file" id="file" class="inputfile"
+                                            (change)="onChange($event)" />
+
+                                        <!-- preset logo -->
+                                        <div *ngIf="base64Image && !myimage">
+                                            <img [src]="base64Image" width="200px" height="200px" alt="">
+                                        </div>
+                                        <!-- custom logo -->
+                                        <div *ngIf="myimage">
+                                            <img [src]="myimage | async" width="200px" height="200px" alt="">
+                                        </div>
+
+                                        <!-- <img src="./../../../../assets/images/home_categories/ionInvoice.svg" alt="" /> -->
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td style="font-weight: bold;">
+                                        {{company_name}}
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td style="font-weight: bold;">
+                                        {{companyaddress}}
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td style="font-weight: bold;">
+                                        {{companyemail}}
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td style="font-weight: bold;">
+                                        {{website}}
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Bill To:</td>
+                                    <td></td>
+                                    <td>
+                                        <!-- Sales Invoices <br />
+                                        {{invoiceDetail["Invoice Number"]}} -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{{invoiceDetail['Customer Name']}}</td>
+                                    <td></td>
+                                    <td>Invoice Date: {{invoiceDetail["Estimate Date"].substring(0, 10)}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Billing Address: {{invoiceDetail['Billing Address']}}</td>
+                                    <td></td>
+                                    <td>Expiry Date: {{invoiceDetail["Expiry Date"].substring(0,10)}}</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Sales person: {{invoiceDetail["Sales person"]}}</td>
+                                </tr>
+                                <!-- <tr><td></td><td></td><td></td></tr> -->
+                            </table>
+
+                            <!-- preset logistic item starts -->
+                            <div *ngIf="companylogisticprofile" id="invoice-bot">
+
+                                <div id="table">
+                                    <table id="logistic_one" class="table-main" style="filter:blur(0px);">
+                                        <tr>
+                                            <td colspan="50">
+                                                <!-- <legend>Shipper</legend> -->
+                                                Shipper: {{shipper}}
+
+                                            </td>
+                                            <td colspan="50">
+                                                <!-- <legend>Consignee</legend> -->
+                                                Consignee: {{consignee}}
+
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="25">
+                                                <!-- <legend>Port of Loading</legend> -->
+                                                Port of loading: {{port_of_loading}}
+
+                                            </td>
+                                            <td colspan="25">
+                                                <!-- <legend>Port of Discharge</legend> -->
+                                                Port of discharge: {{port_of_discharge}}
+                                            </td>
+                                            <td colspan="25">
+                                                <!-- <legend>HBL</legend> -->
+
+                                                HBL: {{HBL}}
+                                            </td>
+                                            <td colspan="16">
+                                                <!-- <legend>MBL</legend> -->
+
+                                                MBL: {{MBL}}
+                                            </td>
+                                            <td colspan="9">
+                                                <!-- <legend>Carriage by</legend> -->
+
+                                                Carriage by: {{carriage_by}}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="25">
+                                                <!-- <legend>Vessel</legend> -->
+                                                Vessel: {{vessel}}
+                                            </td>
+                                            <td colspan="75">
+                                                <!-- <legend>Container</legend> -->
+
+                                                Container: {{container}}
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td colspan="25">
+                                                <!-- <legend>Date of order</legend> -->
+                                                Date of order: {{date_of_order}}
+                                            </td>
+                                            <td colspan="50">
+                                                <!-- <legend>Your Reference</legend> -->
+                                                Your Reference: {{your_reference}}
+                                            </td>
+                                            <td colspan="25">
+                                                <!-- <legend>Terms of delivery</legend> -->
+
+                                                Terms of delivery: {{terms_of_delivery}}
+                                            </td>
+
+                                        </tr>
+
+                                    </table>
+
+                                    <br>
+                                    <table id="logistic_two" class="table-main">
+                                        <tr>
+                                            <td colspan="25">
+                                                <legend>Marks/ No.</legend>
+                                            </td>
+                                            <td colspan="10">
+                                                <legend>Pieces</legend>
+                                            </td>
+                                            <td colspan="15">
+                                                <legend>Packaging</legend>
+                                            </td>
+                                            <td colspan="25">
+                                                <legend>Description of goods</legend>
+                                            </td>
+                                            <td colspan="16">
+                                                <legend>Weights</legend>
+                                            </td>
+                                            <td colspan="9">
+                                                <legend>cbm</legend>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="25">
+                                                {{marks_no}}
+                                            </td>
+                                            <td colspan="10">
+                                                {{pieces}}
+                                            </td>
+                                            <td colspan="15">
+                                                {{packaging}}
+                                            </td>
+                                            <td colspan="25">
+                                                {{description_of_goods}}
+                                            </td>
+                                            <td colspan="16">
+                                                {{weight}}
+                                            </td>
+                                            <td colspan="9">
+                                                {{cbm}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!--End Table-->
+
+                            </div>
+                            <!-- preset logistic item ends -->
+
+                            <table id="my-table">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Item </th>
+                                    <th>Description</th>
+                                    <th>Qty</th>
+                                    <th>Rate {{invoiceDetail["Currency Code"]}} </th>
+                                    <th>Amount {{invoiceDetail["Currency Code"]}}</th>
+                                </tr>
+                                <tr *ngFor="let estimate of invoiceDetail.salesList | slice: 1; let j = index">
+                                    <td>{{j + 1}}</td>
+                                    <td>{{estimate['Item Name']}}</td>
+                                    <td>{{estimate['Description']}}</td>
+                                    <td>{{estimate.quantity}}</td>
+                                    <td>{{estimate.Rate}}</td>
+                                    <td> $
+                                        {{returnProduct(estimate.Rate, estimate.quantity)}}</td>
+                                </tr>
+                                <!-- <tr>
+                                    <td class="no">01</td>
+                                    <td class="text-left">
+                                        <h3>{{invoiceDetail["Item Name"]}}</h3>
+                                        <pre style="white-space: pre-wrap;">
+                                {{invoiceDetail["Item Desc"]}}
+                                        </pre>
+                                    </td>
+                                    <td class="unit">{{invoiceDetail["Item Price"]}}</td>
+                                    <td class="qty">{{invoiceDetail["Quantity"]}}</td>
+                                    <td class="total">{{invoiceDetail["Item Total"]}}</td>
+                                </tr> -->
+
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Sub total</td>
+                                    <td>${{invoiceDetail["Total"]}}</td>
+                                </tr>
+                                <!-- <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2">TAX 25%</td>
+                                    <td>$1,300.00</td>
+                                </tr> -->
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Total</td>
+                                    <td><strong>
+                                            ${{invoiceDetail["Total"]}}
+                                        </strong>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table id="notes" style="font-size: 10px;">
+                                <tr>
+                                    <td>
+                                        {{invoiceDetail["Notes"]}}
+                                    </td>
+                                </tr>
+                            </table>
+                            <table id="notices">
+                                <tr>
+                                    <th>Terms & Conditions:</th>
+                                </tr>
+                                <tr>
+                                    <td class="notice">
+                                        <pre style="white-space: pre-wrap;">
+{{invoiceDetail['Terms & Conditions'] || 'not given'}}
+
+                                        </pre>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table id="e-signature">
+                                <tr>
+                                    <th>
+                                        Signature
+                                    </th>
+
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="file" name="file" id="file" class="inputfile"
+                                            (change)="onSignatureChange($event)" />
+
+                                        <!-- preset logo -->
+                                        <!-- <div *ngIf="Signaturebase64Image && !Signaturemyimage">
+                                        <img [src]="Signaturebase64Image" width="200px" height="200px" alt="">
+                                    </div> -->
+                                        <!-- custom logo -->
+                                        <div *ngIf="mySignatureimage">
+                                            <img [src]="mySignatureimage | async" width="200px" height="200px" alt="">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <footer>
+                                Powered by i-Maker IT Limited
+                            </footer>
+                        </ion-card>
+                    </div>
+                    <div></div>
+                </div>
+
+                <!-- <ion-item class="">
+                    <ion-badge class="badge" color="primary" (click)="updateInvoices(invoiceDetail)">
+                        <ion-icon src="assets/icon/edit.svg"></ion-icon>
+                        Edit
+                    </ion-badge>
+
+                    <ion-badge class="badge" color="secondary" (click)="onMarkAsSent(invoiceDetail)">
+                        <ion-icon src="assets/icon/edit.svg"></ion-icon>
+                        Mark as sent
+                    </ion-badge>
+
+                    <ion-badge class="badge" color="tertiary" (click)="testtablePDFfordeliverynote(invoiceDetail)">
+                        <ion-icon src="assets/icon/edit.svg"></ion-icon>
+                        Delivery note
+                    </ion-badge>
+
+                    <ion-badge class="badge" color="danger" (click)="onVoid(invoiceDetail)">
+                        <ion-icon src="assets/icon/edit.svg"></ion-icon>
+                        Void
+                    </ion-badge>
+
+                    <ion-badge color="theme">
+                        <label class="badge" for="showForm">
+                            Record payment
+                        </label>
+                    </ion-badge>
+
+                </ion-item> -->
+
+            </div>
+        </main>
+    </div>
+
+</ion-content>

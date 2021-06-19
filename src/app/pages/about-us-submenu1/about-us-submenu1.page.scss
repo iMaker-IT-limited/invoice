@@ -1,0 +1,22 @@
+/* On screens that are 600px or more, set the background color to blue */
+@media screen and (min-width: 600px) {
+    .STEP_web {
+        display: block
+    }
+
+    .STEP_mobile {
+        display: none;
+    }
+}
+
+
+/* On screens that are 600px or less, set the background color to blue */
+@media screen and (max-width: 600px) {
+    .STEP_web {
+        display: none;
+    }
+
+    .STEP_mobile {
+        display: block;
+    }
+}

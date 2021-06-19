@@ -1,0 +1,174 @@
+<app-header></app-header>
+<ion-content>
+  <ion-item-divider>
+    <img class="avator" src="./../../../../assets/images/home_categories/estimate.svg" alt="" />
+    <ion-title>New Expenses</ion-title>
+    <ion-button fill="clear" color="theme" (click)="dismissModal()">
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+
+  </ion-item-divider>
+
+  <!-- if contacts list does not show data -->
+  <!-- <app-rating-input *ngIf="!contacts"></app-rating-input> -->
+
+
+  <div class="testbox">
+
+    <form [formGroup]="reimburshForm" (ngSubmit)="createEstimate()" class="form-validate form-horizontal" novalidate="">
+      <!-- START panel-->
+      <div class="panel-body">
+        <legend>New Expense</legend>
+        <fieldset>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label" style="color: #e54643;">Customer Name:</label>
+            <div class="col-sm-6">
+              <ion-skeleton-text *ngIf="!contacts" animated style="background: lightgray; width: 100%; height: 25px;">
+              </ion-skeleton-text>
+
+              <select *ngIf="contacts" class="form-control" formControlName="Customer Name">
+                <option *ngFor="let i of contacts" value="{{i['Customer Name']}}">{{i['Customer Name']}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+        <!-- Invoice number -->
+        <!-- <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" style="color: #e54643;">Estimate Number:</label>
+            <div class="col-sm-6">
+              <input class="form-control" type="text" formControlName="Estimate Number" placeholder="Estimate Number" />
+            </div>
+          </div>
+        </fieldset> -->
+        <!-- Category name -->
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" style="color: #e54643;">Expense Category:</label>
+            <div class="col-sm-6">
+              <select *ngIf="contacts" class="form-control" formControlName="Expense Category">
+                <!-- <option *ngFor="let i of contacts" value="{{i['Customer Name']}}">{{i['Customer Name']}}
+                </option> -->
+                <option value="cost of goods sold">Cost of goods sold</option>
+                <option value="selling and distribution expenses">Selling and distribution expenses</option>
+                <option value="operating, general and administrative">Operating, general and administrative</option>
+                <option value="salaries, wages, and benefits">Salaries, wages, and benefits</option>
+                <option value="rent expense">Rent expense</option>
+
+              </select>
+            </div>
+          </div>
+        </fieldset>
+        <!-- amount -->
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Expense Amount:</label>
+            <div class="col-sm-6">
+              <input class="form-control" type="number" formControlName="Expense Amount" placeholder="" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Order number -->
+
+        <!-- Expense Date -->
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" style="color: #e54643;">Expense Date: </label>
+            <div class="col-sm-6">
+              <ion-datetime (ionChange)="onEstimateDate($event)" class="datetime-text" mode="ios" value="es_d"
+                formControlName="Expense Date">
+              </ion-datetime>
+              <!-- <input type="date" formControlName="Estimate Date" value="2018-07-22" /> -->
+            </div>
+
+          </div>
+        </fieldset>
+
+
+        <!-- Notes -->
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Notes:</label>
+            <div class="col-sm-6">
+              <ion-textarea rows="2" class="form-control" formControlName="Notes"
+                placeholder="Will be displayed on the estimate">
+              </ion-textarea>
+
+              <!-- <input class="form-control" type="text" formControlName="Notes"
+                                placeholder="Will be displayed on the estimate" /> -->
+            </div>
+          </div>
+        </fieldset>
+        <!-- Terms and conditions -->
+
+
+      </div>
+      <!-- 
+            {{reimburshForm.value['Customer Name']}} -->
+      <!-- <ion-button (click)="returnSum()">Calculate sum</ion-button> -->
+      <ion-button [disabled]="!reimburshForm.value['Customer Name']" type="submit" color="theme">Save</ion-button>
+      <!-- <br />
+            <ion-button color="dark" (click)="submitForm(reimburshForm.value)">Save and Send</ion-button> -->
+    </form>
+  </div>
+</ion-content>
+<!-- <form [formGroup]="createEstimateForm" (ngSubmit)="createEstimate()">
+   <h4>Customer Name<span>*</span></h4>
+   <select formControlName="Customer Name">
+      <option value="Type" selected>Select or Type to add</option>
+      <option value="Banma">Banma</option>
+      <option value="Kokui">Kokui</option>
+      <option value="Aaron">Aaron</option>
+      <option value="Claire">Claire</option>
+      <option value="Elaine">Elaine</option>
+      <option value="Fred">Fred</option>
+   </select>
+   <h4>Estimate# <span>*</span></h4>
+   <div class="title-block">
+      <input type="text" name="estimate" formControlName="Estimate Number" />
+   </div>
+   <h4>Reference#</h4>
+   <div class="title-block">
+      <input type="text" name="reference" formControlName="Reference ID" />
+   </div>
+   <h4>Estimate Date<span>*</span></h4>
+   <div class="title-block">
+      <input type="date" name="estimate_date" formControlName="Estimate Date" />
+   </div>
+   <h4>Expiry Date<span>*</span></h4>
+   <div class="title-block">
+      <input type="date" name="expiry_date" formControlName="Expiry Date" />
+   </div>
+   <h4>Salesperson<span>*</span></h4>
+   <div class="title-block">
+      <select formControlName="Sales person">
+         <option value="Type" selected>Select or Type to add</option>
+         <option value="Phyllis">Phyllis</option>
+         <option value="Staffen">Staffen</option>
+         <option value="Phoebe">Phoebe</option>
+         <option value="Richard">Richard</option>
+         <option value="Dan">Dan</option>
+         <option value="Jack">Jack</option>
+         <option value="Koi">Koi</option>
+      </select>
+   </div>
+   <h4>Subject / Project Name</h4>
+   <div class="title-block">
+      <textarea rows="1" placeholder="Let your customer know what this Estimate is for" formControlName="Project Name"></textarea>
+   </div>
+   
+   <h4>Notes</h4>
+   <div class="title-block">
+      <textarea rows="1" placeholder="Will be displayed on the estimate" formControlName="Notes"></textarea>
+   </div>
+   <h4>Terms & Conditions</h4>
+   <div class="title-block">
+      <textarea rows="4" placeholder="Will be displayed on the estimate" formControlName="Terms & Conditions"></textarea>
+   </div>
+   <div class="btn-block">
+      <button type="submit">Save</button>
+   </div>
+   </form> -->

@@ -1,0 +1,44 @@
+{
+    "STEM": {
+        "imageURL": "https://firebasestorage.googleapis.com/v0/b/kun-van-kau.appspot.com/o/cate_image%2Ficons_new_STEM.png?alt=media&token=5c857784-3d12-4ded-b730-5da4026a3d0b"
+    },
+    "學術": {
+        "imageURL": "https://firebasestorage.googleapis.com/v0/b/kun-van-kau.appspot.com/o/cate_image%2Ficons_new_%E5%AD%B8%E8%A1%93.png?alt=media&token=53044f4d-6464-4333-aaf7-ae069cefd75c"
+    },
+    "OLE": {
+        "imageURL": "https://firebasestorage.googleapis.com/v0/b/kun-van-kau.appspot.com/o/cate_image%2Ficons_new_OLE.png?alt=media&token=3414b526-96b6-4495-8eda-a0cf6178abe8"
+    },
+    "生態遊": {
+        "imageURL": "https://firebasestorage.googleapis.com/v0/b/kun-van-kau.appspot.com/o/cate_image%2Ficons_new_%E7%94%9F%E6%85%8B%E9%81%8A.png?alt=media&token=b8806032-2b28-4c6d-b322-291cd62ded9e"
+    },
+    "運動": {
+        "imageURL": "https://firebasestorage.googleapis.com/v0/b/kun-van-kau.appspot.com/o/cate_image%2Ficons_new_%E9%81%8B%E5%8B%95.png?alt=media&token=b5a0eaed-badb-4dd0-aaa7-e3813e12666e"
+    },
+    "舞蹈": {
+        "imageURL": "https://firebasestorage.googleapis.com/v0/b/kun-van-kau.appspot.com/o/cate_image%2Ficons_new_%E8%88%9E%E8%B9%88.png?alt=media&token=1dcbb696-2b94-48a6-8ecf-d575ebda9804"
+    },
+    "藝術": {
+        "imageURL": "https://firebasestorage.googleapis.com/v0/b/kun-van-kau.appspot.com/o/cate_image%2Ficons_new_%E8%97%9D%E8%A1%93.png?alt=media&token=9e58514e-819b-4286-915d-ec97c2b3d22f"
+    },
+    "SEN": {
+        "imageURL": "https://firebasestorage.googleapis.com/v0/b/kun-van-kau.appspot.com/o/cate_image%2Ficons_new_SEN.png?alt=media&token=1e65726b-8d6f-4a8b-89e6-5114d75ac604"
+    },
+    "歷奇": {
+        "imageURL": "https://firebasestorage.googleapis.com/v0/b/kun-van-kau.appspot.com/o/cate_image%2Ficons_new_%E6%AD%B7%E5%A5%87.png?alt=media&token=248776f3-c645-46de-b567-6315f84a1cca"
+    },
+    "技能": {
+        "imageURL": "https://firebasestorage.googleapis.com/v0/b/kun-van-kau.appspot.com/o/cate_image%2Ficons_new_%E6%8A%80%E8%83%BD.png?alt=media&token=5652f6b8-97d9-41e3-b063-d53d25bb7936"
+    },
+    "學校設備": {
+        "imageURL": "https://firebasestorage.googleapis.com/v0/b/kun-van-kau.appspot.com/o/cate_image%2Ficons_new_%E5%AD%B8%E6%A0%A1%E8%A8%AD%E5%82%99.png?alt=media&token=89bc5a66-de95-4b27-ad61-679ab05c3b43"
+    },
+    "制服團隊": {
+        "imageURL": "https://firebasestorage.googleapis.com/v0/b/kun-van-kau.appspot.com/o/cate_image%2Ficons_new_%E5%88%B6%E6%9C%8D%E5%9C%98%E9%9A%8A.png?alt=media&token=e929e028-fa0a-4570-a3d1-ad8ed62d5449"
+    },
+    "制服供應商": {
+        "imageURL": "https://firebasestorage.googleapis.com/v0/b/kun-van-kau.appspot.com/o/cate_image%2Ficons_new_%E5%88%B6%E6%9C%8D%E4%BE%9B%E6%87%89%E5%95%86.png?alt=media&token=21a3b3f1-7e48-4e45-9872-3e50fc69556a"
+    },
+    "學校工程供應商": {
+        "imageURL": "https://firebasestorage.googleapis.com/v0/b/kun-van-kau.appspot.com/o/cate_image%2Ficons_new_%E5%AD%B8%E6%A0%A1%E5%B7%A5%E7%A8%8B%E4%BE%9B%E6%87%89%E5%95%86.png?alt=media&token=1d7b9dc5-b85c-49ea-af90-5d7b2f963057"
+    }
+}

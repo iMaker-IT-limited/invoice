@@ -1,0 +1,321 @@
+ <app-header></app-header>
+
+ <ion-content>
+   <ion-item-divider sticky>
+     <!-- <ion-thumbnail class="" slot="start"> -->
+     <img class="avator" src="./../../../../assets/images/home_categories/invoice.svg" alt="">
+     <!-- </ion-thumbnail> -->
+     <ion-title>Update Invoice | {{invoiceDetail.id}}</ion-title>
+     <ion-button fill="clear" color="theme" (click)="dismissModal()">
+       <ion-icon slot="icon-only" name="close"></ion-icon>
+     </ion-button>
+   </ion-item-divider>
+   <!-- <ion-progress-bar color="theme" type="indeterminate"></ion-progress-bar> -->
+
+   <!-- <app-rating-input *ngIf="!contacts"></app-rating-input> -->
+
+   <div class="testbox">
+     <form [formGroup]="reimburshForm" (ngSubmit)="updateInvoice()" class="form-validate form-horizontal" novalidate="">
+       <!-- START panel-->
+       <div class="panel-body">
+         <fieldset>
+           <legend>Customer Name:</legend>
+           <p>
+             <ion-skeleton-text *ngIf="!contacts" animated style="width: 100%; height: 25px;">
+             </ion-skeleton-text>
+
+             <select *ngIf="contacts" class="form-control" formControlName="Customer Name">
+               <option *ngFor="let i of contacts" value="{{i['Customer Name']}}">
+                 {{i['Customer Name']}}
+               </option>
+             </select>
+           </p>
+
+         </fieldset>
+         <!-- Invoice number -->
+         <fieldset>
+           <legend>Estimate Number:</legend>
+           <p>
+             <input class="form-control" type="text" formControlName="Estimate Number" placeholder="Estimate Number" />
+           </p>
+
+         </fieldset>
+         <!-- Order number -->
+         <fieldset>
+           <legend>Order Number:</legend>
+           <p>
+             <input class="form-control" type="text" formControlName="Project ID" placeholder="Order Number" />
+           </p>
+         </fieldset>
+         <!-- Invoice Date -->
+         <fieldset>
+           <legend>Invoice Date: </legend>
+           <p>
+             <ion-datetime (ionChange)="onEstimateDate($event)" class="datetime-text" mode="ios" value="es_d"
+               formControlName="Estimate Date">
+             </ion-datetime>
+           </p>
+
+         </fieldset>
+         <!-- Termis -->
+         <fieldset>
+           <legend>Terms:</legend>
+           <p>
+             <input (ngModelChange)="onEstimateTerms($event)" type="number" formControlName="Terms">
+           </p>
+         </fieldset>
+         <!-- Due Date -->
+         <fieldset>
+           <legend>Due Date/Expiry Date:</legend>
+           <p>
+             <ion-datetime class="datetime-text" mode="ios" value="{{e_d}}" formControlName="Expiry Date">
+             </ion-datetime>
+           </p>
+         </fieldset>
+         <!-- Sales Person -->
+         <fieldset>
+           <legend>Salesperson:</legend>
+           <p>
+             <input type="text" formControlName="Sales person">
+           </p>
+
+         </fieldset>
+         <!--Item List -->
+
+         <fieldset>
+
+           <!-- <ion-button class="badge" color="theme" *ngFor="let iList of customeditemsList"
+                        (click)="onPush(iList)">
+                        {{iList['Item Name']}} {{iList['Rate']}}
+                    </ion-button> -->
+
+           <ion-chip color="secondary" *ngIf="customeditemsList?.length === 0" (click)="onCreateInventoryItemPage()">
+             No Items Yet Go and
+             Add One Now!
+           </ion-chip>
+
+           <ion-chip class="badge" color="theme" *ngFor="let iList of customeditemsList" (click)="onPush(iList)">
+             {{iList['Item Name']}} {{iList['Rate']}}
+           </ion-chip>
+         </fieldset>
+
+         <!-- <ion-button color="theme" fill="clear" (click)="inputEnabled = !inputEnabled">
+                    <ion-icon slot="start" name="add-circle"></ion-icon>
+                    Add another line
+                </ion-button> -->
+
+         <!--Sales List -->
+         <fieldset>
+           <div class="form-group">
+             <table formArrayName="salesList">
+               <tr>
+                 <th>Item Name</th>
+                 <th>Item Detail</th>
+                 <th>Quantity</th>
+                 <th>Rate</th>
+                 <!-- <th>Tax</th> -->
+                 <th>Amount</th>
+               </tr>
+               <!--Input controls -->
+               <!-- {{estimatesDetail | json}} -->
+               <!-- <tr *ngFor="let y of invoiceDetail.salesList | slice: 1; let j = index">
+                 <td>
+                   <div class="col-sm-6">{{y['Item Name']}}
+                   </div>
+                 </td>
+
+                 <td>
+                   <div class="col-sm-6">{{y.Description}}
+                   </div>
+                 </td>
+
+                 <td>
+                   <div class="col-sm-6">{{y.Rate}}
+                   </div>
+                 </td>
+
+                 <td>
+                   <div class="col-sm-6">{{y.quantity}}
+                   </div>
+                 </td>
+
+                 <td>
+                   <div class="col-sm-6">{{returnProduct(y.quantity, y.Rate)}}
+                   </div>
+                 </td>
+               </tr> -->
+
+               <tr *ngFor="let saleList of salesListArray.controls;let i = index" [formGroupName]="i">
+
+                 <td *ngIf="i > 0">
+                   <div class="col-sm-6">
+                     <input class="form-control" type="text" placeholder="Item Name" formControlName="Item Name" />
+                   </div>
+                 </td>
+
+                 <td *ngIf="i > 0">
+                   <div class="col-sm-6">
+                     <ion-textarea class="form-control" placeholder="Item Detail" formControlName="Description">
+                     </ion-textarea>
+                     <!-- <input class="form-control" type="text" placeholder="Item Detail" formControlName="Description" /> -->
+                   </div>
+                 </td>
+
+                 <td *ngIf="i > 0">
+                   <div class="col-sm-6">
+                     <input class="form-control" type="number" placeholder="" formControlName="quantity"
+                       (input)="onQtyChange($event, saleList.value.Rate, saleList)" />
+                   </div>
+                 </td>
+
+                 <td *ngIf="i > 0">
+                   <div class="col-sm-6">
+                     <input class="form-control" type="number" placeholder="0.00" formControlName="Rate"
+                       (input)="onPriceChange($event, saleList.value.quantity, saleList)" />
+                   </div>
+                 </td>
+
+                 <td *ngIf="i > 0">
+                   <div class="col-sm-6">
+                     <input type="number" readonly
+                       value="{{returnProduct(saleList.value.Rate, saleList.value.quantity)}}">
+
+                   </div>
+                 </td>
+
+
+                 <td *ngIf="i > 0">
+                   <!-- <ion-button color="theme" fill="clear" (click)="addSalesListItem()">
+                     <ion-icon name="copy-outline"></ion-icon>
+                   </ion-button> -->
+
+                   <ion-button fill="clear" (click)="removeSalesListItem(i, saleList.value)">
+                     <ion-icon color="secondary" name="trash-bin"></ion-icon>
+                   </ion-button>
+                 </td>
+
+
+               </tr>
+             </table>
+           </div>
+           <!-- <ul>
+               <li *ngFor="let x of salesListArray.value">
+                {{x.quantity}} x {{x.rate}} => {{returnProduct(x.quantity, x.rate)}}
+               </li>
+               </ul> -->
+           <div style="padding-top: 20px; float: right;">
+
+             <ion-chip style="font-size: larger; color: var(--ion-color-theme);">
+
+               Total ($): &nbsp;&nbsp;&nbsp;
+               <span style="color: var(--ion-color-theme);">
+                 {{invoiceDetail.Total}}
+               </span>
+
+               <!-- <span style="color: var(--ion-color-theme);" *ngIf="totalPrice != 0">
+                 {{totalPrice}}
+               </span> -->
+
+               <!-- <input class="form-control" type="text" formControlName="Total" placeholder="{{totalPrice}}" />
+               Total: {{totalPrice || 0}} -->
+             </ion-chip>
+           </div>
+         </fieldset>
+
+         <!-- <ion-button color="theme" fill="clear" (click)="addSalesListItem()">Add another line</ion-button> -->
+         <!-- Notes -->
+         <fieldset>
+           <legend>Custom Notes</legend>
+           <p>
+             <ion-textarea class="form-control" type="text" formControlName="Notes"
+               placeholder="Will be displayed on the estimate"></ion-textarea>
+           </p>
+
+         </fieldset>
+         <!-- Terms and conditions -->
+         <fieldset>
+           <legend>Terms & Conditions</legend>
+           <p>
+             <ion-textarea class="form-control" type="text" formControlName="Terms & Conditions"
+               placeholder="Enter the terms and conditions of your business that will displayed in your transaction">
+             </ion-textarea>
+           </p>
+
+         </fieldset>
+       </div>
+       <!-- {{reimburshForm.value | json}} -->
+
+       <ion-button type="submit" color="theme">Save</ion-button>
+       <br />
+       <!-- <ion-button color="dark" (click)='submitForm(reimburshForm.value)'>Save and Send</ion-button> -->
+     </form>
+     <!-- <form [formGroup]="createInvoiceForm" (ngSubmit)="updateInvoice()">
+       <h4 style="color: #e54643;">Customer Name<span>*</span></h4>
+       <div class="title-block">
+         <select formControlName="Customer Name">
+           <option value="Type" selected>Select or Type to add</option>
+           <option value="Aaron">Aaron</option>
+           <option value="Bob">Bob</option>
+           <option value="Cindy">Cindy</option>
+         </select>
+       </div>
+
+       <h4 style="color: #e54643;">Invoice Number# <span>*</span> </h4>
+       <div class="title-block">
+         <input type="text" name="invoice" formControlName="Invoice Number" />
+       </div>
+
+       <h4>Invoice ID <span>*</span> </h4>
+       <div class="title-block">
+         <input type="text" name="order_number" formControlName="Invoice ID" />
+       </div>
+
+       <h4 style="color: #e54643;">Invoice Date <span>*</span> </h4>
+       <div class="title-block">
+         <input type="date" id="start" name="Invoice Date" formControlName="Invoice Date" />
+       </div>
+
+       <h4 style="color: #e54643;">Payment Terms<span>*</span></h4>
+       <div class="title-block">
+         <select formControlName="Payment Terms">
+           <option value="Type" selected></option>
+           <option value="net_15">Net 15</option>
+           <option value="net_30">Net 30</option>
+           <option value="net_45">Net 45</option>
+           <option value="net_60">Net 60</option>
+           <option value="due_end_of_the_month">Due end of the month</option>
+           <option value="due_end_of_the_next_month">Due end of the next month</option>
+           <option value="due_on_receipt">Due on Receipt</option>
+         </select>
+       </div>
+
+       <h4 style="color: #e54643;">Sales person<span>*</span></h4>
+       <div class="title-block">
+         <select formControlName="Sales person">
+           <option value="Type" selected>Select or Type to add</option>
+           <option value="Phyllis">Phyllis</option>
+           <option value="Phoebe">Phoebe</option>
+           <option value="Ryan">Ryan</option>
+           <option value="Staffen">Staffen</option>
+           <option value="Dan">Dan</option>
+           <option value="Jack">Jack</option>
+         </select>
+       </div>
+
+       <h4>Subject / Project Name</h4>
+       <div class="">
+         <textarea rows="1" placeholder="Let your customer know what this Invoice is for"
+           formControlName="Project Name"></textarea>
+       </div>
+
+       <h4>Notes</h4>
+       <div class="">
+         <textarea rows="1" formControlName="Notes"></textarea>
+       </div>
+
+       <div class="btn-block">
+         <button type="submit">Save</button>
+       </div>
+     </form> -->
+   </div>
+ </ion-content>

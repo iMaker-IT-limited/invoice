@@ -1,0 +1,63 @@
+<ion-row class="countdown">
+  <ion-col class="time" *ngIf="_initialUnit === 'day' && _daysLeft > 1">
+    <span class="time-unit"></span>
+    <div class="inner-time">
+      <span class="time-value">
+        {{ _daysLeft }} 天內到期
+      </span>
+    </div>
+  </ion-col>
+
+  <ion-col class="time" *ngIf="_initialUnit === 'day' && _daysLeft == 1">
+    <span class="time-unit" style="color: var(--ion-color-premium);"></span>
+    <div class="inner-time">
+      <span class="time-value" style="color: var(--ion-color-premium);">
+        <!-- {{ abs(_daysLeft) }} 天內到期 -->
+        今天逾期
+      </span>
+    </div>
+  </ion-col>
+
+  <ion-col class="time" *ngIf="_initialUnit === 'day' && _daysLeft == 0">
+    <span class="time-unit" style="color: var(--ion-color-premium);"></span>
+    <div class="inner-time">
+      <span class="time-value" style="color: var(--ion-color-premium);">
+        <!-- {{ abs(_daysLeft) }} 天內到期 -->
+        已逾期
+      </span>
+    </div>
+  </ion-col>
+
+  <ion-col class="time" *ngIf="_initialUnit === 'day' && _daysLeft < 0">
+    <span class="time-unit" style="color: var(--ion-color-secondary);">天</span>
+    <div class="inner-time">
+      <span class="time-value" style="color: var(--ion-color-secondary);">
+        逾期 {{ abs(_daysLeft) }}
+      </span>
+    </div>
+  </ion-col>
+
+
+
+
+  <ion-col class="time"
+    *ngIf="(_initialUnit === 'day' && _endingUnit !== 'day') || _initialUnit === 'hour' || _endingUnit === 'hour'">
+    <span class="time-unit">H</span>
+    <div class="inner-time">
+      <span class="time-value">{{ _hoursLeft }}</span>
+    </div>
+  </ion-col>
+  <ion-col class="time"
+    *ngIf="(_initialUnit === 'day' && (_endingUnit !== 'day' && _endingUnit !== 'hour')) || (_initialUnit === 'hour' && _endingUnit !== 'hour') || _initialUnit === 'minute'">
+    <span class="time-unit">M</span>
+    <div class="inner-time">
+      <span class="time-value">{{ _minutesLeft }}</span>
+    </div>
+  </ion-col>
+  <ion-col class="time" *ngIf="_endingUnit === 'second'">
+    <span class="time-unit">S</span>
+    <div class="inner-time">
+      <span class="time-value">{{ _secondsLeft }}</span>
+    </div>
+  </ion-col>
+</ion-row>

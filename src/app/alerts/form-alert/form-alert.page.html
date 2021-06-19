@@ -1,0 +1,402 @@
+<ion-header no-border>
+  <ion-toolbar color="theme">
+    <!-- <ion-buttons slot="start">
+    </ion-buttons> -->
+    <!-- <ion-title style="color: white; font-size: x-large; font-weight: bold; text-align: center;">購入課程
+      <ion-progress-bar id="progress-bar" color="secondary" value="{{progress}}"></ion-progress-bar>
+    </ion-title> -->
+    <ion-title>
+      <ion-progress-bar id="progress-bar" style="height: 8px; border-radius: 10px" color="secondary"
+        value="{{progress}}"></ion-progress-bar>
+    </ion-title>
+    <ion-button icon-only style="color: white" color="none" slot="end" class="ionbutton" outline="clear"
+      (click)="onDismiss()">
+      <ion-icon name="close"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="--background: transparent;">
+
+  <ion-card no-padding style="margin: 0px; border-radius: 0px; height: 100%;">
+    <ion-card-content style="background: var(--ion-color-theme); color: white;" class="filters-content">
+      <ion-item-group class="filters-group">
+        <form [formGroup]="FilterForm" class="range-list" (ngSubmit)="submitFilterForm()">
+          <!-- B1 -->
+          <ion-card *ngIf="!this.cate_1_checked" style="height: 90%">
+            <ion-item-divider tappable (click)="collapseA = !collapseA">
+              <ion-label style="font-size: large;">到校課程類別 (請選擇一個)</ion-label>
+            </ion-item-divider>
+            <ion-list class="radio-list" lines="full">
+              <ion-radio-group class="radio-group" formControlName="cate_1">
+                <ion-item-divider>{{cate_1.name[0]}}</ion-item-divider>
+                <ion-item style="display: inline-block;" class="radio-item" *ngFor="let i of cate_1.list">
+                  <ion-label class="radio-label">{{i}}</ion-label>
+                  <ion-radio slot="start" color="theme" value="{{i}}"></ion-radio>
+                </ion-item>
+                <br />
+                <br />
+                <ion-item-divider>{{cate_1.name[1]}}</ion-item-divider>
+                <ion-item style="display: inline-block;" class="radio-item" *ngFor="let j of cate_1.list2">
+                  <ion-label style="font-size: large;" class="radio-label">{{j}}</ion-label>
+                  <ion-radio slot="start" color="theme" value="{{j}}"></ion-radio>
+                </ion-item>
+                <br />
+                <br />
+                <ion-item-divider>{{cate_1.name[2]}}</ion-item-divider>
+                <ion-item style="display: inline-block;" class="radio-item" *ngFor="let x of cate_1.list3">
+                  <ion-label class="radio-label">{{x}}</ion-label>
+                  <ion-radio slot="start" color="theme" value="{{x}}"></ion-radio>
+                </ion-item>
+                <br />
+                <br />
+                <ion-item-divider>{{cate_1.name[3]}}</ion-item-divider>
+                <ion-item style="display: inline-block;" class="radio-item" *ngFor="let y of cate_1.list4">
+                  <ion-label class="radio-label">{{y}}</ion-label>
+                  <ion-radio slot="start" color="theme" value="{{y}}"></ion-radio>
+                </ion-item>
+                <br />
+                <br />
+              </ion-radio-group>
+            </ion-list>
+
+            <ion-button color="theme" (click)="this.cate_1_checked == true">Continue</ion-button>
+          </ion-card>
+
+          <!-- <div *ngIf="this.cate_1_checked">
+            cate 1 is checked
+          </div> -->
+
+          <!-- B2 -->
+          <ion-card class="card" style="height: 90%"
+            *ngIf="this.target_user_age_checked == false && this.hideTargetUserAge == false">
+            <ion-item-divider>
+              <ion-label style="font-size: large;">
+                <!-- 到校課程對象 -->
+                1. 請選擇到校課程對象範圍（從最低到最高）
+              </ion-label>
+            </ion-item-divider>
+
+            <ion-row class="range-item">
+              <ion-col size="12">
+                <div class="range-header">
+                  <span class="range-value">
+                    {{
+                    changeTargetValue(FilterForm.controls.target_user_age.value.lower)
+                    }}
+                  </span>
+                  <!-- <span class="range-label">課程人數</span> -->
+                  <span class="range-value">
+                    {{
+                    changeTargetValue(FilterForm.controls.target_user_age.value.upper)
+                    }}
+                  </span>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <ion-range class="range-control" formControlName="target_user_age" color="primary" dualKnobs="true"
+                  (ionChange)="rangeChangeSecond($event)" min="1" max="16" step="1">
+                </ion-range>
+              </ion-col>
+            </ion-row>
+
+            <!-- <div class="backbutton">
+              <ion-button color="primary" expand="full" fill="clear"
+                (click)="onAddTargetUserAgeDetail(this.FilterForm.controls.target_user_age.value, this.target_user_age_checked)">
+                上一步
+              </ion-button>
+            </div> -->
+
+            <div class="nextbutton">
+              <ion-button color="primary" expand="full" fill="clear"
+                (click)="onAddTargetUserAgeDetail(this.FilterForm.controls.target_user_age.value, this.target_user_age_checked)">
+                下一步
+              </ion-button>
+            </div>
+          </ion-card>
+
+          <!-- <div *ngIf="this.target_user_age_checked">
+            target user age is checked
+          </div> -->
+
+          <!-- B3 -->
+          <ion-card class="card" style="height: 90%"
+            *ngIf="this.class_length_checked == false && this.hideClassLength == false">
+            <ion-item-divider>
+              <ion-label style="font-size: large;">
+                2. 請問你到校課程嘅時數範圍係
+              </ion-label>
+            </ion-item-divider>
+            <ion-row class="range-item">
+              <ion-col size="12">
+                <div class="range-header">
+                  <span class="range-value">{{ FilterForm.controls.class_length.value.lower }}</span>
+                  <!-- <span class="range-label">時數</span> -->
+                  <div *ngIf="FilterForm.controls.class_length.value.upper < 41">
+                    <span class="range-value">{{ FilterForm.controls.class_length.value.upper }}</span>
+                  </div>
+                  <div *ngIf="FilterForm.controls.class_length.value.upper == 41">
+                    <span class="range-value"> 超過40</span>
+                  </div>
+                  <div *ngIf="FilterForm.controls.class_length.value.upper == 42">
+                    <span class="range-value">任何</span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <ion-range class="range-control" formControlName="class_length" color="primary" dualKnobs="true"
+                  (ionChange)="rangeChange($event)" min="1" max="42" step="1"></ion-range>
+              </ion-col>
+            </ion-row>
+
+            <div class="backbutton">
+              <ion-button color="primary" expand="full" fill="clear" (click)="onB2()">
+                上一步
+              </ion-button>
+            </div>
+
+            <div class="nextbutton">
+              <ion-button color="primary" expand="full" fill="clear"
+                (click)="onAddClassLengthDetail(this.FilterForm.controls.class_length.value, this.class_length_checked)">
+                下一步
+              </ion-button>
+            </div>
+          </ion-card>
+          <!-- <div *ngIf="this.class_length_checked">
+            class length is checked
+          </div> -->
+
+          <!-- B4 -->
+          <ion-card class="card" style="height: 90%"
+            *ngIf="this.class_size_checked == false && this.hideClassSize == false">
+            <ion-item-divider>
+              <ion-label style="font-size: large;">3. 請問你到校課程嘅人數係</ion-label>
+            </ion-item-divider>
+            <ion-row class="range-item">
+              <ion-col size="12">
+                <div class="range-header">
+                  <span class="range-value">{{ FilterForm.controls.class_size.value.lower }}</span>
+                  <!-- <span class="range-label">課程人數</span> -->
+                  <div *ngIf="FilterForm.controls.class_size.value.upper < 41">
+                    <span class="range-value">{{ FilterForm.controls.class_size.value.upper }}</span>
+                  </div>
+                  <div *ngIf="FilterForm.controls.class_size.value.upper == 41">
+                    <span class="range-value"> 超過40</span>
+                  </div>
+                  <div *ngIf="FilterForm.controls.class_size.value.upper == 42">
+                    <span class="range-value">任何</span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <ion-range class="range-control" formControlName="class_size" color="primary" dualKnobs="true"
+                  (ionChange)="rangeChange($event)" min="1" max="42" step="1"></ion-range>
+              </ion-col>
+            </ion-row>
+
+            <div class="backbutton">
+              <ion-button color="primary" expand="full" fill="clear" (click)="onAddTargetUserAgeDetail()">
+                上一步
+              </ion-button>
+            </div>
+
+            <div class="nextbutton">
+              <ion-button color="primary" expand="full" fill="clear"
+                (click)="onAddClassSizeDetail(this.FilterForm.controls.class_size.value, this.class_size_checked)">
+                下一步
+              </ion-button>
+            </div>
+          </ion-card>
+
+          <!-- B5 -->
+          <ion-card class="card" style="height: 90%"
+            *ngIf="this.teaching_materials_checked == false && this.hideTeachingMaterial == false">
+            <ion-item-divider>
+              <ion-label style="font-size: large;">4. 到校課程教材</ion-label>
+            </ion-item-divider>
+            <ion-list class="radio-list" lines="none">
+              <ion-radio-group class="radio-group" formControlName="teaching_materials">
+                <ion-item class="radio-item" style="">
+                  <ion-label class="radio-label">出租</ion-label>
+                  <ion-radio slot="start" color="primary" value="rental" (click)="show(true)"></ion-radio>
+                </ion-item>
+                <ion-item class="radio-item" style="">
+                  <ion-label class="radio-label">出售</ion-label>
+                  <ion-radio slot="start" color="primary" value="sale" (click)="show(true)"></ion-radio>
+                </ion-item>
+                <ion-item class="radio-item" style="">
+                  <ion-label class="radio-label">不需要</ion-label>
+                  <ion-radio slot="start" color="primary" value="null" (click)="show(false)"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+            <br />
+            <div *ngIf="showMessageTeachingMaterial" class="message-tm-section animated slideInRight">
+              <ion-textarea class="message-tm" rows="2" cols="40" maxLength="300" placeholder="你想要多少? 您想擁有哪種教材?"
+                formControlName="message_teaching_materials">
+              </ion-textarea>
+            </div>
+
+            <div class="backbutton">
+              <ion-button color="primary" expand="full" fill="clear" (click)="onAddClassLengthDetail()">
+                上一步
+              </ion-button>
+            </div>
+
+            <div class="nextbutton">
+              <ion-button color="primary" expand="full" fill="clear"
+                (click)="onAddTeachingMaterialsDetail(this.FilterForm.controls.teaching_materials.value)">
+                下一步
+              </ion-button>
+            </div>
+          </ion-card>
+
+          <!-- B6 -->
+          <ion-card class="card" style="height: 90%;" *ngIf="this.hidesqtimelimit == false">
+            <ion-item-divider>
+              <ion-label style="font-size: large;">5. 我希望在 ... 天內收到報價</ion-label>
+            </ion-item-divider>
+            <ion-list class="radio-list" lines="none">
+              <ion-radio-group class="radio-group" formControlName="sq_timelimit">
+                <ion-item class="radio-item" style="display: inline-block;" *ngFor="let i of [1,2,3,4,5,6,7]">
+                  <ion-label class="radio-label">{{i}}</ion-label>
+                  <ion-radio slot="start" color="primary" value="{{i}}"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+
+            <br>
+            <div class="message-tm-section">
+              <ion-textarea class="message-tm" rows="2" cols="40" maxLength="300" placeholder="給供應商的訊息"
+                formControlName="message">
+              </ion-textarea>
+            </div>
+
+            <div class="backbutton">
+              <ion-button color="primary" expand="full" fill="clear" (click)="onAddClassSizeDetail()">
+                上一步
+              </ion-button>
+            </div>
+
+            <div class="nextbutton">
+              <ion-button color="primary" expand="full" fill="clear"
+                (click)="onAddSQTimelimitDetail(this.FilterForm.controls.sq_timelimit.value)">
+                下一步
+              </ion-button>
+            </div>
+          </ion-card>
+
+          <!-- B7 -->
+          <ion-card class="card" *ngIf="this.submitNow == true" style="height: 90%">
+            <ion-card-header style="color: var(--ion-color-primary);font-size: large; font-weight: bold;">
+              到校課程類別: {{FilterForm.value.cate_1 || ""}}
+            </ion-card-header>
+
+            <ion-card-content>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-label style="color: var(--ion-color-primary);font-size:small; float: left;">
+                    到校課程時數:
+                  </ion-label>
+                  <ion-label style="color: var(--ion-color-primary);font-size:small; float: right;">
+                    {{FilterForm.value.class_length.lower.toString().concat('小時')
+                    || '0'}} ~
+                    {{FilterForm.value.class_length.upper.toString().concat('小時')
+                    || '0'}}
+                  </ion-label>
+                </ion-col>
+
+                <ion-col size="12">
+                  <ion-label style="color: var(--ion-color-primary);font-size:small; float: left">
+                    到校課程人數:
+                  </ion-label>
+                  <ion-label style="color: var(--ion-color-primary);font-size:small; float: right;">
+                    {{FilterForm.value.class_size.lower.toString().concat('人')}}
+                    ~
+                    {{FilterForm.value.class_size.upper.toString().concat('人')}}
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-label style="color: var(--ion-color-primary);font-size:small; float: left;">
+                    到校課程對象:
+                  </ion-label>
+                  <ion-label style="color: var(--ion-color-primary);font-size:small; float: right;">
+                    {{changeTargetValue(FilterForm.value.target_user_age.lower)
+                    || '0'}} ~
+                    {{changeTargetValue(FilterForm.value.target_user_age.upper)
+                    || '0'}}
+                  </ion-label>
+                </ion-col>
+                <ion-col size="12">
+                  <div *ngIf="FilterForm.value.teaching_materials == 'sale'">
+                    <ion-label style="color: var(--ion-color-primary);font-size:small; float: left;">
+                      到校課程教材:
+                    </ion-label>
+                    <ion-label style="color: var(--ion-color-primary);font-size:small; float: right;">
+                      出售 , {{FilterForm.value.message_teaching_materials}}
+                    </ion-label>
+                  </div>
+                  <div *ngIf="FilterForm.value.teaching_materials == 'rental'">
+                    <ion-label style="color: var(--ion-color-primary);font-size:small; float: left;">
+                      到校課程教材:
+                    </ion-label>
+                    <ion-label style="color: var(--ion-color-primary);font-size:small; float: right;">
+                      出租 , {{FilterForm.value.message_teaching_materials}}
+                    </ion-label>
+                  </div>
+                  <div *ngIf="FilterForm.value.teaching_materials == 'null'">
+                    <ion-label style="color: var(--ion-color-primary);font-size:small; float: left;">
+                      到校課程教材:
+                    </ion-label>
+                    <ion-label style="color: var(--ion-color-primary);font-size:small; float: right;">
+                      不需要
+                    </ion-label>
+                  </div>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="12">
+                  <ion-label style="color: var(--ion-color-primary);font-size:small; float: left;">
+                    給供應商的訊息:
+                  </ion-label>
+                  <ion-label style="color: var(--ion-color-primary);font-size:small; float: right;">
+                    {{FilterForm.value.message}}
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="12">
+                  <ion-label style="color: var(--ion-color-primary);font-size:small; float: right;">
+                    我想在 {{FilterForm.value.sq_timelimit}} 天內收到報價
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+
+            <br />
+
+            <div class="backbutton">
+              <ion-button color="primary" expand="full" fill="clear" (click)="onAddTeachingMaterialsDetail()">
+                上一步
+              </ion-button>
+            </div>
+
+            <div class="middlebutton" id="firebaseui-auth-container"></div>
+
+            <div class="nextbutton">
+              <ion-button type="submit" color="primary" expand="block" fill="outline">
+                立即獲取報價
+              </ion-button>
+            </div>
+
+            <!-- <ion-button expand="block" color="secondary" fill="outline" (click)="save()">Save</ion-button> -->
+          </ion-card>
+        </form>
+      </ion-item-group>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

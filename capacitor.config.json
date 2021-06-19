@@ -1,0 +1,12 @@
+{
+  "appId": "com.ionicthemes.ionic4fullapp",
+  "appName": "e-SchoolLand",
+  "bundledWebRuntime": true,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false
+    }
+  }
+}

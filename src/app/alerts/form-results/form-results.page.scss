@@ -1,0 +1,54 @@
+  .greenClass { background-color: green }
+
+      
+  .redClass { background-color: red }
+
+
+  .showClass {
+    width: 25%;
+    height: 100%;
+  }
+
+  .hideClass {
+    width: 100%;
+  }
+
+  .showPDFClass {
+
+    width: 75%;
+  }
+
+  .hidePDFClass {
+      display: none;
+  }
+
+  .chip {
+    display: inline-flex;
+    padding: 10px;
+    margin: 10px;
+    background: transparent;
+  //  border-radius: 5%;
+    
+    .radio {
+   //   --background: blue;
+    }
+  }
+
+  .label {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+ //   color: var(--ion-color-theme); 
+             
+  }
+
+   ion-radio {
+    margin-inline-start: 0px;
+ //   color: var(--ion-color-theme);
+
+  }
+
+  // .chip:hover {
+
+  //   box-shadow: 0px 3px 16px 0px rgba(0,0,0,0.75);
+  // }

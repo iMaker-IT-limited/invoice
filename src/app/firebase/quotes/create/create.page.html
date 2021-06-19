@@ -1,0 +1,393 @@
+<app-header></app-header>
+<ion-content>
+    <ion-item-divider>
+        <img class="avator" src="./../../../../assets/images/home_categories/estimate.svg" alt="" />
+        <ion-title>New Estimate</ion-title>
+        <ion-button fill="clear" color="theme" (click)="dismissModal()">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
+
+    </ion-item-divider>
+
+    <!-- if contacts list does not show data -->
+    <!-- <app-rating-input *ngIf="!contacts"></app-rating-input> -->
+
+
+    <div class="testbox">
+        <form [formGroup]="reimburshForm" (ngSubmit)="createEstimate()" class="form-validate form-horizontal"
+            novalidate="">
+            <!-- START panel-->
+            <div class="panel-body">
+
+                <fieldset>
+                    <legend>Customer Name:</legend>
+                    <p>
+                        <ion-skeleton-text *ngIf="!contacts" animated style="width: 100%; height: 25px;">
+                        </ion-skeleton-text>
+
+                        <select *ngIf="contacts" class="form-control" formControlName="Customer Name">
+                            <option *ngFor="let i of contacts" value="{{i['Customer Name']}}">{{i['Customer Name']}}
+                            </option>
+                        </select>
+                    </p>
+                </fieldset>
+
+                <!-- Estimate number -->
+                <fieldset>
+                    <legend>Estimate Number:</legend>
+                    <p>
+                        <input class="form-control" type="text" formControlName="Estimate Number"
+                            placeholder="Estimate Number" />
+                    </p>
+                </fieldset>
+
+                <!-- Order number -->
+                <fieldset>
+                    <legend>Order Number(Project ID)</legend>
+                    <p>
+                        <input class="form-control" type="text" formControlName="Project ID"
+                            placeholder="Order Number" />
+                    </p>
+                </fieldset>
+                <!-- Invoice Date -->
+                <fieldset>
+                    <legend>Estimate Date:</legend>
+                    <p>
+                        <ion-datetime (ionChange)="onEstimateDate($event)" class="datetime-text" mode="ios" value="es_d"
+                            formControlName="Estimate Date">
+                        </ion-datetime>
+                    </p>
+                </fieldset>
+                <!-- Termis -->
+                <fieldset>
+                    <legend>Terms:</legend>
+                    <p>
+                        <input (ngModelChange)="onEstimateTerms($event)" type="number" formControlName="Terms">
+                    </p>
+                </fieldset>
+                <!-- Due Date -->
+                <fieldset>
+                    <legend>Due Date/ Expiry Date</legend>
+                    <p>
+                        <ion-datetime class="datetime-text" mode="ios" value="{{e_d}}" formControlName="Expiry Date">
+                        </ion-datetime>
+                    </p>
+
+                </fieldset>
+                <!-- Sales Person -->
+                <fieldset>
+                    <legend>Salesperson</legend>
+                    <p>
+                        <input type="text" formControlName="Sales person">
+                    </p>
+                </fieldset>
+                <!--Item List -->
+
+                <fieldset>
+                    <!-- <ion-button class="badge" color="theme" *ngFor="let iList of customeditemsList"
+                        (click)="onPush(iList)">
+                        {{iList['Item Name']}} {{iList['Rate']}}
+                    </ion-button> -->
+
+                    <ion-chip color="secondary" *ngIf="customeditemsList?.length === 0"
+                        (click)="onCreateInventoryItemPage()">No Items Yet Go and
+                        Add One Now!
+                    </ion-chip>
+
+                    <ion-chip class="badge" color="theme" *ngFor="let iList of customeditemsList"
+                        (click)="onPush(iList)">
+                        {{iList['Item Name']}} {{iList['Rate']}}
+                    </ion-chip>
+                </fieldset>
+
+                <!-- <ion-button color="theme" fill="clear" (click)="inputEnabled = !inputEnabled">
+                    <ion-icon slot="start" name="add-circle"></ion-icon>
+                    Add another line
+                </ion-button> -->
+
+                <!-- Sales List -->
+                <fieldset>
+                    <div class="form-group">
+                        <table formArrayName="salesList">
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Item Detail</th>
+                                <th>Quantity</th>
+                                <th>Rate</th>
+                                <!-- <th>Tax</th> -->
+                                <th>Amount</th>
+                                <th></th>
+                            </tr>
+
+                            <!--Input controls/ NOT TO EDIT ITEM IN THIS PAGE -->
+
+
+                            <tr *ngFor="let saleList of salesListArray.controls;let i = index" [formGroupName]="i">
+
+                                <td *ngIf="i > 0">
+                                    <div class="col-sm-6">
+                                        <input class="form-control" type="text" placeholder="Item Name"
+                                            formControlName="Item Name" />
+                                    </div>
+                                </td>
+
+                                <td *ngIf="i > 0">
+                                    <div class="col-sm-6">
+                                        <ion-textarea class="item_textarea" row="6" height="1" placeholder="Item Detail"
+                                            formControlName="Description"></ion-textarea>
+                                        <!-- <input class="form-control" type="text" placeholder="Item Detail"
+                                            formControlName="Description" /> -->
+                                    </div>
+                                </td>
+
+                                <td *ngIf="i > 0">
+                                    <div class="col-sm-6">
+                                        <input class="form-control" type="number" placeholder="0"
+                                            (input)="onQtyChange($event, saleList)" formControlName="quantity" />
+                                    </div>
+                                </td>
+
+                                <td *ngIf="i > 0">
+                                    <div class="col-sm-6">
+                                        <input class="form-control" type="number" placeholder="0.00"
+                                            (input)="onPriceChange($event, saleList)" formControlName="Rate" />
+                                    </div>
+                                </td>
+
+                                <td *ngIf="i > 0">
+                                    <div class="col-sm-6">
+                                        <input class="form-control" type="number"
+                                            placeholder="{{returnProduct(saleList.value.Rate, saleList.value.quantity)}}"
+                                            formControlName="amount" />
+                                    </div>
+                                </td>
+
+                                <!-- <td>
+                                    <div class="col-sm-6">
+                                        <span style="color: black; font-weight: bold;">
+                                            {{returnProduct(saleList.value.Rate, saleList.value.quantity)}}</span>
+                                    </div>
+                                </td> -->
+
+                                <td *ngIf="i > 0">
+                                    <!-- <ion-button color="theme" fill="" (click)="addSalesListItem()">
+                                        <ion-icon name="copy-outline"></ion-icon>
+                                    </ion-button> -->
+                                    <ion-button fill="clear" (click)="removeSalesListItem(i)">
+                                        <ion-icon color="secondary" name="trash-bin"></ion-icon>
+                                    </ion-button>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+                    <div style="padding-top: 20px;float: right;">
+                        <ion-chip style="background: white; color: var(--ion-color-theme);">Total: {{totalPrice || 0}}
+                        </ion-chip>
+                    </div>
+                </fieldset>
+
+                <!-- Preset Logistic Item  -->
+                <fieldset>
+                    <div *ngIf="companylogisticprofile" id="invoice-bot">
+
+                        <div id="table">
+                            <table class="table-main" style="filter:blur(0px);">
+                                <tr>
+                                    <td colspan="4">
+                                        <legend>Shipper</legend>
+                                        {{shipper}}
+
+                                    </td>
+                                    <td colspan="4">
+                                        <legend>Consignee</legend>
+                                        {{consignee}}
+
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <legend>Port of Loading</legend>{{port_of_loading}}
+
+                                    </td>
+                                    <td colspan="2">
+                                        <legend>Port of Discharge</legend>{{port_of_discharge}}
+                                    </td>
+                                    <td colspan="2">
+                                        <legend>HBL</legend>{{HBL}}
+                                    </td>
+                                    <td colspan="1">
+                                        <legend>MBL</legend>{{MBL}}
+                                    </td>
+                                    <td colspan="1">
+                                        <legend>Carriage by</legend>{{carriage_by}}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <legend>Vessel</legend>
+                                        {{vessel}}
+                                    </td>
+                                    <td colspan="6">
+                                        <legend>Container</legend>{{container}}
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <legend>Date of order</legend>{{date_of_order}}
+                                    </td>
+                                    <td colspan="4">
+                                        <legend>Your Reference</legend>{{your_reference}}
+                                    </td>
+                                    <td colspan="2">
+                                        <legend>Terms of delivery</legend>{{terms_of_delivery}}
+                                    </td>
+
+                                </tr>
+
+                            </table>
+
+                            <br>
+                            <table class="table-main">
+                                <tr>
+                                    <td colspan="2">
+                                        <legend>Marks/ No.</legend>
+                                    </td>
+                                    <td colspan="1">
+                                        <legend>Pieces</legend>
+                                    </td>
+                                    <td colspan="1">
+                                        <legend>Packaging</legend>
+                                    </td>
+                                    <td colspan="2">
+                                        <legend>Description of goods</legend>
+                                    </td>
+                                    <td colspan="1">
+                                        <legend>Weights</legend>
+                                    </td>
+                                    <td colspan="1">
+                                        <legend>cbm</legend>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        {{marks_no}}
+                                    </td>
+                                    <td colspan="1">
+                                        {{pieces}}
+                                    </td>
+                                    <td colspan="1">
+                                        {{packaging}}
+                                    </td>
+                                    <td colspan="2">
+                                        {{description_of_goods}}
+                                    </td>
+                                    <td colspan="1">
+                                        {{weight}}
+                                    </td>
+                                    <td colspan="1">
+                                        {{cbm}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!--End Table-->
+
+                    </div>
+                </fieldset>
+                <!-- Notes -->
+                <fieldset>
+                    <legend>Custom Notes</legend>
+                    <p>
+                        <ion-textarea rows="6" class="form-control" formControlName="Notes" value="{{customernotes}}"
+                            placeholder="Will be displayed on the estimate">
+                        </ion-textarea>
+                    </p>
+
+                </fieldset>
+                <!-- Terms and conditions -->
+
+                <fieldset>
+                    <legend>Terms & Conditions</legend>
+                    <p>
+                        <ion-textarea rows="10" class="form-control" formControlName="Terms & Conditions"
+                            value="{{termsandconditions}}" placeholder="Enter the terms and conditions of your business
+                              that will displayed in your transaction">
+                        </ion-textarea>
+                    </p>
+
+                </fieldset>
+
+            </div>
+            <!-- 
+            {{reimburshForm.value['Customer Name']}} -->
+            <!-- <ion-button (click)="returnSum()">Calculate sum</ion-button> -->
+            <ion-button expand="full" [disabled]="!reimburshForm.value['Customer Name']" type="submit" color="theme">
+                Save</ion-button>
+            <!-- <br />
+            <ion-button color="dark" (click)="submitForm(reimburshForm.value)">Save and Send</ion-button> -->
+        </form>
+    </div>
+</ion-content>
+<!-- <form [formGroup]="createEstimateForm" (ngSubmit)="createEstimate()">
+   <h4>Customer Name<span>*</span></h4>
+   <select formControlName="Customer Name">
+      <option value="Type" selected>Select or Type to add</option>
+      <option value="Banma">Banma</option>
+      <option value="Kokui">Kokui</option>
+      <option value="Aaron">Aaron</option>
+      <option value="Claire">Claire</option>
+      <option value="Elaine">Elaine</option>
+      <option value="Fred">Fred</option>
+   </select>
+   <h4>Estimate# <span>*</span></h4>
+   <div class="title-block">
+      <input type="text" name="estimate" formControlName="Estimate Number" />
+   </div>
+   <h4>Reference#</h4>
+   <div class="title-block">
+      <input type="text" name="reference" formControlName="Reference ID" />
+   </div>
+   <h4>Estimate Date<span>*</span></h4>
+   <div class="title-block">
+      <input type="date" name="estimate_date" formControlName="Estimate Date" />
+   </div>
+   <h4>Expiry Date<span>*</span></h4>
+   <div class="title-block">
+      <input type="date" name="expiry_date" formControlName="Expiry Date" />
+   </div>
+   <h4>Salesperson<span>*</span></h4>
+   <div class="title-block">
+      <select formControlName="Sales person">
+         <option value="Type" selected>Select or Type to add</option>
+         <option value="Phyllis">Phyllis</option>
+         <option value="Staffen">Staffen</option>
+         <option value="Phoebe">Phoebe</option>
+         <option value="Richard">Richard</option>
+         <option value="Dan">Dan</option>
+         <option value="Jack">Jack</option>
+         <option value="Koi">Koi</option>
+      </select>
+   </div>
+   <h4>Subject / Project Name</h4>
+   <div class="title-block">
+      <textarea rows="1" placeholder="Let your customer know what this Estimate is for" formControlName="Project Name"></textarea>
+   </div>
+   
+   <h4>Notes</h4>
+   <div class="title-block">
+      <textarea rows="1" placeholder="Will be displayed on the estimate" formControlName="Notes"></textarea>
+   </div>
+   <h4>Terms & Conditions</h4>
+   <div class="title-block">
+      <textarea rows="4" placeholder="Will be displayed on the estimate" formControlName="Terms & Conditions"></textarea>
+   </div>
+   <div class="btn-block">
+      <button type="submit">Save</button>
+   </div>
+   </form> -->

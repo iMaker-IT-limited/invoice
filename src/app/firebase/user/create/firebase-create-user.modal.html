@@ -1,0 +1,427 @@
+<!-- This is the proper way if you have submit button outside your ion-content form (typically in the ion-header or ion-footer) -->
+<!-- (ref: https://github.com/ionic-team/ionic/issues/16661) -->
+
+<form class="create-user-form ion-page" [formGroup]="createSupplierForm" (ngSubmit)="createSupplier()">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="end">
+        <ion-button (click)="dismissModal()">
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>
+        供應商資料表格
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content padding class="create-user-content">
+
+    <ion-row>
+      <ion-col size="6">
+        <!-- 公司名稱 name -->
+        <!-- 聯絡電話 phone -->
+        <!-- 電郵 email -->
+        <section class="user-details-fields fields-section">
+          <h5 class="section-header">供應商資料</h5>
+          <ion-list class="inputs-list" lines="full">
+            <ion-item class="input-item">
+              <ion-label color="dark" position="floating">公司名稱</ion-label>
+              <ion-input type="text" formControlName="name" required></ion-input>
+            </ion-item>
+            <ion-item class="input-item">
+              <ion-label color="dark" position="floating">聯絡電話</ion-label>
+              <ion-input type="tel" formControlName="phone" required></ion-input>
+            </ion-item>
+            <ion-item class="input-item">
+              <ion-label color="dark" position="floating">電郵</ion-label>
+              <ion-input type="email" formControlName="email" required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>編輯選擇</ion-label>
+              <ion-select formControlName="editor_choice" interface="alert">
+                <ion-select-option value="true">對</ion-select-option>
+                <ion-select-option value="false">不</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+
+        </section>
+
+
+      </ion-col>
+      <ion-col size="6">
+        <!-- 提供課程類別 cate_1, cate_2, cate_3, cate_4 -->
+        <section class="user-languages-fields fields-section">
+          <h5 class="section-header">提供課程類別</h5>
+          <ion-row class="range-item">
+            <ion-col size="12">
+              <ion-item line="none">
+                <ion-label>{{cate_1.name[0]}}</ion-label>
+                <ion-select formControlName="cate_1" placeholder="" multiple="true" cancelText="Cancel"
+                  okText="Confirm">
+                  <ion-select-option *ngFor="let i of cate_1.list" value="{{i}}">{{i}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item line="none">
+                <ion-label>{{cate_1.name[1]}}</ion-label>
+                <ion-select formControlName="cate_2" placeholder="" multiple="true" cancelText="Cancel"
+                  okText="Confirm">
+                  <ion-select-option *ngFor="let j of cate_1.list2" value="{{j}}">{{j}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item line="none">
+                <ion-label>{{cate_1.name[2]}}</ion-label>
+                <ion-select formControlName="cate_3" placeholder="" multiple="true" cancelText="Cancel"
+                  okText="Confirm">
+                  <ion-select-option *ngFor="let x of cate_1.list3" value="{{x}}">{{x}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item line="none">
+                <ion-label>{{cate_1.name[3]}}</ion-label>
+                <ion-select formControlName="cate_4" placeholder="" multiple="true" cancelText="Cancel"
+                  okText="Confirm">
+                  <ion-select-option *ngFor="let y of cate_1.list4" value="{{y}}">{{y}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </section>
+
+      </ion-col>
+      <ion-col size="12">
+        <!-- 服務對象年齡 target_user_age -->
+        <!-- 課程可容人數 class_size -->
+        <!-- 可提供課時長度 class_length -->
+        <!-- 公司簡介（100字）company_intro -->
+        <!-- 導師資歷（50字）tutor_qual -->
+        <!-- 比賽經驗（50字）competition_exp -->
+        <section class="user-languages-fields fields-section">
+          <h5 class="section-header">提供服務</h5>
+          <ion-row class="range-item-row">
+            <ion-col size="12">
+              <div class="range-header">
+                <ion-label class="range-label">服務對象年齡</ion-label>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <ion-row class="range-item">
+                <ion-col size="12">
+                  <div class="range-header">
+                    <span class="range-value">
+                      {{ changeTargetValue(createSupplierForm.controls.target_user_age.value.lower) }}
+                    </span>
+                    <span class="range-value">
+                      {{ changeTargetValue(createSupplierForm.controls.target_user_age.value.upper) }}
+                    </span>
+                  </div>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-range class="range-control" formControlName="target_user_age" color="theme" dualKnobs="true"
+                    (ionChange)="rangeChangeSecond($event)" min="1" max="18" step="1"></ion-range>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row class="range-item-row">
+            <ion-col size="12">
+              <div class="range-header">
+                <ion-label class="range-label">課程可容人數</ion-label>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <ion-row class="range-item">
+                <ion-col size="12">
+                  <div class="range-header">
+                    <span class="range-value">{{ createSupplierForm.controls.class_size.value.lower }}</span>
+                    <div *ngIf="createSupplierForm.controls.class_size.value.upper < 40">
+                      <span class="range-value">{{ createSupplierForm.controls.class_size.value.upper }}</span>
+                    </div>
+                    <div *ngIf="createSupplierForm.controls.class_size.value.upper == 41">
+                      <span class="range-value"> Over 40</span>
+                    </div>
+                    <div *ngIf="createSupplierForm.controls.class_size.value.upper == 42">
+                      <span class="range-value">Any</span>
+                    </div>
+                  </div>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-range class="range-control" formControlName="class_size" color="theme" dualKnobs="true"
+                    (ionChange)="rangeChange($event)" min="1" max="42" step="1"></ion-range>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row class="range-item-row">
+            <ion-col size="12">
+              <div class="range-header">
+                <span class="range-label">可提供課時長度</span>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <ion-row class="range-item">
+                <ion-col size="12">
+                  <div class="range-header">
+                    <span class="range-value">{{ createSupplierForm.controls.class_length.value.lower }}</span>
+
+                    <div *ngIf="createSupplierForm.controls.class_length.value.upper < 40">
+                      <span class="range-value">{{ createSupplierForm.controls.class_length.value.upper }}</span>
+                    </div>
+                    <div *ngIf="createSupplierForm.controls.class_length.value.upper == 41">
+                      <span class="range-value"> Over 40</span>
+                    </div>
+                    <div *ngIf="createSupplierForm.controls.class_length.value.upper == 42">
+                      <span class="range-value"> Any</span>
+                    </div>
+
+                  </div>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-range class="range-control" formControlName="class_length" color="theme" dualKnobs="true"
+                    (ionChange)="rangeChange($event)" min="1" max="42" step="1"></ion-range>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row class="range-item-row">
+            <ion-col size="12">
+              <div class="range-header">
+                <span class="range-label">公司簡介（100字）</span>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <ion-textarea rows="8" cols="40" maxLength="100" formControlName="company_intro"></ion-textarea>
+              <!-- <ion-input formControlName="company_intro" color="secondary"></ion-input> -->
+            </ion-col>
+          </ion-row>
+          <ion-row class="range-item-row">
+            <ion-col size="12">
+              <div class="range-header">
+                <span class="range-label">導師資歷（50字）</span>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <ion-textarea rows="6" cols="20" maxLength="50" formControlName="tutor_qual"></ion-textarea>
+              <!-- <ion-input formControlName="tutor_qual" color="secondary"></ion-input> -->
+            </ion-col>
+          </ion-row>
+          <ion-row class="range-item-row">
+            <ion-col size="12">
+              <div class="range-header">
+                <span class="range-label">比賽經驗（50字）</span>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <ion-textarea rows="6" cols="20" maxLength="50" formControlName="competition_exp"></ion-textarea>
+            </ion-col>
+          </ion-row>
+
+        </section>
+
+      </ion-col>
+    </ion-row>
+
+
+
+
+    <!-- B2 -->
+    <!-- <ion-item-divider>
+        <ion-label>對象</ion-label>
+      </ion-item-divider>
+      <ion-row class="range-item">
+        <ion-col size="12">
+          <div class="range-header">
+            <span class="range-value">
+              {{ changeTargetValue(createSupplierForm.controls.second.value.lower) }}
+            </span>
+            <span class="range-value">
+              {{ changeTargetValue(createSupplierForm.controls.second.value.upper) }}
+            </span>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <ion-range class="range-control" formControlName="second" color="theme" dualKnobs="true"
+            (ionChange)="rangeChangeSecond($event)" min="1" max="18" step="1"></ion-range>
+        </ion-col>
+      </ion-row> -->
+
+    <!-- <ion-item-divider>
+        <ion-label>課程人數</ion-label>
+      </ion-item-divider>
+      <ion-row class="range-item">
+        <ion-col size="12">
+          <div class="range-header">
+            <span class="range-value">{{ createSupplierForm.controls.first.value.lower }}</span>
+            <span class="range-value">{{ createSupplierForm.controls.first.value.upper }}</span>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <ion-range class="range-control" formControlName="first" color="theme" dualKnobs="true"
+            (ionChange)="rangeChange($event)" min="1" max="40" step="1"></ion-range>
+        </ion-col>
+      </ion-row> -->
+
+    <!-- <ion-item-divider>
+        <ion-label>時數</ion-label>
+      </ion-item-divider>
+      <ion-row class="range-item">
+        <ion-col size="12">
+          <div class="range-header">
+            <span class="range-value">{{ createSupplierForm.controls.dual.value.lower }}</span>
+            <span class="range-value">{{ createSupplierForm.controls.dual.value.upper }}</span>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <ion-range class="range-control" formControlName="dual" color="theme" dualKnobs="true"
+            (ionChange)="rangeChange($event)" min="1" max="40" step="1"></ion-range>
+        </ion-col>
+      </ion-row> -->
+
+  </ion-content>
+
+  <ion-footer>
+    <ion-row class="form-actions-wrapper">
+      <ion-col>
+        <ion-button color="danger" expand="block" fill="outline" (click)="onReset()">
+          重置
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button class="submit-btn" expand="block" color="theme" type="submit" fill="solid">提交
+        </ion-button>
+        <!-- // <ion-button class="submit-btn" expand="block" color="secondary" type="submit" fill="solid"
+          [disabled]="!createUserForm.valid">CREATE</ion-button> -->
+      </ion-col>
+    </ion-row>
+  </ion-footer>
+</form>
+
+
+
+<!-- <form class="create-user-form ion-page" [formGroup]="createUserForm" (ngSubmit)="createUser()">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="end">
+        <ion-button (click)="dismissModal()">
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>
+        供應商資料表格
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="create-user-content">
+    <ion-row class="select-user-image-row">
+      <ion-col class="user-image-col" size="5">
+        <app-aspect-ratio [ratio]="{w: 1, h: 1}">
+          <app-image-shell [mode]="'cover'" class="user-image" animation="spinner" [src]="userData.avatar"
+            [alt]="'user image'"></app-image-shell>
+        </app-aspect-ratio>
+        <ion-button class="change-image-btn" color="secondary" (click)="changeUserImage()">
+          <ion-icon class="btn-icon" slot="icon-only" name="camera"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    公司名稱
+    
+    <section class="user-details-fields fields-section">
+      
+      <ion-list class="inputs-list" lines="full">
+        <ion-item class="input-item">
+          <ion-label color="secondary" position="floating">Name</ion-label>
+          <ion-input type="text" formControlName="name" required></ion-input>
+        </ion-item>
+        <ion-item class="input-item">
+          <ion-label color="secondary" position="floating">Last name</ion-label>
+          <ion-input type="text" formControlName="lastname" required></ion-input>
+        </ion-item>
+        <ion-item class="input-item">
+          <ion-label color="secondary" position="floating">Date of Birth</ion-label>
+          <ion-datetime display-format="DD/MM/YYYY" picker-format="DD MMMM YYYY" formControlName="birthdate" required>
+          </ion-datetime>
+        </ion-item>
+        <ion-item class="input-item">
+          <ion-label color="secondary" position="floating">Phone number</ion-label>
+          <ion-input type="tel" formControlName="phone" required></ion-input>
+        </ion-item>
+        <ion-item class="input-item">
+          <ion-label color="secondary" position="floating">Email</ion-label>
+          <ion-input type="email" formControlName="email" required></ion-input>
+        </ion-item>
+      </ion-list>
+    </section>
+編輯選擇
+    <section class="user-experience-fields fields-section">
+      <h5 class="section-header">Experience in</h5>
+      <ion-row class="checkbox-tags rounded-checkbox-tags">
+        <ion-item formArrayName="skills" lines="none" class="checkbox-tag rounded-tag"
+          *ngFor="let skill of skillsFormArray.controls; let i = index;">
+          <ion-label class="tag-label">{{skills[i].name}}</ion-label>
+          <ion-checkbox [formControlName]="i"></ion-checkbox>
+        </ion-item>
+      </ion-row>
+    </section>
+
+    <section class="user-languages-fields fields-section">
+      <h5 class="section-header">Languages</h5>
+      <ion-row class="range-item-row">
+        <ion-col size="12">
+          <div class="range-header">
+            <span class="range-label">English</span>
+            <span class="range-value">{{ changeLangValue(createUserForm.controls.english.value) }}</span>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <ion-range class="range-control" formControlName="english" color="secondary" min="1" max="10" step="1">
+          </ion-range>
+        </ion-col>
+      </ion-row>
+      <ion-row class="range-item-row">
+        <ion-col size="12">
+          <div class="range-header">
+            <span class="range-label">Spanish</span>
+            <span class="range-value">{{ changeLangValue(createUserForm.controls.spanish.value) }}</span>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <ion-range class="range-control" formControlName="spanish" color="secondary" min="1" max="10" step="1">
+          </ion-range>
+        </ion-col>
+      </ion-row>
+      <ion-row class="range-item-row">
+        <ion-col size="12">
+          <div class="range-header">
+            <span class="range-label">French</span>
+            <span class="range-value">{{ changeLangValue(createUserForm.controls.french.value) }}</span>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <ion-range class="range-control" formControlName="french" color="secondary" min="1" max="10" step="1">
+          </ion-range>
+        </ion-col>
+      </ion-row>
+    </section>
+  </ion-content>
+
+  <ion-footer>
+    <ion-row class="form-actions-wrapper">
+      <ion-col>
+        <ion-button class="submit-btn" expand="block" color="secondary" type="submit" fill="solid">CREATE</ion-button>
+   //     <ion-button class="submit-btn" expand="block" color="secondary" type="submit" fill="solid" [disabled]="!createUserForm.valid">CREATE</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-footer>
+</form> -->

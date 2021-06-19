@@ -1,0 +1,66 @@
+<app-header></app-header>
+<ion-content>
+   <ion-item-divider sticky>
+      <ion-title>Update Item {{itemDetail.id}} </ion-title>
+      <ion-button fill="clear" color="theme" (click)="dismissModal()">
+         <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+   </ion-item-divider>
+
+   <div class="testbox">
+
+      <form [formGroup]="createItemForm" (ngSubmit)="createItem()">
+         <fieldset>
+            <legend>Item ID</legend>
+            <p>
+               <input type="number" name="id" formControlName="Item ID" />
+            </p>
+         </fieldset>
+
+         <fieldset>
+            <legend>Type</legend>
+            <p>
+               <select formControlName="Product Type">
+                  <option value="Type" selected>Select or Type to add</option>
+                  <option value="service">Service</option>
+                  <option value="goods">Goods</option>
+                  <option value="others">Others</option>
+               </select>
+            </p>
+         </fieldset>
+
+         <fieldset>
+            <legend>Name</legend>
+            <p>
+               <input type="text" name="name" formControlName="Item Name" />
+            </p>
+         </fieldset>
+
+         <fieldset>
+            <legend>Unit</legend>
+            <p>
+               <input class="name" type="number" name="name" placeholder="leave blank if not applicable"
+                  formControlName="Usage unit" />
+            </p>
+         </fieldset>
+
+         <fieldset>
+            <legend>Description</legend>
+            <p>
+               <textarea rows="5" formControlName="Description"></textarea>
+            </p>
+         </fieldset>
+
+         <fieldset>
+            <legend>Selling Price</legend>
+            <p>
+               <input type="number" name="selling_price" formControlName="Rate" />
+            </p>
+         </fieldset>
+
+         <hr>
+
+         <ion-button color="theme" expand="full" type="submit">Save</ion-button>
+      </form>
+   </div>
+</ion-content>

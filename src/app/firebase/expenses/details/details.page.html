@@ -1,0 +1,79 @@
+<app-header></app-header>
+<ion-content>
+  <ion-item-divider sticky>
+    <ion-title class="title" (click)="showSideNav(sideNav = !sideNav)">
+      All Expenses
+
+    </ion-title>
+
+    <ion-button slot="end" fill="clear" color="dark" (click)="onDismiss()">
+      <ion-icon name="close"></ion-icon>
+    </ion-button>
+  </ion-item-divider>
+
+  <app-rating-input *ngIf="!estimateDetail"></app-rating-input>
+
+  <div class="grid-container" id="grid-container">
+    <aside class="sidenav" id="sidenav">
+      <!-- <ul *ngFor="let i of estimateList" class="sidenav__list">
+        <li class="sidenav__list-item">
+          <input type="checkbox" style="padding-right: 10px;" />
+          <ion-label style="margin-bottom: 10px; color: black;">
+            {{i['Customer Name']}}
+          </ion-label>
+          <br />
+          <div class="estimatenumber">
+            {{i['Estimate Number']}}
+          </div>
+          <div class="estimatedate">
+            | {{i['Estimate Date']}}
+          </div>
+          <div class="status">
+            {{i['Estimate Status']}}
+          </div>
+        </li>
+      </ul> -->
+    </aside>
+    <header class="header">
+      <ion-title>
+        <!-- | {{estimateDetail.id}} -->
+      </ion-title>
+      <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice" (click)="updateEstimate()">
+        <ion-icon src="assets/icon/edit.svg"></ion-icon>
+      </ion-button>
+
+      <ion-button slot="end" fill="clear" color="theme" (click)="testtablePDF(estimateDetail, myimage)">
+        <ion-icon src="assets/icon/pdf.svg"></ion-icon>
+      </ion-button>
+
+
+      <ion-button slot="end" fill="solid" color="theme" (click)="convertToInvoice(estimateDetail)">Convert to
+        Invoice
+      </ion-button>
+
+      <ion-button slot="end" fill="solid" color="theme" (click)="deleteItem()">Delete </ion-button>
+    </header>
+    <main class="main">
+
+      <div id="invoice">
+        <div class="ribbon">
+          <div class="wrap">
+            <span class="ribbon6">Expense</span>
+            <ion-card class="invoice overflow-auto">
+
+
+
+
+              {{estimateDetail | json}}
+
+
+              <footer>
+                Powered by i-Maker IT Limited
+              </footer>
+            </ion-card>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</ion-content>

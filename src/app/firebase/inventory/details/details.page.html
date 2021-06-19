@@ -1,0 +1,170 @@
+<app-header></app-header>
+<ion-content>
+
+    <ion-item-divider sticky>
+        <ion-title class="title" (click)="showSideNav(sideNav = !sideNav)">
+            Active Items
+        </ion-title>
+        <!-- <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice">
+			<ion-icon name="print"></ion-icon>
+		</ion-button>
+		<ion-button slot="end" fill="clear" color="theme" (click)="testtablePDF(result)">
+			<ion-icon src="assets/icon/pdf.svg"></ion-icon>
+		</ion-button>
+		<ion-button slot="end" fill="solid" color="theme" (click)="testtablePDF(result)">Convert to Invoice </ion-button> -->
+        <ion-button slot="end" fill="clear" color="dark" (click)="onDismiss()">
+            <ion-icon name="close"></ion-icon>
+        </ion-button>
+    </ion-item-divider>
+
+    <ion-progress-bar *ngIf="!itemDetail" color="theme" type="indeterminate"></ion-progress-bar>
+
+    <div class="grid-container" id="grid-container">
+
+        <aside class="sidenav" id="sidenav">
+
+            <ul *ngFor="let i of itemList" class="sidenav__list">
+                <li class="sidenav__list-item">
+                    <input type="checkbox" style="padding-right: 10px;" />
+                    <ion-label style="margin-bottom: 10px; color: black;">
+                        {{i["Item Name"]}}
+                    </ion-label>
+                </li>
+            </ul>
+            <!-- <ul *ngFor="let i of itemsData" class="sidenav__list">
+                <li class="sidenav__list-item">
+                    <input type="checkbox" style="padding-right: 10px;" />
+                    <ion-label style="margin-bottom: 10px; color: black;">
+                        {{i["Item Name"]}}
+                    </ion-label>
+                </li>
+            </ul> -->
+        </aside>
+        <header class="header">
+            <ion-title> {{itemDetail.id}}</ion-title>
+            <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice"
+                (click)="updateItems(itemDetail)">
+                <ion-icon src="assets/icon/edit.svg"></ion-icon>
+            </ion-button>
+
+            <!-- <ion-button slot="end" fill="clear" color="theme" (click)="testtablePDF(result)">
+                <ion-icon src="assets/icon/pdf.svg"></ion-icon>
+            </ion-button> -->
+
+            <!-- <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice">
+                <ion-icon name="print"></ion-icon>
+            </ion-button> -->
+
+            <!-- <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice">
+                <ion-icon name="mail"></ion-icon>
+            </ion-button> -->
+
+            <!-- <ion-button slot="end" fill="clear" color="theme" (click)="testtablePDF(result)">
+                <ion-icon src="assets/icon/paperclip.svg"></ion-icon>
+            </ion-button> -->
+
+            <ion-button slot="end" fill="solid" color="theme" (click)="deleteItem(itemDetail)">Delete </ion-button>
+        </header>
+
+        <main class="main">
+
+            <ion-item-divider
+                style="padding-left: 0px; border-width: 1px; border-left-style: solid; border-left-color: lightgray;"
+                sticky>
+                <ion-button class="segment-button" slot="start" fill="clear" color="theme" icon-only id="printInvoice">
+
+                    Overview
+
+                </ion-button>
+
+                <!-- <ion-button class="segment-button" slot="start" fill="clear" color="theme"
+                    (click)="testtablePDF(result)">
+                    Transactions
+                </ion-button> -->
+
+                <!-- <ion-button class="segment-button" slot="start" fill="clear" color="theme"
+                    (click)="testtablePDF(result)">
+                    Related Lists
+                </ion-button> -->
+
+                <!-- <ion-button class="segment-button" slot="start" fill="clear" color="theme"
+                    (click)="testtablePDF(result)">
+                    History
+                </ion-button> -->
+            </ion-item-divider>
+
+            <!-- <div class="main-header">
+						<ul>
+							<li>
+								<p>
+                     26 Nov 2020 06:41 PM
+                  </p>
+								<ion-icon name="document"></ion-icon>
+                  Estimate updated. Amount changed from HKD82,000.00 to HKD102,000.00 by iMaker
+               
+							</li>
+							<li>
+								<p>
+                     26 Nov 2020 06:41 PM
+                  </p>
+								<ion-icon name="document"></ion-icon>
+                  Estimate updated. Amount changed from HKD82,000.00 to HKD102,000.00 by iMaker
+               
+							</li>
+							<li>
+								<p>
+                     26 Nov 2020 06:41 PM
+                  </p>
+								<ion-icon name="document"></ion-icon>
+                  Estimate updated. Amount changed from HKD82,000.00 to HKD102,000.00 by iMaker
+               
+							</li>
+						</ul>
+					</div> -->
+
+            <div class="testbox">
+                <form action="/">
+
+                    <ion-item>
+                        <ion-label>Item Name</ion-label>
+                        <ion-title>
+                            {{itemDetail["Item Name"]}}
+                        </ion-title>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label>Item ID</ion-label>
+                        <ion-title>
+                            {{itemDetail["Item ID"]}}
+                        </ion-title>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label>Rate</ion-label>
+                        <ion-title>
+                            {{itemDetail["Rate"]}}
+                        </ion-title>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label>Item Type</ion-label>
+                        <ion-title>
+                            {{itemDetail["Product Type"]}}
+                        </ion-title>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label>Description</ion-label>
+                        <ion-title>
+                            <pre>
+ {{itemDetail["Description"]}}
+                    </pre>
+                        </ion-title>
+                    </ion-item>
+
+                </form>
+            </div>
+        </main>
+    </div>
+    <!-- {{itemDetail|json}} -->
+</ion-content>

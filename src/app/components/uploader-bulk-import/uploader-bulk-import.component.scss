@@ -1,0 +1,44 @@
+.dropzone {
+    display: flex;
+      align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    /* width: 800px; */
+    /* min-width: 100%; */
+    /* font-weight: 200; */
+    /* height: 300px; */
+    border: 4px dashed #dadada;
+    border-radius: 20px;
+    background: var(--ion-color-dark-tint);
+    margin: 10px 0;
+    padding: 10px;
+
+    &.hovering {
+        border: 4px solid var(--ion-color-theme);
+        color: #dadada !important;
+    }
+
+    .file-label {
+        font-size: 1.2em;
+        color: var(--ion-color-theme);
+    }
+
+    h1 {
+        color: #dadada;
+    }
+    h3 {
+        color: var(--ion-color-theme);
+    }
+
+    p {
+        color: var(--ion-color-theme);
+    }
+}
+
+progress::-webkit-progress-value {
+    transition: width 0.1s ease;
+}
+
+.icon {
+    width: 200px;
+}

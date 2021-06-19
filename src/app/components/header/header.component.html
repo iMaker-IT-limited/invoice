@@ -1,0 +1,295 @@
+<nav class="dropdownmenu">
+   <ion-buttons slot="start">
+      <ion-menu-button color="theme"></ion-menu-button>
+   </ion-buttons>
+   <!-- Searchbar with a cancel button and custom cancel button text -->
+   <!-- <ion-searchbar class="searchbar" mode="ios"></ion-searchbar> -->
+
+   <!-- <app-image-shell style="" class="header-logo" animation="spinner"
+      src="./assets/images/home_categories/logo-header.svg"> </app-image-shell> -->
+
+   <!-- <ul class="menulist_top">
+      <a href="{{url}}" target="_blank">
+        導師登記
+      </a>
+      </ul> -->
+   <ul class="menulist_" style="position: absolute; top: 0; right: 0;">
+      <li><a *ngIf="signin == 'Sign in'" class="loginbutton" (click)="onSignIn()"> 登入</a></li>
+      <!-- <li><a *ngIf="signin == 'Sign out'" class="loginbutton" (click)="onSignOut()"> 登出</a></li> -->
+      <li *ngIf="signin == 'Sign out'" (click)="showProfileToggle = !showProfileToggle">
+
+         <div *ngIf="photoURL">
+            <app-image-shell class="user-avatar" animation="spinner" [src]="photoURL"> </app-image-shell>
+         </div>
+         <div *ngIf="!photoURL">
+            <app-image-shell class="user-avatar" animation="spinner"
+               [src]="'https://thumbs.dreamstime.com/b/young-executive-woman-profile-icon-beautiful-vector-illustration-design-81933333.jpg'">
+            </app-image-shell>
+         </div>
+
+         <div class="menu_toggle" *ngIf="showProfileToggle" style="overflow-y: scroll; height: 600px;">
+            <ul>
+               <li>
+                  <ion-item-divider style="background-color: #f3f8fe!important;" sticky>
+
+                     <ion-avatar>
+                        <div *ngIf="photoURL">
+                           <app-image-shell animation="spinner" [src]="photoURL">
+                           </app-image-shell>
+                        </div>
+                        <div *ngIf="!photoURL">
+                           <app-image-shell animation="spinner"
+                              [src]="'https://thumbs.dreamstime.com/b/young-executive-woman-profile-icon-beautiful-vector-illustration-design-81933333.jpg'">
+                           </app-image-shell>
+                        </div>
+                     </ion-avatar>
+
+                     <ion-button color="secondary" fill="clear" expand="block" *ngIf="signin == 'Sign out'"
+                        class="loginbutton" (click)="onSignOut()"> 登出</ion-button>
+
+                     <ion-button color="theme" fill="clear" class="dismissbutton" (click)="onDismiss()">
+                        <ion-icon name="close-outline"></ion-icon>
+                     </ion-button>
+                  </ion-item-divider>
+                  <ion-card class="card">
+                     <ion-item>
+                        <ion-thumbnail slot="start">
+                           <ion-img src="assets/icon/tutorial.svg" alt=""></ion-img>
+                        </ion-thumbnail>
+
+                        <ion-label>
+                           {{displayName}}
+                        </ion-label>
+
+                     </ion-item>
+
+                     <ion-item>
+                        <ion-thumbnail slot="start">
+                           <ion-img src="assets/icon/email.svg" alt=""></ion-img>
+                        </ion-thumbnail>
+                        <ion-label>
+                           {{email}}
+                        </ion-label>
+                     </ion-item>
+
+                     <ion-item>
+                        <ion-badge color="theme" style="padding: 5px;">
+                           Created At: {{creationTime.substring(0, 16)}}
+                        </ion-badge>
+                     </ion-item>
+
+                     <ion-item>
+                        <ion-badge style="background: lightblue; color: var(--ion-color-theme); padding: 5px;">
+                           Last Sign In: {{lastSignInTime.substring(0, 16)}}
+                        </ion-badge>
+                     </ion-item>
+                  </ion-card>
+               </li>
+
+            </ul>
+         </div>
+
+      </li>
+      <!-- Help and Support -->
+      <li>
+         <ion-button class="notification" color="premium" fill="clear" slot="end"
+            (click)="showCreditNotesToggle = !showCreditNotesToggle">
+            <ion-icon name="help-circle-outline"></ion-icon>
+         </ion-button>
+         <div class="menu_toggle" *ngIf="showCreditNotesToggle" style="overflow-y: scroll; height: 700px;">
+            <ul>
+               <li>
+                  <ion-item-divider sticky>
+                     <ion-title>Help & Support</ion-title>
+                  </ion-item-divider>
+                  <ion-card class="card">
+                     <ion-item>
+                        <ion-thumbnail slot="start">
+                           <ion-img src="assets/icon/tutorial.svg" alt=""></ion-img>
+                        </ion-thumbnail>
+                        <ion-label>Educational guides for your business</ion-label>
+                     </ion-item>
+                     <ion-item>
+                        <ion-thumbnail slot="start">
+                           <ion-img src="assets/icon/tutorial.svg" alt=""></ion-img>
+                        </ion-thumbnail>
+                        <ion-label>
+                           Call us anytime between Monday - Friday (Toll Free)
+                        </ion-label>
+                     </ion-item>
+                  </ion-card>
+                  <ion-card class="card">
+                     <ion-slides pager="false" [options]="slideOptsTut">
+                        <ion-slide>
+                           <a href="https://www.youtube.com/watch?v=BpAwQzBThj4" target=”_blank”>
+                              <img src="./../../../assets/images/Add_Company_Details.jpg" alt="">
+
+                           </a>
+                        </ion-slide>
+                        <ion-slide>
+                           <a href="">
+                              <img src="./../../../assets/images/Add_Company_Details.jpg" alt="">
+
+                           </a>
+                        </ion-slide>
+                        <ion-slide>
+                           <a href="">
+                              <img src="./../../../assets/images/Add_Company_Details.jpg" alt="">
+                           </a>
+                        </ion-slide>
+                     </ion-slides>
+                  </ion-card>
+                  <ion-card class="card">
+                     <ion-slides pager="false" [options]="slideOptsTut">
+                        <ion-slide>
+                           <a href="">
+                              <img src="./../../../assets/images/Add_Company_Details.jpg" alt="">
+                           </a>
+                        </ion-slide>
+                        <ion-slide>
+                           <a href="">
+
+                              <img src="./../../../assets/images/Add_Company_Details.jpg" alt="">
+                           </a>
+                        </ion-slide>
+                        <ion-slide>
+                           <a href="">
+                              <img src="./../../../assets/images/Add_Company_Details.jpg" alt="">
+                           </a>
+                        </ion-slide>
+                     </ion-slides>
+                  </ion-card>
+                  <ion-card class="card">
+                     <ion-card-header>
+                        <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+                        <ion-card-title>Card Title</ion-card-title>
+                     </ion-card-header>
+                     <ion-card-content>
+                        Keep close to Nature's heart... and break clear away, once in awhile,
+                        and climb a mountain or spend a week in the woods. Wash your spirit clean.
+                     </ion-card-content>
+                  </ion-card>
+                  <ion-card class="card">
+                     <ion-item>
+                        <ion-thumbnail slot="start">
+                           <ion-img src="assets/icon/tutorial.svg" alt=""></ion-img>
+                        </ion-thumbnail>
+                        <ion-label>Educational guides for your business</ion-label>
+                     </ion-item>
+                     <ion-item>
+                        <ion-thumbnail slot="start">
+                           <ion-img src="assets/icon/tutorial.svg" alt=""></ion-img>
+                        </ion-thumbnail>
+                        <ion-label>
+                           Call us anytime between Monday - Friday (Toll Free)
+                        </ion-label>
+                     </ion-item>
+                  </ion-card>
+               </li>
+            </ul>
+         </div>
+      </li>
+
+      <!-- <li>
+         <ion-button class="notification" slot="icon-only" color="theme" fill="clear"
+            (click)="presentPopoverNotification()">
+            <ion-icon name="notifications-outline"></ion-icon>
+         </ion-button>
+      </li> -->
+
+      <!-- <li>
+         <ion-button class="notification" color="premium" fill="clear" slot="end"
+            (click)="showCreditNotesToggle2 = !showCreditNotesToggle2">
+            <ion-icon name="settings-outline"></ion-icon>
+         </ion-button>
+         <div class="menu_toggle" *ngIf="showCreditNotesToggle2">
+            <ul>
+               <li>
+                  <ion-button class="listbutton" expand="full" fill="clear" (click)="show = !show">
+                     <ion-icon slot="start" size="medium" icon-only name="cloud-upload-sharp"></ion-icon>
+                     <span>
+                        Upload contact import
+                     </span>
+                  </ion-button>
+               </li>
+               <li>
+                  <ion-button class="listbutton" expand="full" fill="clear" (click)="getTestCsv()">
+                     <ion-icon slot="start" size="medium" icon-only name=""></ion-icon>
+                     <span>
+                        Get CSV
+                     </span>
+                  </ion-button>
+               </li>
+               <li>
+                  <ion-button class="listbutton" expand="full" fill="clear" (click)="loadCSV()">
+                     <ion-icon slot="start" size="medium" icon-only name="cloud-upload-sharp"></ion-icon>
+                     <span>
+                        Bulk import
+                     </span>
+                  </ion-button>
+               </li>
+               <li>
+                  <ion-button class="listbutton" expand="full" fill="clear" (click)="exportCSV()">
+                     <ion-icon slot="start" size="medium" icon-only name="cloud-download-sharp"></ion-icon>
+                     <span>
+                        Bulk export
+                     </span>
+                  </ion-button>
+               </li>
+            </ul>
+         </div>
+      </li> -->
+
+      <!-- <li>
+         <ion-button class="notification" color="premium" fill="clear" slot="end"
+            (click)="showCreditNotesToggle3 = !showCreditNotesToggle3">
+            <ion-icon name="people-outline"></ion-icon>
+         </ion-button>
+         <div class="menu_toggle" *ngIf="showCreditNotesToggle3">
+            <ul>
+               <li>
+                  <ion-button class="listbutton" expand="full" fill="clear" (click)="show = !show">
+                     <ion-icon slot="start" size="medium" icon-only name="cloud-upload-sharp"></ion-icon>
+                     <span>
+                        Upload contact import
+                     </span>
+                  </ion-button>
+               </li>
+               <li>
+                  <ion-button class="listbutton" expand="full" fill="clear" (click)="getTestCsv()">
+                     <ion-icon slot="start" size="medium" icon-only name=""></ion-icon>
+                     <span>
+                        Get CSV
+                     </span>
+                  </ion-button>
+               </li>
+               <li>
+                  <ion-button class="listbutton" expand="full" fill="clear" (click)="loadCSV()">
+                     <ion-icon slot="start" size="medium" icon-only name="cloud-upload-sharp"></ion-icon>
+                     <span>
+                        Bulk import
+                     </span>
+                  </ion-button>
+               </li>
+               <li>
+                  <ion-button class="listbutton" expand="full" fill="clear" (click)="exportCSV()">
+                     <ion-icon slot="start" size="medium" icon-only name="cloud-download-sharp"></ion-icon>
+                     <span>
+                        Bulk export
+                     </span>
+                  </ion-button>
+               </li>
+            </ul>
+         </div>
+      </li> -->
+
+      <li>
+         <ion-item lines="none" style="--background: transparent; color: lightgray; font-weight: bold;">
+            {{displayName}}
+            <!-- | {{uid}} -->
+         </ion-item>
+      </li>
+   </ul>
+
+
+</nav>

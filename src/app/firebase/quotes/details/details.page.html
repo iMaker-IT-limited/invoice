@@ -1,0 +1,437 @@
+<app-header></app-header>
+<ion-content>
+    <ion-item-divider sticky>
+        <ion-title class="title" (click)="showSideNav(sideNav = !sideNav)">
+            All Estimates
+            <!-- {{sideNav}} -->
+        </ion-title>
+
+        <!-- <button (click)="createPDF()">pdf</button> -->
+        <!-- <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice">
+			<ion-icon name="print"></ion-icon>
+		</ion-button>
+		<ion-button slot="end" fill="clear" color="theme" (click)="testtablePDF(result)">
+			<ion-icon src="assets/icon/pdf.svg"></ion-icon>
+		</ion-button>
+		<ion-button slot="end" fill="solid" color="theme" (click)="testtablePDF(result)">Convert to Invoice </ion-button> -->
+        <ion-button slot="end" fill="clear" color="dark" (click)="onDismiss()">
+            <ion-icon name="close"></ion-icon>
+        </ion-button>
+    </ion-item-divider>
+    <!-- <ion-progress-bar *ngIf="!estimateDetail" color="theme" type="indeterminate"></ion-progress-bar> -->
+
+    <app-rating-input *ngIf="!estimateDetail"></app-rating-input>
+
+    <div class="grid-container" id="grid-container">
+
+        <!-- <aside class="sidenav" id="sidenav">
+            <ul *ngFor="let i of quotesData" class="sidenav__list">
+                <li class="sidenav__list-item">
+                    <input type="checkbox" style="padding-right: 10px;" />
+                    <ion-label style="margin-bottom: 10px; color: black;">
+                        {{i['Customer Name']}}
+                    </ion-label>
+                    <br />
+                    <div class="estimatenumber">
+                        {{i['Estimate Number']}}
+                    </div>
+                    <div class="estimatedate">
+                        | {{i['Estimate Date']}}
+                    </div>
+                    <div class="status">
+                        {{i['Estimate Status']}}
+                    </div>
+                </li>
+            </ul>
+        </aside> -->
+        <aside class="sidenav" id="sidenav">
+            <ul *ngFor="let i of estimateList" class="sidenav__list">
+                <li class="sidenav__list-item">
+                    <input type="checkbox" style="padding-right: 10px;" />
+                    <ion-label style="margin-bottom: 10px; color: black;">
+                        {{i['Customer Name']}}
+                    </ion-label>
+                    <br />
+                    <div class="estimatenumber">
+                        {{i['Estimate Number']}}
+                    </div>
+                    <div class="estimatedate">
+                        | {{i['Estimate Date']}}
+                    </div>
+                    <div class="status">
+                        {{i['Estimate Status']}}
+                    </div>
+                </li>
+            </ul>
+        </aside>
+
+
+
+        <header class="header">
+            <ion-title>{{estimateDetail["Estimate Number"]}}
+                <!-- | {{estimateDetail.id}} -->
+            </ion-title>
+            <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice" (click)="updateEstimate()">
+                <ion-icon src="assets/icon/edit.svg"></ion-icon>
+            </ion-button>
+
+            <ion-button slot="end" fill="clear" color="theme" (click)="testtablePDF(estimateDetail, myimage)">
+                <ion-icon src="assets/icon/pdf.svg"></ion-icon>
+            </ion-button>
+
+            <!-- <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice">
+                <ion-icon name="print"></ion-icon>
+            </ion-button> -->
+
+            <!-- <ion-button slot="end" fill="clear" color="theme" icon-only id="printInvoice">
+                <ion-icon name="mail"></ion-icon>
+            </ion-button> -->
+
+            <!-- <ion-button slot="end" fill="clear" color="theme" (click)="testtablePDF(estimateDetail)">
+                <ion-icon src="assets/icon/paperclip.svg"></ion-icon>
+            </ion-button> -->
+
+            <ion-button slot="end" fill="solid" color="theme" (click)="convertToInvoice(estimateDetail)">Convert to
+                Invoice
+            </ion-button>
+
+            <ion-button slot="end" fill="solid" color="theme" (click)="deleteItem()">Delete </ion-button>
+        </header>
+        <main class="main">
+            <!-- <div class="main-header">
+
+                <ul>
+                    <li>
+                        <p>
+                            26 Nov 2020 06:41 PM
+                        </p>
+                        <ion-icon name="document"></ion-icon>
+                        Estimate updated. Amount changed from HKD82,000.00 to HKD102,000.00 by iMaker
+                    </li>
+                    <li>
+                        <p>
+                            26 Nov 2020 06:41 PM
+                        </p>
+                        <ion-icon name="document"></ion-icon>
+                        Estimate updated. Amount changed from HKD82,000.00 to HKD102,000.00 by iMaker
+                    </li>
+                    <li>
+                        <p>
+                            26 Nov 2020 06:41 PM
+                        </p>
+                        <ion-icon name="document"></ion-icon>
+                        Estimate updated. Amount changed from HKD82,000.00 to HKD102,000.00 by iMaker
+                    </li>
+                </ul>
+            </div> -->
+
+            <div id="invoice">
+                <div class="ribbon">
+                    <div class="wrap">
+                        <span class="ribbon6">Estimate</span>
+                        <ion-card class="invoice overflow-auto">
+
+                            <table id="billto">
+                                <tr colspan="3">
+                                    <td>
+                                        <input type="file" name="file" id="file" class="inputfile" value=""
+                                            (change)="onChange($event)" />
+
+                                        <!-- preset logo -->
+                                        <div *ngIf="base64Image && !myimage">
+                                            <img [src]="base64Image" width="200px" height="200px" alt="">
+                                        </div>
+                                        <!-- custom logo -->
+                                        <div *ngIf="myimage">
+                                            <img [src]="myimage | async" width="200px" height="200px" alt="">
+                                        </div>
+
+                                        <!-- <img id="img" style="height: 100px" src="{{downloadURL}}" alt=""> -->
+
+                                        <!-- <img id="img" src="./../../../../assets/images/home_categories/ionInvoice.svg"
+                                            alt="" /> -->
+
+                                    </td>
+
+                                    <td></td>
+                                    <td>
+                                        <!-- <strong>Sales Quotation </strong>
+                                        --
+                                        {{estimateDetail["Estimate Number"]}} -->
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="font-weight: bold;">
+                                        {{company_name}}
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td style="font-weight: bold;">
+                                        {{companyaddress}}
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td style="font-weight: bold;">
+                                        {{companyemail}}
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td style="font-weight: bold;">
+                                        {{website}}
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td style="font-weight: bold;">
+                                        Bill To:
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td>{{estimateDetail['Customer Name']}}</td>
+                                    <td></td>
+                                    <td style="float: right;">Estimate Date:
+                                        {{estimateDetail["Estimate Date"].substring(0, 10)}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Billing Address: {{estimateDetail['Billing Address']}}</td>
+                                    <td></td>
+                                    <td style="float: right;">Expiry Date:
+                                        {{estimateDetail["Expiry Date"].substring(0, 10)}}</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="float: right;">Sales person: {{estimateDetail["Sales person"]}}</td>
+                                </tr>
+                            </table>
+
+                            <!-- preset logistic item starts -->
+                            <div *ngIf="companylogisticprofile" id="invoice-bot">
+
+                                <div id="table">
+                                    <table id="logistic_one" class="table-main" style="filter:blur(0px);">
+                                        <tr>
+                                            <td colspan="50">
+                                                <!-- <legend>Shipper</legend> -->
+                                                Shipper: {{shipper}}
+
+                                            </td>
+                                            <td colspan="50">
+                                                <!-- <legend>Consignee</legend> -->
+                                                Consignee: {{consignee}}
+
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="25">
+                                                <!-- <legend>Port of Loading</legend> -->
+                                                Port of loading: {{port_of_loading}}
+
+                                            </td>
+                                            <td colspan="25">
+                                                <!-- <legend>Port of Discharge</legend> -->
+                                                Port of discharge: {{port_of_discharge}}
+                                            </td>
+                                            <td colspan="25">
+                                                <!-- <legend>HBL</legend> -->
+
+                                                HBL: {{HBL}}
+                                            </td>
+                                            <td colspan="16">
+                                                <!-- <legend>MBL</legend> -->
+
+                                                MBL: {{MBL}}
+                                            </td>
+                                            <td colspan="9">
+                                                <!-- <legend>Carriage by</legend> -->
+
+                                                Carriage by: {{carriage_by}}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="25">
+                                                <!-- <legend>Vessel</legend> -->
+                                                Vessel: {{vessel}}
+                                            </td>
+                                            <td colspan="75">
+                                                <!-- <legend>Container</legend> -->
+
+                                                Container: {{container}}
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td colspan="25">
+                                                <!-- <legend>Date of order</legend> -->
+                                                Date of order: {{date_of_order}}
+                                            </td>
+                                            <td colspan="50">
+                                                <!-- <legend>Your Reference</legend> -->
+                                                Your Reference: {{your_reference}}
+                                            </td>
+                                            <td colspan="25">
+                                                <!-- <legend>Terms of delivery</legend> -->
+
+                                                Terms of delivery: {{terms_of_delivery}}
+                                            </td>
+
+                                        </tr>
+
+                                    </table>
+
+                                    <br>
+                                    <table id="logistic_two" class="table-main">
+                                        <tr>
+                                            <td colspan="25">
+                                                <legend>Marks/ No.</legend>
+                                            </td>
+                                            <td colspan="10">
+                                                <legend>Pieces</legend>
+                                            </td>
+                                            <td colspan="15">
+                                                <legend>Packaging</legend>
+                                            </td>
+                                            <td colspan="25">
+                                                <legend>Description of goods</legend>
+                                            </td>
+                                            <td colspan="16">
+                                                <legend>Weights</legend>
+                                            </td>
+                                            <td colspan="9">
+                                                <legend>cbm</legend>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="25">
+                                                {{marks_no}}
+                                            </td>
+                                            <td colspan="10">
+                                                {{pieces}}
+                                            </td>
+                                            <td colspan="15">
+                                                {{packaging}}
+                                            </td>
+                                            <td colspan="25">
+                                                {{description_of_goods}}
+                                            </td>
+                                            <td colspan="16">
+                                                {{weight}}
+                                            </td>
+                                            <td colspan="9">
+                                                {{cbm}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!--End Table-->
+
+                            </div>
+                            <!-- preset logistic item ends -->
+                            <table id="my-table" style="">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Item</th>
+                                    <th>Description</th>
+                                    <th>Qty</th>
+                                    <th>Rate {{estimateDetail["Currency Code"] || ''}}</th>
+                                    <th>Amount {{estimateDetail["Currency Code"] || ''}}</th>
+                                </tr>
+                                <!-- estimateDetail['salesList'] -->
+                                <tr *ngFor="let estimate of estimateDetail.salesList | slice: 1; let j = index">
+                                    <td>{{j + 1}}</td>
+                                    <td>{{estimate['Item Name']}}</td>
+                                    <td>{{estimate['Description']}}</td>
+                                    <td>{{estimate.quantity}}</td>
+                                    <td>{{estimate.Rate}}</td>
+                                    <td> $
+                                        {{returnProduct(estimate.Rate, estimate.quantity)}}</td>
+                                </tr>
+
+                                <!-- <tr>
+                                    <td class="no">01</td>
+                                    <td class="text-left">
+                                        <h3>{{estimateDetail["Item Name"]}}</h3>
+                                        <pre style="white-space: pre-wrap;">
+                                {{estimateDetail["Item Desc"]}}
+
+                                        </pre>
+                                    </td>
+                                    <td class="unit">{{estimateDetail["Item Price"]}}</td>
+                                    <td class="qty">{{estimateDetail["Quantity"]}}</td>
+                                    <td class="total">{{estimateDetail["Item Total"]}}</td>
+                                </tr> -->
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Sub Total</td>
+                                    <td>${{estimateDetail["Total"]}}</td>
+                                </tr>
+                                <!-- <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2">TAX 25%</td>
+                                    <td>$1,300.00</td>
+                                </tr> -->
+                                <tr>
+
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><strong>Total</strong> </td>
+                                    <td><strong>
+                                            ${{estimateDetail["Total"]}}
+                                        </strong>
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                            <table id="notes" style="font-size: 10px;">
+                                <tr>
+                                    <td>
+                                        {{estimateDetail["Notes"]}}
+                                    </td>
+                                </tr>
+                            </table>
+                            <table id="notices">
+                                <tr>
+                                    <th>Terms & Conditions:</th>
+                                </tr>
+                                <tr>
+                                    <td class="notice">
+                                        <pre style="white-space: pre-wrap;">
+{{estimateDetail['Terms & Conditions']?.toString()}}
+                                        </pre>
+                                    </td>
+                                </tr>
+                            </table>
+                            <footer>
+                                Powered by i-Maker IT Limited
+                            </footer>
+                        </ion-card>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</ion-content>
